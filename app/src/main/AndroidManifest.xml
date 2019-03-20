@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".RegisterClientActivity"
+            android:name=".Views.Activitys.RegisterClientActivity"
             android:label="@string/title_activity_register_client"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
