@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.Toolbar;
+
 import br.com.newoutsourcing.walletofclients.R;
 
 
@@ -22,10 +24,8 @@ public class PhysicalPersonFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Toolbar  toolbar = getActivity().findViewById(R.id.idToolbar);
+        toolbar.setTitle("Pessoa física");
     }
 
     @Override

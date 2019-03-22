@@ -1,17 +1,27 @@
 <resources>
-    <string name="app_name">Carteira de clientes</string>
-    <string name="title_activity_register_client">Cadastro de clientes</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="str_des_additional_data">Dados Adicionais</string>
-    <string name="str_des_client_data">Dados do cliente</string>
+    <!-- TODO: APP -->
+    <string name="str_app_name">Carteira de clientes</string>
+    <string name="str_client_title">Cadastro de clientes</string>
     <string name="str_btn_next">Próximo</string>
-    <string-array name="array_sexo">
-        <item>Indefido</item>
+
+    <!-- TODO: Lista de clientes-->
+    <string name="str_list_client_list">Lista de clientes</string>
+    <string name="str_list_client_pf">Pessoa física</string>
+    <string name="str_list_client_pj">Pessoa juridica</string>
+
+    <!-- TODO: Cadastro de pessoa fisica -->
+    <string name="str_client_pf_description_data">Dados do cliente</string>
+    <string name="str_client_pf_name">Nome</string>
+    <string name="str_client_pf_nick_name">Apelido</string>
+    <string name="str_client_pf_CPF">CPF</string>
+    <string name="str_client_pf_RG">RG</string>
+    <string name="str_client_pf_description_additional_data">Dados Adicionais</string>
+    <string name="str_client_pf_site">Site</string>
+    <string name="str_client_pf_observation">Observação</string>
+    <string name="str_client_pf_sex">Sexo</string>
+    <string-array name="array_client_pf_sexo">
+        <item>Indefinido</item>
         <item>Feminino</item>
         <item>Masculino</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
