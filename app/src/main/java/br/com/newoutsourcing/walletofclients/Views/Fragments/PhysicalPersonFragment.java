@@ -13,19 +13,17 @@ import br.com.newoutsourcing.walletofclients.R;
 public class PhysicalPersonFragment extends Fragment {
 
     public PhysicalPersonFragment() {
-
     }
 
     public static PhysicalPersonFragment newInstance() {
-        PhysicalPersonFragment fragment = new PhysicalPersonFragment();
-        return fragment;
+        return new PhysicalPersonFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toolbar  toolbar = getActivity().findViewById(R.id.idToolbar);
-        toolbar.setTitle("Pessoa física");
+        toolbar.setSubtitle("Pessoa física");
     }
 
     @Override

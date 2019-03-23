@@ -179,7 +179,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/idBtnClientPFNext"
                 android:layout_width="200dp"
                 android:layout_height="45dp"
                 android:layout_alignParentBottom="true"
@@ -188,12 +188,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/btn_rounded_blue"
                 android:drawableRight="@mipmap/ic_next"
                 android:drawableTint="@color/colorWhite"
                 android:elevation="@dimen/fab_margin"
                 android:gravity="center"
-                android:text="@string/str_btn_next"
+                android:text="@string/str_next"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="19dp" />

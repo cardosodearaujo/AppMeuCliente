@@ -13,13 +13,13 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 public class FunctionsApp {
-    public static void iniciarActivity(Context context, Class classe, Bundle paramentros){
+    public static void startActivity(Context context, Class classe, Bundle paramentros){
         Intent intent = new Intent(context,classe);
         if (paramentros != null){intent.putExtras(paramentros);}
         context.startActivity(intent);
     }
 
-    public static void fecharActivity(Context context){
+    public static void closeActivity(Context context){
         ((Activity) context).finish();
     }
 

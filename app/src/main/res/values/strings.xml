@@ -2,12 +2,22 @@
     <!-- TODO: APP -->
     <string name="str_app_name">Carteira de clientes</string>
     <string name="str_client_title">Cadastro de clientes</string>
-    <string name="str_btn_next">Próximo</string>
+    <string name="str_next">Próximo</string>
+    <string name="str_close">Fechar</string>
+
+    <!-- TODO: Erro -->
+    <string name="str_error_message_caption">Ocorreu um erro!</string>
+    <string name="str_error_message">Tente novamente.</string>
 
     <!-- TODO: Lista de clientes-->
     <string name="str_list_client_list">Lista de clientes</string>
     <string name="str_list_client_pf">Pessoa física</string>
     <string name="str_list_client_pj">Pessoa juridica</string>
+
+    <!-- TODO: Card de clientes-->
+    <string name="str_card_client_name">Nome:</string>
+    <string name="str_card_client_type">Tipo:</string>
+    <string name="str_card_client_CPF_CNPJ">CPF/CNPJ:</string>
 
     <!-- TODO: Cadastro de pessoa fisica -->
     <string name="str_client_pf_description_data">Dados do cliente</string>

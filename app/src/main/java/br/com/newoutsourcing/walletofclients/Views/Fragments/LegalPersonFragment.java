@@ -17,19 +17,27 @@ public class LegalPersonFragment extends Fragment {
     }
 
     public static LegalPersonFragment newInstance() {
-        LegalPersonFragment fragment = new LegalPersonFragment();
-        return fragment;
+        return new LegalPersonFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar  toolbar = getActivity().findViewById(R.id.toolbar);
+        this.loadConfigurationView();
+        this.loadInformationView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_legal_person, container, false);
+    }
+
+    private void loadConfigurationView(){
+        this.toolbar = getActivity().findViewById(R.id.idToolbar);
+    }
+
+    private void loadInformationView(){
+        this.toolbar.setSubtitle("Pessoa juridica");
     }
 }
