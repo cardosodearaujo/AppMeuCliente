@@ -40,7 +40,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/idTxwCidade"
+                    android:id="@+id/idTxwNome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
@@ -67,7 +67,7 @@
                     android:textSize="17dp"/>
 
                 <TextView
-                    android:id="@+id/idTxwOperadora"
+                    android:id="@+id/idTxwCPF_CNPJ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
@@ -88,7 +88,7 @@
                     android:textSize="17dp"/>
 
                 <TextView
-                    android:id="@+id/idTxwDDD"
+                    android:id="@+id/idTxwTipo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"

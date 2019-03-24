@@ -1,4 +1,4 @@
-package br.com.newoutsourcing.walletofclients.Adapters;
+package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

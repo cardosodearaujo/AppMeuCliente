@@ -1,33 +1,22 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
+import java.util.ArrayList;
+import br.com.newoutsourcing.walletofclients.Views.Adapters.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
-import br.com.newoutsourcing.walletofclients.App.RecyclerViewTouchListenerApp;
+import br.com.newoutsourcing.walletofclients.Objects.ClientObject;
 import br.com.newoutsourcing.walletofclients.R;
 
-public class ListClientActivity extends AppCompatActivity implements RecyclerViewTouchListenerApp.RecyclerViewOnClickListenerHack,
-        NavigationView.OnNavigationItemSelectedListener,
-        LoaderManager.LoaderCallbacks<Cursor> ,
-        SwipeRefreshLayout.OnRefreshListener{
 
+public class ListClientActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar idToolbar;
     private FloatingActionMenu idBtnFam;
     private FloatingActionButton idBtnFabClientLegalPerson;
@@ -45,27 +34,44 @@ public class ListClientActivity extends AppCompatActivity implements RecyclerVie
     }
 
     private void loadConfigurationView(){
+        //Inflando views:
         this.idToolbar = this.findViewById(R.id.idToolbar);
         this.idBtnFam = this.findViewById(R.id.idBtnFam);
         this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson = this.findViewById(R.id.idBtnFabClientPhysicalPerson);
         this.idBtnFabError = this.findViewById(R.id.idBtnFabError);
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
+
+        //Eventos dos botões:
         this.idBtnFabClientLegalPerson.setOnClickListener(this.onClickBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
         this.idBtnFabError.setOnClickListener(this.onClickBtnFabError);
 
+        //Configurando a RecyclerView:
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        this.idRecycleView = this.findViewById(R.id.idRecycleView);
-        this.idRecycleView.setHasFixedSize(true);
-        this.idRecycleView.addOnItemTouchListener(new RecyclerViewTouchListenerApp(ListClientActivity.this,this.idRecycleView,this));
         this.idRecycleView.setLayoutManager(linearLayoutManager);
+        this.idRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     private void loadInformationView(){
-        this.idRecycleView.setAdapter(null);
+        this.idRecycleView.setAdapter(this.getAdapter());
+    }
+
+    private ClientAdapter getAdapter(){
+        ArrayList<ClientObject> clientList = new ArrayList<ClientObject>();
+        for (int cont = 0; cont <=100; cont++){
+            clientList.add(getClient("Pai de familha " + cont, "11111111111","PF"));
+        }
+        return new ClientAdapter(clientList);
+    }
+
+    private ClientObject getClient(String nome, String CPF_CNPJ, String tipo){
+        ClientObject client = new ClientObject();
+        client.setNome(nome);
+        client.setCPF_CNPJ(CPF_CNPJ);
+        client.setTipo(tipo);
+        return client;
     }
 
     View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){
@@ -94,38 +100,7 @@ public class ListClientActivity extends AppCompatActivity implements RecyclerVie
     };
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
-
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onClickListener(View view, int position) {
-
-    }
-
-    @Override
-    public void onLongPressClickListener(View view, int position) {
-
+    public void onClick(View v) {
+        //Nada por enquanto....
     }
 }

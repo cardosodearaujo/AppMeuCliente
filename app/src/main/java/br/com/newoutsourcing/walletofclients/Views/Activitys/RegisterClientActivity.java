@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Adapters.SectionsPagerAdapter;
+import br.com.newoutsourcing.walletofclients.Views.Adapters.SectionsPagerAdapter;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
 
