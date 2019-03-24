@@ -61,7 +61,11 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private ClientAdapter getAdapter(){
         ArrayList<ClientObject> clientList = new ArrayList<ClientObject>();
         for (int cont = 0; cont <=100; cont++){
-            clientList.add(getClient("Pai de familha " + cont, "11111111111","PF"));
+            if (cont % 2 == 0){
+                clientList.add(getClient((cont+1) + " - Everaldo Cardoso de Araújo  ", "146.442.937-50","PF"));
+            }else {
+                clientList.add(getClient((cont+1) + " - New Outsourcing MEI", "30.797.064/0001-81", "PF"));
+            }
         }
         return new ClientAdapter(clientList);
     }

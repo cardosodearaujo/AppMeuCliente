@@ -15,7 +15,7 @@
     <string name="str_list_client_pj">Pessoa juridica</string>
 
     <!-- TODO: Card de clientes-->
-    <string name="str_card_client_name">Nome:</string>
+    <string name="str_card_client_name">Cliente:</string>
     <string name="str_card_client_type">Tipo:</string>
     <string name="str_card_client_CPF_CNPJ">CPF/CNPJ:</string>
 
