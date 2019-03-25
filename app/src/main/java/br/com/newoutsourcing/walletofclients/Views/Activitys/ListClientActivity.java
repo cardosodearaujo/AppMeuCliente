@@ -15,7 +15,6 @@ import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.ClientObject;
 import br.com.newoutsourcing.walletofclients.R;
 
-
 public class ListClientActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar idToolbar;
     private FloatingActionMenu idBtnFam;
@@ -31,6 +30,11 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.loadConfigurationView();
         this.loadInformationView();
         this.setSupportActionBar(this.idToolbar);
+    }
+
+    @Override
+    public void onClick(View v) {
+        //Nada por enquanto....
     }
 
     private void loadConfigurationView(){
@@ -54,26 +58,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idRecycleView.setAdapter(this.getAdapter());
     }
 
-    private ClientAdapter getAdapter(){
-        ArrayList<ClientObject> clientList = new ArrayList<ClientObject>();
-        for (int cont = 0; cont <100; cont++){
-            if (cont % 2 == 0){
-                clientList.add(getClient((cont+1) + " - Everaldo Cardoso de Araújo  ", "146.442.937-50","PF"));
-            }else {
-                clientList.add(getClient((cont+1) + " - New Outsourcing MEI", "30.797.064/0001-81", "PF"));
-            }
-        }
-        return new ClientAdapter(clientList);
-    }
-
-    private ClientObject getClient(String nome, String CPF_CNPJ, String tipo){
-        ClientObject client = new ClientObject();
-        client.setNome(nome);
-        client.setCPF_CNPJ(CPF_CNPJ);
-        client.setTipo(tipo);
-        return client;
-    }
-
     View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -92,8 +76,23 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         }
     };
 
-    @Override
-    public void onClick(View v) {
-        //Nada por enquanto....
+    private ClientAdapter getAdapter(){
+        ArrayList<ClientObject> clientList = new ArrayList<ClientObject>();
+        for (int cont = 0; cont <100; cont++){
+            if (cont % 2 == 0){
+                clientList.add(getClient((cont+1) + " - Everaldo Cardoso de Araújo  ", "146.442.937-50","PF"));
+            }else {
+                clientList.add(getClient((cont+1) + " - New Outsourcing MEI", "30.797.064/0001-81", "PF"));
+            }
+        }
+        return new ClientAdapter(clientList);
+    }
+
+    private ClientObject getClient(String nome, String CPF_CNPJ, String tipo){
+        ClientObject client = new ClientObject();
+        client.setNome(nome);
+        client.setCPF_CNPJ(CPF_CNPJ);
+        client.setTipo(tipo);
+        return client;
     }
 }

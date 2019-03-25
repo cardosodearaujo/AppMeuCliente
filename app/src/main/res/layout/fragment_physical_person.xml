@@ -77,7 +77,8 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginBottom="10dp"
                     android:hint="@string/str_client_pf_CPF"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -94,7 +95,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginBottom="10dp"
                     android:hint="@string/str_client_pf_RG"
-                    android:singleLine="true" />
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -146,7 +147,7 @@
                 android:layout_gravity="center">
 
                 <EditText
-                    android:id="@+id/idEdtClientPFEmail"
+                    android:id="@+id/idEdtClientPFSite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -154,7 +155,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginBottom="10dp"
                     android:hint="@string/str_client_pf_site"
-                    android:singleLine="true" />
+                    android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

@@ -26,13 +26,20 @@
     <string name="str_client_pf_nick_name">Apelido</string>
     <string name="str_client_pf_CPF">CPF</string>
     <string name="str_client_pf_RG">RG</string>
-    <string name="str_client_pf_description_additional_data">Dados Adicionais</string>
+    <string name="str_client_pf_description_additional_data">Dados adicionais</string>
     <string name="str_client_pf_site">Site</string>
     <string name="str_client_pf_observation">Observação</string>
     <string name="str_client_pf_sex">Sexo</string>
-    <string-array name="array_client_pf_sexo">
-        <item>Indefinido</item>
-        <item>Feminino</item>
-        <item>Masculino</item>
-    </string-array>
+
+    <!-- TODO: Cadastro de pessoa juridica -->
+    <string name="str_client_pj_description_data">Dados do cliente</string>
+    <string name="str_client_pj_social_name">Razão social</string>
+    <string name="str_client_pj_fantasy_name">Nome fantasia</string>
+    <string name="str_client_pj_CNPJ">CNPJ</string>
+    <string name="str_client_pj_IE">Insc. estadual</string>
+    <string name="str_client_pj_IM">Insc. municipal</string>
+    <string name="str_client_pj_description_additional_data">Dados adicionais</string>
+    <string name="str_client_pj_site">Site</string>
+    <string name="str_client_pj_observation">Observação</string>
+
 </resources>

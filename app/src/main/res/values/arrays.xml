@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="array_client_pf_sexo">
+        <item>Indefinido</item>
+        <item>Feminino</item>
+        <item>Masculino</item>
+    </array>
+</resources>

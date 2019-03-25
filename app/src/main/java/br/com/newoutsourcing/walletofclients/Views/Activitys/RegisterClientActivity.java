@@ -9,6 +9,7 @@ import android.widget.Button;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.SectionsPagerAdapter;
+import br.com.newoutsourcing.walletofclients.Views.Fragments.AdressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
 
@@ -49,7 +50,10 @@ public class RegisterClientActivity extends AppCompatActivity {
                 FunctionsApp.closeActivity(RegisterClientActivity.this);
                 break;
         }
-        if (this.pagerAdapter.getCount()>0){this.idViewPager.setAdapter(pagerAdapter);}
+        if (this.pagerAdapter.getCount()>0){
+            this.pagerAdapter.addFragment(AdressFragment.newInstance());
+            this.idViewPager.setAdapter(pagerAdapter);
+        }
     }
 
     View.OnClickListener onClickClose = new View.OnClickListener(){
