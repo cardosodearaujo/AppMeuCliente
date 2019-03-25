@@ -90,12 +90,13 @@
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/idBtnFabError"
+                android:id="@+id/idBtnFabClientConfig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_error"
-                fab:fab_label="Erro"
+                android:src="@mipmap/ic_settings"
+                fab:fab_label="@string/str_list_client_settings"
                 fab:fab_size="mini" />
+
         </com.github.clans.fab.FloatingActionMenu>
     </RelativeLayout>
 </LinearLayout>

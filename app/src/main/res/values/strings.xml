@@ -13,6 +13,7 @@
     <string name="str_list_client_list">Lista de clientes</string>
     <string name="str_list_client_pf">Pessoa física</string>
     <string name="str_list_client_pj">Pessoa juridica</string>
+    <string name="str_list_client_settings">Configurações</string>
 
     <!-- TODO: Card de clientes-->
     <string name="str_card_client_name">Cliente:</string>

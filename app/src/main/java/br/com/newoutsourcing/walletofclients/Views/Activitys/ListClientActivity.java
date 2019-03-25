@@ -39,14 +39,10 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFam = this.findViewById(R.id.idBtnFam);
         this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson = this.findViewById(R.id.idBtnFabClientPhysicalPerson);
-        this.idBtnFabError = this.findViewById(R.id.idBtnFabError);
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
-
         //Eventos dos botões:
         this.idBtnFabClientLegalPerson.setOnClickListener(this.onClickBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
-        this.idBtnFabError.setOnClickListener(this.onClickBtnFabError);
-
         //Configurando a RecyclerView:
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -60,7 +56,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
 
     private ClientAdapter getAdapter(){
         ArrayList<ClientObject> clientList = new ArrayList<ClientObject>();
-        for (int cont = 0; cont <=100; cont++){
+        for (int cont = 0; cont <100; cont++){
             if (cont % 2 == 0){
                 clientList.add(getClient((cont+1) + " - Everaldo Cardoso de Araújo  ", "146.442.937-50","PF"));
             }else {
@@ -93,13 +89,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             Bundle bundle = new Bundle();
             bundle.putString("TipoCadastro","F");
             FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
-        }
-    };
-
-    View.OnClickListener onClickBtnFabError = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.startActivity(ListClientActivity.this,ErrorActivity.class,null );
         }
     };
 
