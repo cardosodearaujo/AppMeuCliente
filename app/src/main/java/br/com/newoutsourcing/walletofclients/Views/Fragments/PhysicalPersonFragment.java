@@ -27,7 +27,6 @@ public class PhysicalPersonFragment extends Fragment {
     private TextView idTxwClientPFDescriptionAdditionalData;
     private EditText idEdtClientPFSite;
     private EditText idEdtClientPFObservation;
-    private Button idBtnClientPFNext;
     private ViewPager idViewPager;
 
     public PhysicalPersonFragment() {
@@ -63,19 +62,10 @@ public class PhysicalPersonFragment extends Fragment {
         this.idTxwClientPFDescriptionAdditionalData = view.findViewById(R.id.idTxwClientPFDescriptionAdditionalData);
         this.idEdtClientPFSite = view.findViewById(R.id.idEdtClientPFSite);
         this.idEdtClientPFObservation = view.findViewById(R.id.idEdtClientPFObservation);
-        this.idBtnClientPFNext = view.findViewById(R.id.idBtnClientPFNext);
     }
 
     private void LoadInformationToView(){
         this.idToolbar.setSubtitle("Pessoa física");
         this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", this.idEdtClientPFCPF));
-        this.idBtnClientPFNext.setOnClickListener(this.onClickBtnClientPFNext);
     }
-
-    View.OnClickListener onClickBtnClientPFNext = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            idViewPager.setCurrentItem(R.layout.fragment_address,true);
-        }
-    };
 }

@@ -25,7 +25,6 @@ public class LegalPersonFragment extends Fragment {
     private TextView idTxwClientPJDescriptionAdditionalData;
     private EditText idEdtClientPJSite;
     private EditText idEdtClientPJObservation;
-    private Button idBtnClientPJNext;
     private ViewPager idViewPager;
 
     public LegalPersonFragment() {
@@ -60,19 +59,10 @@ public class LegalPersonFragment extends Fragment {
         this.idTxwClientPJDescriptionAdditionalData = view.findViewById(R.id.idTxwClientPJDescriptionAdditionalData);
         this.idEdtClientPJSite = view.findViewById(R.id.idEdtClientPJSite);
         this.idEdtClientPJObservation = view.findViewById(R.id.idEdtClientPJObservation);
-        this.idBtnClientPJNext = view.findViewById(R.id.idBtnClientPJNext);
         this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener("##.###.###.####/##", this.idEdtClientPJCNPJ));
-        this.idBtnClientPJNext.setOnClickListener(this.onClickBtnClientPJNext);
     }
 
     private void loadInformationToView(){
         this.idToolbar.setSubtitle("Pessoa juridica");
     }
-
-    View.OnClickListener onClickBtnClientPJNext = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            idViewPager.setCurrentItem(R.layout.fragment_address,true);
-        }
-    };
 }
