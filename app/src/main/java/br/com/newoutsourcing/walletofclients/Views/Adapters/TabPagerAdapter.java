@@ -6,11 +6,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class TabPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> lFragmentList = new ArrayList<>();
+    private final List<String> lFragmentTitleList = new ArrayList<>();
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public TabPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -24,7 +25,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return lFragmentList.size();
     }
 
-    public void addFragment(Fragment fragment){
+    @Override
+    public CharSequence getPageTitle(int position){
+        return lFragmentTitleList.get(position);
+    }
+
+    public void addFragment(Fragment fragment,String title){
         lFragmentList.add(fragment);
+        lFragmentTitleList.add(title);
     }
 }

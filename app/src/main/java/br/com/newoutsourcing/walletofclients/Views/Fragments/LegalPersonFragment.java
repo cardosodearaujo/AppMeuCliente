@@ -52,7 +52,6 @@ public class LegalPersonFragment extends Fragment {
     private void loadConfigurationToView(View view){
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
-        this.idTxwClientPJDescriptionData = view.findViewById(R.id.idTxwClientPJDescriptionData);
         this.idEdtClientPJSocialName = view.findViewById(R.id.idEdtClientPJSocialName);
         this.idEdtClientPJFantasyName = view.findViewById(R.id.idEdtClientPJFantasyName);
         this.idEdtClientPJCNPJ = view.findViewById(R.id.idEdtClientPJCNPJ);
@@ -73,7 +72,7 @@ public class LegalPersonFragment extends Fragment {
     View.OnClickListener onClickBtnClientPJNext = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            idViewPager.setCurrentItem(R.layout.fragment_adress,true);
+            idViewPager.setCurrentItem(R.layout.fragment_address,true);
         }
     };
 }

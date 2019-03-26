@@ -55,7 +55,6 @@ public class PhysicalPersonFragment extends Fragment {
     private void LoadConfigurationToView(View view){
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
-        this.idTxwClientPFDescriptionData = view.findViewById(R.id.idTxwClientPFDescriptionData);
         this.idEdtClientPFName = view.findViewById(R.id.idEdtClientPFName);
         this.idEdtClientPFNickName = view.findViewById(R.id.idEdtClientPFNickName);
         this.idEdtClientPFCPF = view.findViewById(R.id.idEdtClientPFCPF);
@@ -76,7 +75,7 @@ public class PhysicalPersonFragment extends Fragment {
     View.OnClickListener onClickBtnClientPFNext = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            idViewPager.setCurrentItem(R.layout.fragment_adress,true);
+            idViewPager.setCurrentItem(R.layout.fragment_address,true);
         }
     };
 }
