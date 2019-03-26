@@ -2,17 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.newoutsourcing.walletofclients">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_wallet"
-        android:label="@string/str_app_name"
+        android:label="@string/str_app_name_en"
         android:roundIcon="@mipmap/ic_wallet"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
 
         <activity
-            android:name=".Views.Activitys.ListClientActivity"
+            android:name=".Views.Activitys.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,15 +23,20 @@
         </activity>
 
         <activity
-            android:name=".Views.Activitys.RegisterClientActivity"
+            android:name=".Views.Activitys.ListClientActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
+            android:name=".Views.Activitys.RegisterClientActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
             android:name=".Views.Activitys.ErrorActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
+
 </manifest>

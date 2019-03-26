@@ -1,9 +1,13 @@
 <resources>
     <!-- TODO: APP -->
     <string name="str_app_name">Carteira de clientes</string>
+    <string name="str_app_name_en">Wallet of clients</string>
     <string name="str_client_title">Cadastro de clientes</string>
     <string name="str_next">Próximo</string>
     <string name="str_close">Fechar</string>
+    <string name="str_app_version">Versão 1.0</string>
+    <string name="str_dev_name">New Outsourcing</string>
+    <string name="str_copyright">Copyright 2019 ©</string>
 
     <!-- TODO: Erro -->
     <string name="str_error_message_caption">Ocorreu um erro!</string>

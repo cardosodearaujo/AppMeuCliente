@@ -45,7 +45,7 @@ public class FunctionsApp {
                 .setNeutralButton(mensagemBotao, null).show();
     }
 
-    public static void iniciarFragment(Fragment fragment, int id, FragmentManager fragmentManager){
+    public static void startFragment(Fragment fragment, int id, FragmentManager fragmentManager){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(id,fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

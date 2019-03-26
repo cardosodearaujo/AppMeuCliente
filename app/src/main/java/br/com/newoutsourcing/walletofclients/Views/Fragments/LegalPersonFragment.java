@@ -48,7 +48,7 @@ public class LegalPersonFragment extends Fragment {
     }
 
     private void loadConfigurationToView(View view){
-        this.idToolbar = getActivity().findViewById(R.id.idToolbar);
+        this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idTxwClientPJDescriptionData = view.findViewById(R.id.idTxwClientPJDescriptionData);
         this.idEdtClientPJSocialName = view.findViewById(R.id.idEdtClientPJSocialName);
         this.idEdtClientPJFantasyName = view.findViewById(R.id.idEdtClientPJFantasyName);

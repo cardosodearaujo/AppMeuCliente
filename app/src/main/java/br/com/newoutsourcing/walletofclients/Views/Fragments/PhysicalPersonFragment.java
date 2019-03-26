@@ -51,7 +51,7 @@ public class PhysicalPersonFragment extends Fragment {
     }
 
     private void LoadConfigurationToView(View view){
-        this.idToolbar = getActivity().findViewById(R.id.idToolbar);
+        this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idTxwClientPFDescriptionData = view.findViewById(R.id.idTxwClientPFDescriptionData);
         this.idEdtClientPFName = view.findViewById(R.id.idEdtClientPFName);
         this.idEdtClientPFNickName = view.findViewById(R.id.idEdtClientPFNickName);
