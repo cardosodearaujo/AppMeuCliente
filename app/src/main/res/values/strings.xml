@@ -18,6 +18,7 @@
     <string name="str_list_client_pf">Pessoa física</string>
     <string name="str_list_client_pj">Pessoa juridica</string>
     <string name="str_list_client_settings">Configurações</string>
+    <string name="str_list_client_import_export">Importar/Exportar</string>
 
     <!-- TODO: Card de clientes-->
     <string name="str_card_client_name">Cliente:</string>
@@ -45,5 +46,16 @@
     <string name="str_client_pj_description_additional_data">Dados adicionais</string>
     <string name="str_client_pj_site">Site</string>
     <string name="str_client_pj_observation">Observação</string>
+
+    <!-- TODO: Cadastro de endereço -->
+    <string name="str_client_address_description_data">Dados do endereço</string>
+    <string name="str_client_address_CEP">CEP</string>
+    <string name="str_client_address_street">Rua</string>
+    <string name="str_client_address_number">Número</string>
+    <string name="str_client_address_neighborhood">Bairro</string>
+    <string name="str_client_address_city">Cidade</string>
+    <string name="str_client_address_state">Estado</string>
+    <string name="str_client_address_country">Pais</string>
+    <string name="str_client_address_country_fixed">Brasil</string>
 
 </resources>

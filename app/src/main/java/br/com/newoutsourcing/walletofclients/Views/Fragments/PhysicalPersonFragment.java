@@ -2,6 +2,7 @@ package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class PhysicalPersonFragment extends Fragment {
     private EditText idEdtClientPFSite;
     private EditText idEdtClientPFObservation;
     private Button idBtnClientPFNext;
+    private ViewPager idViewPager;
 
     public PhysicalPersonFragment() {
     }
@@ -52,6 +54,7 @@ public class PhysicalPersonFragment extends Fragment {
 
     private void LoadConfigurationToView(View view){
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
+        this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
         this.idTxwClientPFDescriptionData = view.findViewById(R.id.idTxwClientPFDescriptionData);
         this.idEdtClientPFName = view.findViewById(R.id.idEdtClientPFName);
         this.idEdtClientPFNickName = view.findViewById(R.id.idEdtClientPFNickName);
@@ -67,5 +70,13 @@ public class PhysicalPersonFragment extends Fragment {
     private void LoadInformationToView(){
         this.idToolbar.setSubtitle("Pessoa física");
         this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", this.idEdtClientPFCPF));
+        this.idBtnClientPFNext.setOnClickListener(this.onClickBtnClientPFNext);
     }
+
+    View.OnClickListener onClickBtnClientPFNext = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            idViewPager.setCurrentItem(R.layout.fragment_adress,true);
+        }
+    };
 }

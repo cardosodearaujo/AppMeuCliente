@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton idBtnFabClientPhysicalPerson;
     private FloatingActionButton idBtnFabError;
     private RecyclerView idRecycleView;
+    private Button idBtnClose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,11 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson = this.findViewById(R.id.idBtnFabClientPhysicalPerson);
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
+        this.idBtnClose = this.findViewById(R.id.idBtnClose);
         //Eventos dos botões:
         this.idBtnFabClientLegalPerson.setOnClickListener(this.onClickBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
+        this.idBtnClose.setOnClickListener(this.onClickClose);
         //Configurando a RecyclerView:
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -73,6 +78,13 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             Bundle bundle = new Bundle();
             bundle.putString("TipoCadastro","F");
             FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
+        }
+    };
+
+    View.OnClickListener onClickClose = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            FunctionsApp.closeActivity(ListClientActivity.this);
         }
     };
 
