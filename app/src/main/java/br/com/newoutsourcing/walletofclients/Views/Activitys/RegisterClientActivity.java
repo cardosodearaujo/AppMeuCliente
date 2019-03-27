@@ -43,7 +43,6 @@ public class RegisterClientActivity extends AppCompatActivity {
     }
 
     public void loadInformationToView(){
-        AddressFragment address;
         switch (this.getIntent().getExtras().getString("TipoCadastro")){
             case "F":
                 this.pagerAdapter.addFragment(PhysicalPersonFragment.newInstance(),"Informações");
@@ -57,8 +56,8 @@ public class RegisterClientActivity extends AppCompatActivity {
                 break;
         }
         if (this.pagerAdapter.getCount()>0){
+            this.pagerAdapter.addFragment(AdditionalDataFragment.newInstance(),"Inf.Adicionais");
             this.pagerAdapter.addFragment(AddressFragment.newInstance(),"Endereço");
-            this.pagerAdapter.addFragment(AdditionalDataFragment.newInstance(),"Observações");
             this.idViewPager.setAdapter(pagerAdapter);
         }
     }

@@ -56,13 +56,10 @@ public class LegalPersonFragment extends Fragment {
         this.idEdtClientPJCNPJ = view.findViewById(R.id.idEdtClientPJCNPJ);
         this.idEdtClientPJIE = view.findViewById(R.id.idEdtClientPJIE);
         this.idEdtClientPJIM = view.findViewById(R.id.idEdtClientPJIM);
-        this.idTxwClientPJDescriptionAdditionalData = view.findViewById(R.id.idTxwClientPJDescriptionAdditionalData);
-        this.idEdtClientPJSite = view.findViewById(R.id.idEdtClientPJSite);
-        this.idEdtClientPJObservation = view.findViewById(R.id.idEdtClientPJObservation);
-        this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener("##.###.###.####/##", this.idEdtClientPJCNPJ));
     }
 
     private void loadInformationToView(){
         this.idToolbar.setSubtitle("Pessoa juridica");
+        this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener("##.###.###.####/##", this.idEdtClientPJCNPJ));
     }
 }

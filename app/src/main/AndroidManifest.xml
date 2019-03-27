@@ -31,6 +31,7 @@
         <activity
             android:name=".Views.Activitys.RegisterClientActivity"
             android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity

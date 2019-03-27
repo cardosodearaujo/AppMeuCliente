@@ -38,7 +38,7 @@ public class AddressFragment extends Fragment {
     private void loadConfigurationToView(View view){
         this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
         this.idEdtClientAddressCEP = view.findViewById(R.id.idEdtClientAddressCEP);
-        this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener("##.###.###", this.idEdtClientAddressCEP));
+        this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener("##.###-###", this.idEdtClientAddressCEP));
     }
 
     private void loadInformationToView(){

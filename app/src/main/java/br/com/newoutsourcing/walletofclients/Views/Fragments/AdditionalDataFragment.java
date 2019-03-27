@@ -6,12 +6,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.R;
 
 
 public class AdditionalDataFragment extends Fragment {
 
+    private EditText idEdtClientPFCellphone;
+    private EditText idEdtClientPFTelephone;
 
     public AdditionalDataFragment() {
     }
@@ -23,7 +27,19 @@ public class AdditionalDataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_additional_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_additional_data, container, false);
+        this.loadConfigurationToView(view);
+        this.loadInformationToView();
+        return view;
     }
 
+    private void loadConfigurationToView(View view){
+        this.idEdtClientPFCellphone = view.findViewById(R.id.idEdtClientPFCellphone);
+        this.idEdtClientPFTelephone = view.findViewById(R.id.idEdtClientPFTelephone);
+    }
+
+    private void loadInformationToView(){
+        this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener("(##)#####-####", this.idEdtClientPFCellphone));
+        this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener("(##)####-####", this.idEdtClientPFTelephone));
+    }
 }
