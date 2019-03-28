@@ -19,6 +19,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FunctionsApp {
+
+    public static ProgressDialog PG_DIALOG;
+    public static int IMAGEM_CAMERA = 0;
+    public static int IMAGEM_INTERNA = 1;
+    public static final String MASCARA_TELEFONE = "(##)####-####";
+    public static final String MASCARA_CELULAR = "(##)#####-####";
+    public static final String MASCARA_CPF = "###.###.###-##";
+    public static final String MASCARA_CNPJ = "##.###.###/####-##";
+    public static final String MASCARA_CEP = "##.###-###";
+    public static final String MASCARA_DATA = "##/##/####";
+
     public static void startActivity(Context context, Class classe, Bundle paramentros){
         Intent intent = new Intent(context,classe);
         if (paramentros != null){intent.putExtras(paramentros);}
@@ -28,8 +39,6 @@ public class FunctionsApp {
     public static void closeActivity(Context context){
         ((Activity) context).finish();
     }
-
-    public static ProgressDialog PG_DIALOG;
 
     public static void showPgDialog(Context context){
         PG_DIALOG = new ProgressDialog(context);

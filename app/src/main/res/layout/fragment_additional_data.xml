@@ -96,7 +96,7 @@
                 <EditText
                     android:id="@+id/idEdtClientPFObservation"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="200dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="30dp"
@@ -104,8 +104,8 @@
                     android:gravity="top|left"
                     android:hint="@string/str_client_pf_observation"
                     android:inputType="textMultiLine"
-                    android:lines="8"
-                    android:maxLines="8"
+                    android:lines="10"
+                    android:maxLines="10"
                     android:scrollbars="vertical" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
