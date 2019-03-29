@@ -1,6 +1,6 @@
-package br.com.newoutsourcing.walletofclients.Objects.Entity;
+package br.com.newoutsourcing.walletofclients.Objects;
 
-public class AdditionalInformationEntity {
+public class AdditionalInformation {
     private long additionalInformationId;
     private long clientId;
     private String cellphone;
@@ -9,7 +9,7 @@ public class AdditionalInformationEntity {
     private String site;
     private String observation;
 
-    public AdditionalInformationEntity(){
+    public AdditionalInformation(){
         this.setAdditionalInformationId(0);
         this.setClientId(0);
         this.setCellphone("");
@@ -19,8 +19,8 @@ public class AdditionalInformationEntity {
         this.setObservation("");
     }
 
-    public AdditionalInformationEntity(long additionalInformationId, long clientId, String cellphone,
-                                       String telephone, String email, String site, String observation){
+    public AdditionalInformation(long additionalInformationId, long clientId, String cellphone,
+                                 String telephone, String email, String site, String observation){
         this.setAdditionalInformationId(additionalInformationId);
         this.setClientId(clientId);
         this.setCellphone(cellphone);
@@ -30,8 +30,8 @@ public class AdditionalInformationEntity {
         this.setObservation(observation);
     }
 
-    public static AdditionalInformationEntity newInstance(){
-        return new AdditionalInformationEntity();
+    public static AdditionalInformation newInstance(){
+        return new AdditionalInformation();
     }
 
     public long getAdditionalInformationId() {

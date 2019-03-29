@@ -19,9 +19,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FunctionsApp {
+    /**Controles do banco de dados**/
+    public static final String DB_NAME = "DB_WalletOfClients";
+    public static final int DB_VERSION = 1;
 
+    /**Controles da camera**/
     public static int IMAGEM_CAMERA = 0;
     public static int IMAGEM_INTERNA = 1;
+
+    /**Controles de layout**/
     public static ProgressDialog PG_DIALOG;
     public static final String MASCARA_TELEFONE = "(##)####-####";
     public static final String MASCARA_CELULAR = "(##)#####-####";
@@ -30,6 +36,7 @@ public class FunctionsApp {
     public static final String MASCARA_CEP = "##.###-###";
     public static final String MASCARA_DATA = "##/##/####";
 
+    /**Funções de Layout**/
     public static void startActivity(Context context, Class classe, Bundle paramentros){
         Intent intent = new Intent(context,classe);
         if (paramentros != null){intent.putExtras(paramentros);}
@@ -38,6 +45,13 @@ public class FunctionsApp {
 
     public static void closeActivity(Context context){
         ((Activity) context).finish();
+    }
+
+    public static void startFragment(Fragment fragment, int id, FragmentManager fragmentManager){
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(id,fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
     }
 
     public static void showPgDialog(Context context){
@@ -53,28 +67,27 @@ public class FunctionsApp {
         if (PG_DIALOG.isShowing()){ PG_DIALOG.dismiss();}
     }
 
-    public static AlertDialog modal(Context context, String titulo, String menssagem, String mensagemBotao){
+    public static AlertDialog showAlertDialog(Context context, String titulo, String menssagem, String mensagemBotao){
         return new AlertDialog.Builder(context)
                 .setTitle(titulo)
                 .setMessage(menssagem)
                 .setNeutralButton(mensagemBotao, null).show();
     }
 
-    public static void startFragment(Fragment fragment, int id, FragmentManager fragmentManager){
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(id,fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.commit();
-    }
-
-    public static void snackBarShort(View view,String message){
+    public static void showSnackBarShort(View view, String message){
         Snackbar.make(view,message,Snackbar.LENGTH_SHORT).show();
     }
 
-    public static void snackBarLong(View view,String message){
+    public static void showSnackBarLong(View view, String message){
         Snackbar.make(view,message,Snackbar.LENGTH_LONG).show();
     }
 
+    public static void closeKeyboard(Context context, View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**Funções de data**/
     public static String getCurrentDate(){
         Date data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -100,10 +113,5 @@ public class FunctionsApp {
             return date;
         } catch (ParseException e) {}
         return date;
-    }
-
-    public static void hiddenKeyboard(Context context, View view){
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

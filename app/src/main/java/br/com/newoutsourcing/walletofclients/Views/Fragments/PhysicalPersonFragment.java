@@ -25,7 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -180,7 +179,7 @@ public class PhysicalPersonFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 this.takePhoto();
             } else {
-                FunctionsApp.snackBarShort(this.getView(),"Permissão negada!");
+                FunctionsApp.showSnackBarShort(this.getView(),"Permissão negada!");
             }
         }
     }
@@ -214,7 +213,7 @@ public class PhysicalPersonFragment extends Fragment {
                 }
             }
         }catch (Exception ex){
-            FunctionsApp.snackBarShort(this.getView(),ex.getMessage());
+            FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
         }
     }
 }

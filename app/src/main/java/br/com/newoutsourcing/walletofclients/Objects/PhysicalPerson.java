@@ -1,42 +1,42 @@
-package br.com.newoutsourcing.walletofclients.Objects.Entity;
+package br.com.newoutsourcing.walletofclients.Objects;
 
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 
-public class PhysicalPersonEntity {
+public class PhysicalPerson {
     private long physicalPersonId;
     private long clientId; //Chave estrangeira
     private String name;
-    private String apelido;
+    private String nickname;
     private String CPF;
     private String RG;
     private String birthDate;
     private String sex;
 
-    public PhysicalPersonEntity(){
+    public PhysicalPerson(){
         this.setPhysicalPersonId(0);
         this.setClientId(0);
         this.setName("");
-        this.setApelido("");
+        this.setNickname("");
         this.setCPF("");
         this.setRG("");
         this.setBirthDate(FunctionsApp.getCurrentDate());
         this.setSex("");
     }
 
-    public PhysicalPersonEntity(long physicalPersonId, long clientId, String name, String apelido,
-                                String CPF, String RG, String birthDate, String sex){
+    public PhysicalPerson(long physicalPersonId, long clientId, String name, String nickname,
+                          String CPF, String RG, String birthDate, String sex){
         this.setPhysicalPersonId(physicalPersonId);
         this.setClientId(clientId);
         this.setName(name);
-        this.setApelido(apelido);
+        this.setNickname(nickname);
         this.setCPF(CPF);
         this.setRG(RG);
         this.setBirthDate(birthDate);
         this.setSex(sex);
     }
 
-    public static PhysicalPersonEntity newInstance(){
-        return new PhysicalPersonEntity();
+    public static PhysicalPerson newInstance(){
+        return new PhysicalPerson();
     }
 
     public long getPhysicalPersonId() {
@@ -63,12 +63,12 @@ public class PhysicalPersonEntity {
         this.name = name;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getCPF() {

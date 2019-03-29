@@ -6,12 +6,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
-    private List<ClientObject> clientList;
+    private List<Client> clientList;
 
     public ClientAdapter(ArrayList clientList){
         this.clientList = clientList;
@@ -25,9 +26,9 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     @Override
     public void onBindViewHolder(ClientViewHolder viewHolder, int position) {
-        viewHolder.idTxwNome.setText(this.clientList.get(position).getNome());
-        viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getCPF_CNPJ());
-        viewHolder.idTxwTipo.setText(this.clientList.get(position).getTipo());
+        //viewHolder.idTxwNome.setText(this.clientList.get(position).getName());
+        //viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getCPF_CNPJ());
+        //viewHolder.idTxwTipo.setText(this.clientList.get(position).getTipo());
     }
 
     @Override
@@ -35,12 +36,12 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
         return clientList != null ? clientList.size() : 0;
     }
 
-    public void insertItem(ClientObject client){
+    public void insertItem(Client client){
         this.clientList.add(client);
         this.notifyItemInserted(clientList.size());
     }
 
-    private void updateItem(int position,ClientObject client) {
+    private void updateItem(int position,Client client) {
         this.clientList.set(position,client);
         notifyItemChanged(position);
     }

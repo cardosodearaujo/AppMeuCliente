@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -141,7 +140,7 @@ public class LegalPersonFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 this.takePhoto();
             } else {
-                FunctionsApp.snackBarShort(this.getView(),"Permissão negada!");
+                FunctionsApp.showSnackBarShort(this.getView(),"Permissão negada!");
             }
         }
     }
@@ -175,7 +174,7 @@ public class LegalPersonFragment extends Fragment {
                 }
             }
         }catch (Exception ex){
-            FunctionsApp.snackBarShort(this.getView(),ex.getMessage());
+            FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
         }
     }
 }
