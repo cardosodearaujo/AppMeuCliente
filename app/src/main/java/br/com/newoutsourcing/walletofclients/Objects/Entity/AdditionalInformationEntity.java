@@ -1,15 +1,17 @@
-package br.com.newoutsourcing.walletofclients.Objects;
+package br.com.newoutsourcing.walletofclients.Objects.Entity;
 
-public class AdditionalInformation {
+public class AdditionalInformationEntity {
     private long additionalInformationId;
+    private long clientId;
     private String cellphone;
     private String telephone;
     private String email;
     private String site;
     private String observation;
 
-    public AdditionalInformation(){
+    public AdditionalInformationEntity(){
         this.setAdditionalInformationId(0);
+        this.setClientId(0);
         this.setCellphone("");
         this.setTelephone("");
         this.setEmail("");
@@ -17,8 +19,10 @@ public class AdditionalInformation {
         this.setObservation("");
     }
 
-    public AdditionalInformation(long additionalInformationId,String cellphone, String telephone, String email, String site, String observation){
+    public AdditionalInformationEntity(long additionalInformationId, long clientId, String cellphone,
+                                       String telephone, String email, String site, String observation){
         this.setAdditionalInformationId(additionalInformationId);
+        this.setClientId(clientId);
         this.setCellphone(cellphone);
         this.setTelephone(telephone);
         this.setEmail(email);
@@ -26,6 +30,9 @@ public class AdditionalInformation {
         this.setObservation(observation);
     }
 
+    public static AdditionalInformationEntity newInstance(){
+        return new AdditionalInformationEntity();
+    }
 
     public long getAdditionalInformationId() {
         return additionalInformationId;
@@ -33,6 +40,14 @@ public class AdditionalInformation {
 
     public void setAdditionalInformationId(long additionalInformationId) {
         this.additionalInformationId = additionalInformationId;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getCellphone() {

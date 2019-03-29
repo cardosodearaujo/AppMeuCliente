@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
-import br.com.newoutsourcing.walletofclients.Objects.ClientObject;
+
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
 

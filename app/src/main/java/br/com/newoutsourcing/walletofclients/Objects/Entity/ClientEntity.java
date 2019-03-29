@@ -1,18 +1,18 @@
-package br.com.newoutsourcing.walletofclients.Objects;
+package br.com.newoutsourcing.walletofclients.Objects.Entity;
 
-public class Client {
+public class ClientEntity {
 
     private long clientId;
     private String image;
     private int type;
 
-    public Client(){
+    public ClientEntity(){
         this.setClientId(0);
         this.setImage("");
         this.setType(0);
     }
 
-    public Client(long clientId, String image, int type){
+    public ClientEntity(long clientId, String image, int type){
         this.setClientId(clientId);
         this.setImage(image);
         this.setType(type);

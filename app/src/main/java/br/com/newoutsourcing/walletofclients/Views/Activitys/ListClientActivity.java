@@ -14,7 +14,6 @@ import com.github.clans.fab.FloatingActionButton;
 import java.util.ArrayList;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
-import br.com.newoutsourcing.walletofclients.Objects.ClientObject;
 import br.com.newoutsourcing.walletofclients.R;
 
 public class ListClientActivity extends AppCompatActivity implements View.OnClickListener{

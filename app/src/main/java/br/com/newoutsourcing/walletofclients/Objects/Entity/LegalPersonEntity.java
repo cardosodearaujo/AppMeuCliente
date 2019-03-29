@@ -1,15 +1,17 @@
-package br.com.newoutsourcing.walletofclients.Objects;
+package br.com.newoutsourcing.walletofclients.Objects.Entity;
 
-public class LegalPerson {
+public class LegalPersonEntity {
     private long legalPersonId;
+    private long clientId; //Chave estrangeira
     private String socialName;
     private String fantasyName;
     private String CNPJ;
     private String IE;
     private String IM;
 
-    public LegalPerson(){
+    public LegalPersonEntity(){
         this.setLegalPersonId(0);
+        this.setClientId(0);
         this.setSocialName("");
         this.setFantasyName("");
         this.setCNPJ("");
@@ -17,13 +19,18 @@ public class LegalPerson {
         this.setIM("");
     }
 
-    public LegalPerson(long legalPersonId,String socialName,String fantasyName,String CNPJ,String IE,String IM){
+    public LegalPersonEntity(long legalPersonId, long clientId, String socialName, String fantasyName, String CNPJ, String IE, String IM){
         this.setLegalPersonId(legalPersonId);
+        this.setClientId(clientId);
         this.setSocialName(socialName);
         this.setFantasyName(fantasyName);
         this.setCNPJ(CNPJ);
         this.setIE(IE);
         this.setIM(IM);
+    }
+
+    public static LegalPersonEntity newInstance(){
+        return new LegalPersonEntity();
     }
 
     public long getLegalPersonId() {
@@ -32,6 +39,14 @@ public class LegalPerson {
 
     public void setLegalPersonId(long legalPersonId) {
         this.legalPersonId = legalPersonId;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getSocialName() {

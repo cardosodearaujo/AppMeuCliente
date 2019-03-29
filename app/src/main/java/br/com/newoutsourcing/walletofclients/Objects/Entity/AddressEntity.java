@@ -1,7 +1,8 @@
-package br.com.newoutsourcing.walletofclients.Objects;
+package br.com.newoutsourcing.walletofclients.Objects.Entity;
 
-public class Address {
+public class AddressEntity {
     private long addressId;
+    private long clientId;
     private String CEP;
     private String street;
     private String number;
@@ -10,9 +11,9 @@ public class Address {
     private String state;
     private String Country;
 
-
-    public Address(){
+    public AddressEntity(){
         this.setAddressId(0);
+        this.setClientId(0);
         this.setCEP("");
         this.setStreet("");
         this.setNumber("");
@@ -22,8 +23,10 @@ public class Address {
         this.setCountry("");
     }
 
-    public Address(long addressId,String CEP,String street,String number,String neighborhood,String city,String state,String Country){
+    public AddressEntity(long addressId, long clientId , String CEP, String street, String number,
+                         String neighborhood, String city, String state, String Country){
         this.setAddressId(addressId);
+        this.setClientId(clientId);
         this.setCEP(CEP);
         this.setStreet(street);
         this.setNumber(number);
@@ -33,12 +36,24 @@ public class Address {
         this.setCountry(Country);
     }
 
+    public static AddressEntity newInstance(){
+        return new AddressEntity();
+    }
+
     public long getAddressId() {
         return addressId;
     }
 
     public void setAddressId(long addressId) {
         this.addressId = addressId;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getCEP() {
