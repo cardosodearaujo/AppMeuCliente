@@ -9,6 +9,7 @@
     <string name="str_app_version">Versão 1.0</string>
     <string name="str_dev_name">New Outsourcing</string>
     <string name="str_copyright">Copyright 2019 ©</string>
+    <string name="str_take_photo">Tirar foto</string>
 
     <!-- TODO: Erro -->
     <string name="str_error_message_caption">Ocorreu um erro!</string>
@@ -27,13 +28,12 @@
     <string name="str_card_client_CPF_CNPJ">CPF/CNPJ:</string>
 
     <!-- TODO: Cadastro de pessoa fisica -->
-    <string name="str_client_pf_description_data">Dados do cliente</string>
+
     <string name="str_client_pf_name">Nome</string>
     <string name="str_client_pf_nick_name">Apelido</string>
     <string name="str_client_pf_CPF">CPF</string>
     <string name="str_client_pf_RG">RG</string>
     <string name="str_client_pf_date">Data de nascimento</string>
-    <string name="str_client_pf_description_additional_data">Dados adicionais</string>
     <string name="str_client_pf_site">Site</string>
     <string name="str_client_pf_cellphone">Celular</string>
     <string name="str_client_pf_telephone">Telefone</string>

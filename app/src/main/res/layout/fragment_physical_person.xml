@@ -33,12 +33,12 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:background="@mipmap/ic_client_circle"
-                        android:backgroundTint="@color/colorAccent"/>
+                        android:backgroundTint="@color/colorAccent" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tirar foto"
+                        android:text="@string/str_take_photo"
                         android:textSize="10dp"
                         android:gravity="center"
                         android:layout_gravity="center"/>
@@ -55,9 +55,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
-                        android:layout_marginRight="25dp"
+                        android:layout_marginRight="26dp"
                         android:layout_marginBottom="15dp"
                         android:hint="@string/str_client_pf_name"
                         android:singleLine="true" />

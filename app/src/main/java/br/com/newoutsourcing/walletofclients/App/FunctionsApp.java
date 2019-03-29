@@ -20,9 +20,9 @@ import java.util.Date;
 
 public class FunctionsApp {
 
-    public static ProgressDialog PG_DIALOG;
     public static int IMAGEM_CAMERA = 0;
     public static int IMAGEM_INTERNA = 1;
+    public static ProgressDialog PG_DIALOG;
     public static final String MASCARA_TELEFONE = "(##)####-####";
     public static final String MASCARA_CELULAR = "(##)#####-####";
     public static final String MASCARA_CPF = "###.###.###-##";

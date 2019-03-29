@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
+import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
 
 
@@ -39,7 +40,7 @@ public class AdditionalDataFragment extends Fragment {
     }
 
     private void loadInformationToView(){
-        this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener("(##)#####-####", this.idEdtClientPFCellphone));
-        this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener("(##)####-####", this.idEdtClientPFTelephone));
+        this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CELULAR, this.idEdtClientPFCellphone));
+        this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_TELEFONE, this.idEdtClientPFTelephone));
     }
 }

@@ -50,7 +50,6 @@ public class PhysicalPersonFragment extends Fragment {
     private EditText idEdtClientPFObservation;
     private ViewPager idViewPager;
     private EditText idEdtClientPFDate;
-    private LinearLayout idLLClientPFTakePhoto;
     private CircleImageView idImgClientPFPhoto;
 
     public PhysicalPersonFragment() {
@@ -85,20 +84,19 @@ public class PhysicalPersonFragment extends Fragment {
         this.idEdtClientPFSite = view.findViewById(R.id.idEdtClientPFSite);
         this.idEdtClientPFObservation = view.findViewById(R.id.idEdtClientPFObservation);
         this.idEdtClientPFDate = view.findViewById(R.id.idEdtClientPFDate);
-        this.idLLClientPFTakePhoto = view.findViewById(R.id.idLLClientPFTakePhoto);
         this.idImgClientPFPhoto = view.findViewById(R.id.idImgClientPFPhoto);
     }
 
     private void LoadInformationToView(){
         this.idToolbar.setSubtitle("Pessoa física");
-        this.idEdtClientPFDate.addTextChangedListener(new MaskEditTextChangedListener("##/##/####", this.idEdtClientPFDate));
-        this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", this.idEdtClientPFCPF));
+        this.idEdtClientPFDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_DATA, this.idEdtClientPFDate));
+        this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CPF, this.idEdtClientPFCPF));
         this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
         this.idEdtClientPFDate.setOnClickListener(this.onClickDate);
-        this.idLLClientPFTakePhoto.setOnClickListener(this.onClickTakePhoto);
         this.idImgClientPFPhoto.setOnClickListener(this.onClickTakePhoto);
     }
 
+    /*Metodos para o DatePicker*/
     private View.OnClickListener onClickDate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -126,6 +124,7 @@ public class PhysicalPersonFragment extends Fragment {
         }
     };
 
+    /* Metodos para a camera */
     private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){
         @Override
         public void onClick(View view){
@@ -163,9 +162,9 @@ public class PhysicalPersonFragment extends Fragment {
                         dialog.cancel();
                         break;
                     case 1: //Pegar da galeria
-                        intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                         intent.setType("image/*");
-                        startActivityForResult(intent,FunctionsApp.IMAGEM_INTERNA);
+                        startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"),FunctionsApp.IMAGEM_INTERNA);
                         dialog.cancel();
                         break;
                 }
@@ -194,7 +193,7 @@ public class PhysicalPersonFragment extends Fragment {
                 if (requestCode == FunctionsApp.IMAGEM_INTERNA){
                     Uri imagemSelecionada = data.getData();
                     String[] colunas = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getActivity().getContentResolver().query(imagemSelecionada, colunas, null, null, null);
+                    Cursor cursor = getContext().getContentResolver().query(imagemSelecionada, colunas, null, null, null);
                     cursor.moveToFirst();
 
                     int indexColuna = cursor.getColumnIndex(colunas[0]);
@@ -203,8 +202,8 @@ public class PhysicalPersonFragment extends Fragment {
 
                     bitmap = BitmapFactory.decodeFile(pathImg);
                     if (bitmap != null){
-                        this.idImgClientPFPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         this.idImgClientPFPhoto.setImageBitmap(bitmap);
+                        this.idImgClientPFPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     }
                 }else if(requestCode == FunctionsApp.IMAGEM_CAMERA){
                     bitmap = (Bitmap) data.getExtras().get("data");

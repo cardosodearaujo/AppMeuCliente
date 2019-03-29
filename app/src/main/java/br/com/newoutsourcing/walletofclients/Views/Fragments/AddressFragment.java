@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
+import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
 
 public class AddressFragment extends Fragment {
@@ -38,10 +39,9 @@ public class AddressFragment extends Fragment {
     private void loadConfigurationToView(View view){
         this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
         this.idEdtClientAddressCEP = view.findViewById(R.id.idEdtClientAddressCEP);
-        this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener("##.###-###", this.idEdtClientAddressCEP));
     }
 
     private void loadInformationToView(){
-
+        this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CEP, this.idEdtClientAddressCEP));
     }
 }
