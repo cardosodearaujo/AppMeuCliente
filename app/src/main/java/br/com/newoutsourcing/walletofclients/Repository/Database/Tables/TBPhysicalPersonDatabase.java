@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.PhysicalPerson;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
 
 public class TBPhysicalPersonDatabase {
 
@@ -23,7 +24,7 @@ public class TBPhysicalPersonDatabase {
     }
 
     public TBPhysicalPersonDatabase(Context context){
-
+        this.Database = new ConfigurationDatabase(context).getReadableDatabase();
     }
 
     public static TBPhysicalPersonDatabase newInstance(Context context){

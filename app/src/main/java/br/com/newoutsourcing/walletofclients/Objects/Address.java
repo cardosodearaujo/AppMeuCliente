@@ -5,7 +5,7 @@ public class Address {
     private long clientId;
     private String CEP;
     private String street;
-    private String number;
+    private int number;
     private String neighborhood;
     private String city;
     private String state;
@@ -16,20 +16,20 @@ public class Address {
         this.setClientId(0);
         this.setCEP("");
         this.setStreet("");
-        this.setNumber("");
+        this.setNumber(0);
         this.setNeighborhood("");
         this.setCity("");
         this.setState("");
         this.setCountry("");
     }
 
-    public Address(long addressId, long clientId , String CEP, String street, String number,
+    public Address(long addressId, long clientId , String CEP, String street, int number,
                    String neighborhood, String city, String state, String Country){
         this.setAddressId(addressId);
         this.setClientId(clientId);
         this.setCEP(CEP);
         this.setStreet(street);
-        this.setNumber(number);
+        this.setNumber(0);
         this.setNeighborhood(neighborhood);
         this.setCity(city);
         this.setState(state);
@@ -72,11 +72,11 @@ public class Address {
         this.street = street;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

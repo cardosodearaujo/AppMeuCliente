@@ -26,7 +26,8 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     @Override
     public void onBindViewHolder(ClientViewHolder viewHolder, int position) {
-        //viewHolder.idTxwNome.setText(this.clientList.get(position).getName());
+
+        //viewHolder.idTxwName.setText(this.clientList.get(position).get());
         //viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getCPF_CNPJ());
         //viewHolder.idTxwTipo.setText(this.clientList.get(position).getTipo());
     }
@@ -50,10 +51,4 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
         this.clientList.remove(position);
         notifyItemRemoved(position);
     }
-
-
-
-
-
-
 }
