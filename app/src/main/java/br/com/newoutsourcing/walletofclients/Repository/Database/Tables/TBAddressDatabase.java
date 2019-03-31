@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.newoutsourcing.walletofclients.Objects.Address;
-import br.com.newoutsourcing.walletofclients.Objects.LegalPerson;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
 
 public class TBAddressDatabase {
