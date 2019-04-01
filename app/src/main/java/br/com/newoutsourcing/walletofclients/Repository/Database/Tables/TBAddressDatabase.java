@@ -31,8 +31,8 @@ public class TBAddressDatabase {
         this.Database = new ConfigurationDatabase(context).getReadableDatabase();
     }
 
-    public static TBLegalPersonDatabase newInstance(Context context){
-        return new TBLegalPersonDatabase(context);
+    public static TBAddressDatabase newInstance(Context context){
+        return new TBAddressDatabase(context);
     }
 
     public List<Address> SELECT(){

@@ -12,6 +12,8 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.
 public class TBPhysicalPersonDatabase {
 
     private SQLiteDatabase Database;
+    private Cursor Cursor;
+    private String SQL;
     private String Table = "TB_PHYSICAL_PERSON";
     private enum Fields {
         ID_PHYSICAL_PERSON,
@@ -32,39 +34,45 @@ public class TBPhysicalPersonDatabase {
     }
 
     public List<PhysicalPerson> SELECT(){
+        return SELECT(0);
+    }
+
+    public List<PhysicalPerson> SELECT(long clientId){
         try{
             List<PhysicalPerson> list = new ArrayList<PhysicalPerson>();
-            String[] columns = new String[]{
-                    Fields.ID_PHYSICAL_PERSON.name(),
-                    Fields.ID_CLIENT.name(),
-                    Fields.NAME.name(),
-                    Fields.NICKNAME.name(),
-                    Fields.CPF.name(),
-                    Fields.BIRTH_DATE.name(),
-                    Fields.SEX.name()
-            };
+            if (clientId > 0){
+                SQL = " Select * From " + this.Table
+                    + " Where ID_CLIENT = " + clientId
+                    + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
 
-            Cursor cursor = this.Database.query(this.Table,columns,
-                    null,null,null,
-                    null, Fields.ID_PHYSICAL_PERSON.name() + " ASC");
+                this.Cursor = this.Database.rawQuery(SQL,null);
+            }else{
+                SQL = " Select * From " + this.Table
+                    + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
 
-            if (cursor.getCount()>0){
-                cursor.moveToFirst();
+                this.Cursor = this.Database.rawQuery(SQL,null);
+            }
+
+            if (this.Cursor.getCount()>0){
+                this.Cursor.moveToFirst();
                 PhysicalPerson physicalPerson;
                 do{
                     physicalPerson = new PhysicalPerson();
 
-                    physicalPerson.setPhysicalPersonId(cursor.getInt(0));
-                    physicalPerson.setClientId(cursor.getInt(1));
-                    physicalPerson.setName(cursor.getString(2));
-                    physicalPerson.setNickname(cursor.getString(3));
-                    physicalPerson.setCPF(cursor.getString(4));
-                    physicalPerson.setBirthDate(cursor.getString(   5));
-                    physicalPerson.setSex(cursor.getString(6));
+                    physicalPerson.setPhysicalPersonId(this.Cursor.getInt(0));
+                    physicalPerson.setClientId(this.Cursor.getInt(1));
+                    physicalPerson.setName(this.Cursor.getString(2));
+                    physicalPerson.setNickname(this.Cursor.getString(3));
+                    physicalPerson.setCPF(this.Cursor.getString(4));
+                    physicalPerson.setBirthDate(this.Cursor.getString(   5));
+                    physicalPerson.setSex(this.Cursor.getString(6));
 
                     list.add(physicalPerson);
-                }while (cursor.moveToNext());
+                }while (this.Cursor.moveToNext());
             }
+
+            this.Cursor.close();
+
             return list;
         }catch (Exception ex){
             return null;

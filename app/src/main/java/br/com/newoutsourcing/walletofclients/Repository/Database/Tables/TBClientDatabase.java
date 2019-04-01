@@ -50,6 +50,8 @@ public class TBClientDatabase {
                     client.setImage(cursor.getString(1));
                     client.setType(cursor.getInt(2));
 
+
+
                     list.add(client);
                 }while (cursor.moveToNext());
             }
