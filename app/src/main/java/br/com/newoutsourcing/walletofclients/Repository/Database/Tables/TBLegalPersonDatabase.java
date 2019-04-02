@@ -2,17 +2,13 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Tables;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.LegalPerson;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBLegalPersonDatabase {
+public class TBLegalPersonDatabase extends TableConfigurationDatabase {
 
-    private SQLiteDatabase Database;
-    private String Table = "TB_LEGAL_PERSON";
     private enum Fields {
         ID_LEGAL_PERSON,
         ID_CLIENT,
@@ -24,54 +20,63 @@ public class TBLegalPersonDatabase {
     }
 
     public TBLegalPersonDatabase(Context context){
-        this.Database = new ConfigurationDatabase(context).getReadableDatabase();
+        super(context);
+        super.Table = "TB_LEGAL_PERSON";
     }
 
     public static TBLegalPersonDatabase newInstance(Context context){
         return new TBLegalPersonDatabase(context);
     }
 
-    public List<LegalPerson> SELECT(){
+    @Override
+    public List<LegalPerson> Select(long clientId){
+        super.openDatabaseInstance();
         try{
             List<LegalPerson> list = new ArrayList<LegalPerson>();
-            String[] columns = new String[]{
-                    Fields.ID_LEGAL_PERSON.name(),
-                    Fields.ID_CLIENT.name(),
-                    Fields.SOCIAL_NAME.name(),
-                    Fields.FANTASY_NAME.name(),
-                    Fields.CNPJ.name(),
-                    Fields.IE.name(),
-                    Fields.IM.name()
-            };
 
-            Cursor cursor = this.Database.query(this.Table,columns,
-                    null,null,null,
-                    null, Fields.ID_LEGAL_PERSON.name() + " ASC");
+            if (clientId > 0){
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Where " + Fields.ID_CLIENT + " = " + clientId
+                        + " Order by " + Fields.ID_LEGAL_PERSON.name();
+            }else{
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Order by " + Fields.ID_LEGAL_PERSON.name();
+            }
 
-            if (cursor.getCount()>0){
-                cursor.moveToFirst();
+            this.Cursor = this.Database.rawQuery(this.SQL,null);
+
+            if (this.Cursor.getCount()>0){
+                this.Cursor.moveToFirst();
                 LegalPerson legalPerson;
                 do{
                     legalPerson = new LegalPerson();
 
-                    legalPerson.setLegalPersonId(cursor.getInt(0));
-                    legalPerson.setClientId(cursor.getInt(1));
-                    legalPerson.setSocialName(cursor.getString(2));
-                    legalPerson.setFantasyName(cursor.getString(3));
-                    legalPerson.setCNPJ(cursor.getString(4));
-                    legalPerson.setIE(cursor.getString(   5));
-                    legalPerson.setIM(cursor.getString(6));
+                    legalPerson.setLegalPersonId(this.Cursor.getInt(0));
+                    legalPerson.setClientId(this.Cursor.getInt(1));
+                    legalPerson.setSocialName(this.Cursor.getString(2));
+                    legalPerson.setFantasyName(this.Cursor.getString(3));
+                    legalPerson.setCNPJ(this.Cursor.getString(4));
+                    legalPerson.setIE(this.Cursor.getString(   5));
+                    legalPerson.setIM(this.Cursor.getString(6));
 
                     list.add(legalPerson);
-                }while (cursor.moveToNext());
+                }while (this.Cursor.moveToNext());
             }
+
+            this.Cursor.close();
+
             return list;
         }catch (Exception ex){
             return null;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public long INSERT(LegalPerson legalPerson){
+    public long Insert(LegalPerson legalPerson){
+        super.openDatabaseInstance();
         try{
             ContentValues values = new ContentValues();
 
@@ -87,10 +92,13 @@ public class TBLegalPersonDatabase {
 
         }catch (Exception ex){
             return 0;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean UPDATE(LegalPerson legalPerson){
+    public Boolean Update(LegalPerson legalPerson){
+        super.openDatabaseInstance();
         try {
             ContentValues values = new ContentValues();
 
@@ -109,10 +117,13 @@ public class TBLegalPersonDatabase {
             return true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean DELETE(LegalPerson legalPerson){
+    public Boolean Delete(LegalPerson legalPerson){
+        super.openDatabaseInstance();
         try {
             if (legalPerson.getLegalPersonId() > 0) {
                 this.Database.delete(this.Table,
@@ -122,6 +133,24 @@ public class TBLegalPersonDatabase {
             return  true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
+    }
+
+    private String getFields(){
+        String StringFields = "";
+
+        for(Fields Field: Fields.values()){
+            StringFields += Field.name() + ",";
+        }
+
+        if (StringFields.length() > 0){
+            StringFields = StringFields.substring(0,StringFields.length()-1);
+        }else{
+            StringFields = "*";
+        }
+
+        return StringFields;
     }
 }

@@ -2,17 +2,13 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Tables;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.AdditionalInformation;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBAdditionalInformationDatabase {
+public class TBAdditionalInformationDatabase extends TableConfigurationDatabase {
 
-    private SQLiteDatabase Database;
-    private String Table = "TB_ADDITIONAL_INFORMATION";
     private enum Fields {
         ID_ADDITIONAL_INFORMATION,
         ID_CLIENT,
@@ -24,54 +20,60 @@ public class TBAdditionalInformationDatabase {
     }
 
     public TBAdditionalInformationDatabase(Context context){
-        this.Database = new ConfigurationDatabase(context).getReadableDatabase();
+        super(context);
+        this.Table = "TB_ADDITIONAL_INFORMATION";
     }
 
     public static TBAdditionalInformationDatabase newInstance(Context context){
         return new TBAdditionalInformationDatabase(context);
     }
 
-    public List<AdditionalInformation> SELECT(){
+    @Override
+    public List<AdditionalInformation> Select(long clientId){
+        super.openDatabaseInstance();
         try{
             List<AdditionalInformation> list = new ArrayList<AdditionalInformation>();
-            String[] columns = new String[]{
-                    Fields.ID_ADDITIONAL_INFORMATION.name(),
-                    Fields.ID_CLIENT.name(),
-                    Fields.CELLPHONE.name(),
-                    Fields.TELEPHONE.name(),
-                    Fields.EMAIL.name(),
-                    Fields.SITE.name(),
-                    Fields.OBSERVATION.name()
-            };
 
-            Cursor cursor = this.Database.query(this.Table,columns,
-                    null,null,null,
-                    null, Fields.ID_ADDITIONAL_INFORMATION.name() + " ASC");
+            if (clientId > 0){
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Where " + Fields.ID_CLIENT.name() + " = " + clientId
+                        + " Order by " + Fields.ID_CLIENT;
+            }else{
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Order by " + Fields.ID_CLIENT;
+            }
 
-            if (cursor.getCount()>0){
-                cursor.moveToFirst();
+            this.Cursor = this.Database.rawQuery(this.SQL,null);
+
+            if (this.Cursor.getCount()>0){
+                this.Cursor.moveToFirst();
                 AdditionalInformation additionalInformation;
                 do{
                     additionalInformation = new AdditionalInformation();
 
-                    additionalInformation.setAdditionalInformationId(cursor.getInt(0));
-                    additionalInformation.setClientId(cursor.getInt(1));
-                    additionalInformation.setCellphone(cursor.getString(2));
-                    additionalInformation.setTelephone(cursor.getString(3));
-                    additionalInformation.setEmail(cursor.getString(4));
-                    additionalInformation.setSite(cursor.getString(   5));
-                    additionalInformation.setObservation(cursor.getString(6));
+                    additionalInformation.setAdditionalInformationId(this.Cursor.getInt(0));
+                    additionalInformation.setClientId(this.Cursor.getInt(1));
+                    additionalInformation.setCellphone(this.Cursor.getString(2));
+                    additionalInformation.setTelephone(this.Cursor.getString(3));
+                    additionalInformation.setEmail(this.Cursor.getString(4));
+                    additionalInformation.setSite(this.Cursor.getString(   5));
+                    additionalInformation.setObservation(this.Cursor.getString(6));
 
                     list.add(additionalInformation);
-                }while (cursor.moveToNext());
+                }while (this.Cursor.moveToNext());
             }
             return list;
         }catch (Exception ex){
             return null;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public long INSERT(AdditionalInformation additionalInformation){
+    public long Insert(AdditionalInformation additionalInformation){
+        super.openDatabaseInstance();
         try{
             ContentValues values = new ContentValues();
 
@@ -87,10 +89,13 @@ public class TBAdditionalInformationDatabase {
 
         }catch (Exception ex){
             return 0;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean UPDATE(AdditionalInformation additionalInformation){
+    public Boolean Update(AdditionalInformation additionalInformation){
+        super.openDatabaseInstance();
         try {
             ContentValues values = new ContentValues();
 
@@ -109,10 +114,13 @@ public class TBAdditionalInformationDatabase {
             return true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean DELETE(AdditionalInformation additionalInformation){
+    public Boolean Delete(AdditionalInformation additionalInformation){
+        super.openDatabaseInstance();
         try {
             if (additionalInformation.getAdditionalInformationId() > 0) {
                 this.Database.delete(this.Table,
@@ -122,6 +130,24 @@ public class TBAdditionalInformationDatabase {
             return  true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
+    }
+
+    private String getFields(){
+        String StringFields = "";
+
+        for(Fields Field: Fields.values()){
+            StringFields += Field.name() + ",";
+        }
+
+        if (StringFields.length() > 0){
+            StringFields = StringFields.substring(0,StringFields.length()-1);
+        }else{
+            StringFields = "*";
+        }
+
+        return StringFields;
     }
 }

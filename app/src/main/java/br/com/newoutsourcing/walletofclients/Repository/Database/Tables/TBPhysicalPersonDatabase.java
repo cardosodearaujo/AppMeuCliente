@@ -2,19 +2,13 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Tables;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.PhysicalPerson;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBPhysicalPersonDatabase {
+public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
 
-    private SQLiteDatabase Database;
-    private Cursor Cursor;
-    private String SQL;
-    private String Table = "TB_PHYSICAL_PERSON";
     private enum Fields {
         ID_PHYSICAL_PERSON,
         ID_CLIENT,
@@ -26,32 +20,32 @@ public class TBPhysicalPersonDatabase {
     }
 
     public TBPhysicalPersonDatabase(Context context){
-        this.Database = new ConfigurationDatabase(context).getReadableDatabase();
+        super(context);
+        super.Table = "TB_PHYSICAL_PERSON";
     }
 
     public static TBPhysicalPersonDatabase newInstance(Context context){
         return new TBPhysicalPersonDatabase(context);
     }
 
-    public List<PhysicalPerson> SELECT(){
-        return SELECT(0);
-    }
-
-    public List<PhysicalPerson> SELECT(long clientId){
+    @Override
+    public List<PhysicalPerson> Select(long clientId){
+        super.Select(clientId);
         try{
             List<PhysicalPerson> list = new ArrayList<PhysicalPerson>();
+
             if (clientId > 0){
-                SQL = " Select * From " + this.Table
-                    + " Where ID_CLIENT = " + clientId
-                    + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
-
-                this.Cursor = this.Database.rawQuery(SQL,null);
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Where ID_CLIENT = " + clientId
+                        + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
             }else{
-                SQL = " Select * From " + this.Table
-                    + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
-
-                this.Cursor = this.Database.rawQuery(SQL,null);
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
             }
+
+            this.Cursor = this.Database.rawQuery(SQL,null);
 
             if (this.Cursor.getCount()>0){
                 this.Cursor.moveToFirst();
@@ -76,10 +70,13 @@ public class TBPhysicalPersonDatabase {
             return list;
         }catch (Exception ex){
             return null;
+        }finally {
+            this.closeDatabaseInstance();
         }
     }
 
-    public long INSERT(PhysicalPerson physicalPerson){
+    public long Insert(PhysicalPerson physicalPerson){
+        super.openDatabaseInstance();
         try{
             ContentValues values = new ContentValues();
 
@@ -95,10 +92,13 @@ public class TBPhysicalPersonDatabase {
 
         }catch (Exception ex){
             return 0;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean UPDATE(PhysicalPerson physicalPerson){
+    public Boolean Update(PhysicalPerson physicalPerson){
+        super.openDatabaseInstance();
         try {
             ContentValues values = new ContentValues();
 
@@ -117,10 +117,13 @@ public class TBPhysicalPersonDatabase {
             return true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean DELETE(PhysicalPerson physicalPerson){
+    public Boolean Delete(PhysicalPerson physicalPerson){
+        super.openDatabaseInstance();
         try {
             if (physicalPerson.getPhysicalPersonId() > 0) {
                 this.Database.delete(this.Table,
@@ -130,6 +133,24 @@ public class TBPhysicalPersonDatabase {
             return  true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
+    }
+
+    private String getFields(){
+        String StringFields = "";
+
+        for(Fields Field: Fields.values()){
+            StringFields += Field.name() + ",";
+        }
+
+        if (StringFields.length() > 0){
+            StringFields = StringFields.substring(0,StringFields.length()-1);
+        }else{
+            StringFields = "*";
+        }
+
+        return StringFields;
     }
 }

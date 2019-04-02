@@ -23,7 +23,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionMenu idBtnFam;
     private FloatingActionButton idBtnFabClientLegalPerson;
     private FloatingActionButton idBtnFabClientPhysicalPerson;
-    private FloatingActionButton idBtnFabError;
     private RecyclerView idRecycleView;
     private Button idBtnClose;
 

@@ -2,17 +2,13 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Tables;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBClientDatabase {
+public class TBClientDatabase extends TableConfigurationDatabase {
 
-    private SQLiteDatabase Database;
-    private String Table = "TB_CLIENT";
     private enum Fields {
         ID_CLIENT,
         IMAGE,
@@ -20,48 +16,59 @@ public class TBClientDatabase {
     }
 
     public TBClientDatabase(Context context){
-        this.Database = new ConfigurationDatabase(context).getReadableDatabase();
+        super(context);
+        super.Table = "TB_CLIENT";
     }
 
     public static TBClientDatabase newInstance(Context context){
         return new TBClientDatabase(context);
     }
 
-    public List<Client> SELECT(){
+    @Override
+    public List<Client> Select(long clientId){
+        super.openDatabaseInstance();
         try{
             List<Client> list = new ArrayList<Client>();
-            String[] columns = new String[]{
-                    Fields.ID_CLIENT.name(),
-                    Fields.IMAGE.name(),
-                    Fields.TYPE.name()
-            };
 
-            Cursor cursor = this.Database.query(this.Table,columns,
-                    null,null,null,
-                    null,Fields.ID_CLIENT.name() + " ASC");
+            if (clientId > 0){
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Where " + Fields.ID_CLIENT.name() + " = " + clientId
+                        + " Order by " + Fields.ID_CLIENT.name();
+            }else{
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Order by " + Fields.ID_CLIENT.name();
+            }
 
-            if (cursor.getCount()>0){
-                cursor.moveToFirst();
+            this.Cursor = this.Database.rawQuery(this.SQL,null);
+
+            if (this.Cursor.getCount()>0){
+                this.Cursor.moveToFirst();
                 Client client;
                 do{
                     client = new Client();
 
-                    client.setClientId(cursor.getInt(0));
-                    client.setImage(cursor.getString(1));
-                    client.setType(cursor.getInt(2));
-
-
+                    client.setClientId(this.Cursor.getInt(0));
+                    client.setImage(this.Cursor.getString(1));
+                    client.setType(this.Cursor.getInt(2));
 
                     list.add(client);
-                }while (cursor.moveToNext());
+                }while (this.Cursor.moveToNext());
             }
+
+            this.Cursor.close();
+
             return list;
         }catch (Exception ex){
             return null;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public long INSERT(Client client){
+    public long Insert(Client client){
+        super.openDatabaseInstance();
         try{
             ContentValues values = new ContentValues();
 
@@ -73,10 +80,13 @@ public class TBClientDatabase {
 
         }catch (Exception ex){
             return 0;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean UPDATE(Client client){
+    public Boolean Update(Client client){
+        super.openDatabaseInstance();
         try {
             ContentValues values = new ContentValues();
 
@@ -91,10 +101,13 @@ public class TBClientDatabase {
             return true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean DELETE(Client client){
+    public Boolean Delete(Client client){
+        super.openDatabaseInstance();
         try {
             if (client.getClientId() > 0) {
                 this.Database.delete(this.Table,
@@ -104,6 +117,24 @@ public class TBClientDatabase {
             return  true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
+    }
+
+    private String getFields(){
+        String StringFields = "";
+
+        for(Fields Field: Fields.values()){
+            StringFields += Field.name() + ",";
+        }
+
+        if (StringFields.length() > 0){
+            StringFields = StringFields.substring(0,StringFields.length()-1);
+        }else{
+            StringFields = "*";
+        }
+
+        return StringFields;
     }
 }

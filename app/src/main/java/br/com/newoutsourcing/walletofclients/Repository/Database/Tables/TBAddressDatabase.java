@@ -2,19 +2,13 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Tables;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.newoutsourcing.walletofclients.Objects.Address;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBAddressDatabase {
+public class TBAddressDatabase extends TableConfigurationDatabase {
 
-    private SQLiteDatabase Database;
-    private String Table = "TB_ADDRESS";
     private enum Fields {
         ID_ADDRESS,
         ID_CLIENT,
@@ -28,57 +22,61 @@ public class TBAddressDatabase {
     }
 
     public TBAddressDatabase(Context context){
-        this.Database = new ConfigurationDatabase(context).getReadableDatabase();
+        super(context);
+        super.Table = "TB_ADDRESS";
     }
 
     public static TBAddressDatabase newInstance(Context context){
         return new TBAddressDatabase(context);
     }
 
-    public List<Address> SELECT(){
+    @Override
+    public List<Address> Select(long clientId){
+        super.openDatabaseInstance();
         try{
             List<Address> list = new ArrayList<Address>();
-            String[] columns = new String[]{
-                    Fields.ID_ADDRESS.name(),
-                    Fields.ID_CLIENT.name(),
-                    Fields.CEP.name(),
-                    Fields.STREET.name(),
-                    Fields.NUMBER.name(),
-                    Fields.NEIGHBORHOOD.name(),
-                    Fields.CITY.name(),
-                    Fields.STATE.name(),
-                    Fields.COUNTRY.name()
-            };
 
-            Cursor cursor = this.Database.query(this.Table,columns,
-                    null,null,null,
-                    null, Fields.ID_ADDRESS.name() + " ASC");
+            if (clientId > 0){
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Where " + Fields.ID_CLIENT.name() + " = " + clientId
+                        + " Order by " + Fields.ID_CLIENT;
+            }else{
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Order by " + Fields.ID_CLIENT;
+            }
 
-            if (cursor.getCount()>0){
-                cursor.moveToFirst();
+            this.Cursor = this.Database.rawQuery(this.SQL,null);
+
+            if (this.Cursor.getCount()>0){
+                this.Cursor.moveToFirst();
                 Address address;
                 do{
                     address = new Address();
 
-                    address.setAddressId(cursor.getInt(0));
-                    address.setClientId(cursor.getInt(1));
-                    address.setCEP(cursor.getString(2));
-                    address.setStreet(cursor.getString(3));
-                    address.setNumber(cursor.getInt(4));
-                    address.setNeighborhood(cursor.getString(   5));
-                    address.setCity(cursor.getString(6));
-                    address.setCountry(cursor.getString(7));
+                    address.setAddressId(this.Cursor.getInt(0));
+                    address.setClientId(this.Cursor.getInt(1));
+                    address.setCEP(this.Cursor.getString(2));
+                    address.setStreet(this.Cursor.getString(3));
+                    address.setNumber(this.Cursor.getInt(4));
+                    address.setNeighborhood(this.Cursor.getString(   5));
+                    address.setCity(this.Cursor.getString(6));
+                    address.setCountry(this.Cursor.getString(7));
 
                     list.add(address);
-                }while (cursor.moveToNext());
+                }while (this.Cursor.moveToNext());
             }
             return list;
         }catch (Exception ex){
             return null;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public long INSERT(Address address){
+    public long Insert(Address address){
+        super.openDatabaseInstance();
         try{
             ContentValues values = new ContentValues();
 
@@ -96,10 +94,13 @@ public class TBAddressDatabase {
 
         }catch (Exception ex){
             return 0;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean UPDATE(Address address){
+    public Boolean Update(Address address){
+        super.openDatabaseInstance();
         try {
             ContentValues values = new ContentValues();
 
@@ -120,10 +121,13 @@ public class TBAddressDatabase {
             return true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
     }
 
-    public Boolean DELETE(Address address){
+    public Boolean Delete(Address address){
+        super.openDatabaseInstance();
         try {
             if (address.getAddressId() > 0) {
                 this.Database.delete(this.Table,
@@ -133,6 +137,24 @@ public class TBAddressDatabase {
             return  true;
         }catch (Exception ex){
             return false;
+        }finally {
+            super.closeDatabaseInstance();
         }
+    }
+
+    private String getFields(){
+        String StringFields = "";
+
+        for(Fields Field: Fields.values()){
+            StringFields += Field.name() + ",";
+        }
+
+        if (StringFields.length() > 0){
+            StringFields = StringFields.substring(0,StringFields.length()-1);
+        }else{
+            StringFields = "*";
+        }
+
+        return StringFields;
     }
 }
