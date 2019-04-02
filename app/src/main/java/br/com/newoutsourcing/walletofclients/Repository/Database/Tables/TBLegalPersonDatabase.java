@@ -45,27 +45,27 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
                         + " Order by " + Fields.ID_LEGAL_PERSON.name();
             }
 
-            this.Cursor = this.Database.rawQuery(this.SQL,null);
+            this.cursor = this.database.rawQuery(this.SQL,null);
 
-            if (this.Cursor.getCount()>0){
-                this.Cursor.moveToFirst();
+            if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 LegalPerson legalPerson;
                 do{
                     legalPerson = new LegalPerson();
 
-                    legalPerson.setLegalPersonId(this.Cursor.getInt(0));
-                    legalPerson.setClientId(this.Cursor.getInt(1));
-                    legalPerson.setSocialName(this.Cursor.getString(2));
-                    legalPerson.setFantasyName(this.Cursor.getString(3));
-                    legalPerson.setCNPJ(this.Cursor.getString(4));
-                    legalPerson.setIE(this.Cursor.getString(   5));
-                    legalPerson.setIM(this.Cursor.getString(6));
+                    legalPerson.setLegalPersonId(this.cursor.getInt(0));
+                    legalPerson.setClientId(this.cursor.getInt(1));
+                    legalPerson.setSocialName(this.cursor.getString(2));
+                    legalPerson.setFantasyName(this.cursor.getString(3));
+                    legalPerson.setCNPJ(this.cursor.getString(4));
+                    legalPerson.setIE(this.cursor.getString(   5));
+                    legalPerson.setIM(this.cursor.getString(6));
 
                     list.add(legalPerson);
-                }while (this.Cursor.moveToNext());
+                }while (this.cursor.moveToNext());
             }
 
-            this.Cursor.close();
+            this.cursor.close();
 
             return list;
         }catch (Exception ex){
@@ -88,7 +88,7 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
             values.put(Fields.IE.name(),legalPerson.getIE());
             values.put(Fields.IM.name(),legalPerson.getIM());
 
-            return this.Database.insert(this.Table,null,values);
+            return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
             return 0;
@@ -110,7 +110,7 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
             values.put(Fields.IE.name(), legalPerson.getIE());
             values.put(Fields.IM.name(), legalPerson.getIM());
 
-            this.Database.update(this.Table, values,
+            this.database.update(this.Table, values,
                     Fields.ID_LEGAL_PERSON.name() + " = " + legalPerson.getLegalPersonId(),
                     null);
 
@@ -126,7 +126,7 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try {
             if (legalPerson.getLegalPersonId() > 0) {
-                this.Database.delete(this.Table,
+                this.database.delete(this.Table,
                         Fields.ID_LEGAL_PERSON.name() + " = " + legalPerson.getLegalPersonId(),
                         null);
             }

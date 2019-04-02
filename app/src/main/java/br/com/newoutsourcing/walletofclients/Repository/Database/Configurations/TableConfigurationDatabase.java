@@ -7,8 +7,8 @@ import java.util.List;
 
 public class TableConfigurationDatabase<T> {
 
-    protected SQLiteDatabase Database;
-    protected Cursor Cursor;
+    protected SQLiteDatabase database;
+    protected Cursor cursor;
     protected String SQL;
     protected String Table;
     protected Context context;
@@ -18,14 +18,14 @@ public class TableConfigurationDatabase<T> {
     }
 
     protected void openDatabaseInstance(){
-        if(this.Database != null || !this.Database.isOpen()){
-            this.Database = new ConfigurationDatabase(context).getReadableDatabase();
+        if(this.database == null || !this.database.isOpen()){
+            this.database = new ConfigurationDatabase(context).getReadableDatabase();
         }
     }
 
     protected void closeDatabaseInstance(){
-        if (this.Database.isOpen()){
-            this.Database.close();
+        if (this.database != null && this.database.isOpen()){
+            this.database.close();
         }
     }
 

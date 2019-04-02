@@ -45,24 +45,24 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
                         + " Order by " + Fields.ID_CLIENT;
             }
 
-            this.Cursor = this.Database.rawQuery(this.SQL,null);
+            this.cursor = this.database.rawQuery(this.SQL,null);
 
-            if (this.Cursor.getCount()>0){
-                this.Cursor.moveToFirst();
+            if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 AdditionalInformation additionalInformation;
                 do{
                     additionalInformation = new AdditionalInformation();
 
-                    additionalInformation.setAdditionalInformationId(this.Cursor.getInt(0));
-                    additionalInformation.setClientId(this.Cursor.getInt(1));
-                    additionalInformation.setCellphone(this.Cursor.getString(2));
-                    additionalInformation.setTelephone(this.Cursor.getString(3));
-                    additionalInformation.setEmail(this.Cursor.getString(4));
-                    additionalInformation.setSite(this.Cursor.getString(   5));
-                    additionalInformation.setObservation(this.Cursor.getString(6));
+                    additionalInformation.setAdditionalInformationId(this.cursor.getInt(0));
+                    additionalInformation.setClientId(this.cursor.getInt(1));
+                    additionalInformation.setCellphone(this.cursor.getString(2));
+                    additionalInformation.setTelephone(this.cursor.getString(3));
+                    additionalInformation.setEmail(this.cursor.getString(4));
+                    additionalInformation.setSite(this.cursor.getString(   5));
+                    additionalInformation.setObservation(this.cursor.getString(6));
 
                     list.add(additionalInformation);
-                }while (this.Cursor.moveToNext());
+                }while (this.cursor.moveToNext());
             }
             return list;
         }catch (Exception ex){
@@ -85,7 +85,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
             values.put(Fields.SITE.name(),additionalInformation.getSite());
             values.put(Fields.OBSERVATION.name(),additionalInformation.getObservation());
 
-            return this.Database.insert(this.Table,null,values);
+            return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
             return 0;
@@ -107,7 +107,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
             values.put(Fields.SITE.name(), additionalInformation.getSite());
             values.put(Fields.OBSERVATION.name(), additionalInformation.getObservation());
 
-            this.Database.update(this.Table, values,
+            this.database.update(this.Table, values,
                     Fields.ID_ADDITIONAL_INFORMATION.name() + " = " + additionalInformation.getAdditionalInformationId(),
                     null);
 
@@ -123,7 +123,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         super.openDatabaseInstance();
         try {
             if (additionalInformation.getAdditionalInformationId() > 0) {
-                this.Database.delete(this.Table,
+                this.database.delete(this.Table,
                         Fields.ID_ADDITIONAL_INFORMATION.name() + " = " + additionalInformation.getAdditionalInformationId(),
                         null);
             }

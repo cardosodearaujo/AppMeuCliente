@@ -45,27 +45,27 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
                         + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
             }
 
-            this.Cursor = this.Database.rawQuery(SQL,null);
+            this.cursor = this.database.rawQuery(SQL,null);
 
-            if (this.Cursor.getCount()>0){
-                this.Cursor.moveToFirst();
+            if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 PhysicalPerson physicalPerson;
                 do{
                     physicalPerson = new PhysicalPerson();
 
-                    physicalPerson.setPhysicalPersonId(this.Cursor.getInt(0));
-                    physicalPerson.setClientId(this.Cursor.getInt(1));
-                    physicalPerson.setName(this.Cursor.getString(2));
-                    physicalPerson.setNickname(this.Cursor.getString(3));
-                    physicalPerson.setCPF(this.Cursor.getString(4));
-                    physicalPerson.setBirthDate(this.Cursor.getString(   5));
-                    physicalPerson.setSex(this.Cursor.getString(6));
+                    physicalPerson.setPhysicalPersonId(this.cursor.getInt(0));
+                    physicalPerson.setClientId(this.cursor.getInt(1));
+                    physicalPerson.setName(this.cursor.getString(2));
+                    physicalPerson.setNickname(this.cursor.getString(3));
+                    physicalPerson.setCPF(this.cursor.getString(4));
+                    physicalPerson.setBirthDate(this.cursor.getString(   5));
+                    physicalPerson.setSex(this.cursor.getString(6));
 
                     list.add(physicalPerson);
-                }while (this.Cursor.moveToNext());
+                }while (this.cursor.moveToNext());
             }
 
-            this.Cursor.close();
+            this.cursor.close();
 
             return list;
         }catch (Exception ex){
@@ -88,7 +88,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             values.put(Fields.BIRTH_DATE.name(),physicalPerson.getBirthDate());
             values.put(Fields.SEX.name(),physicalPerson.getSex());
 
-            return this.Database.insert(this.Table,null,values);
+            return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
             return 0;
@@ -110,7 +110,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             values.put(Fields.BIRTH_DATE.name(), physicalPerson.getBirthDate());
             values.put(Fields.SEX.name(), physicalPerson.getSex());
 
-            this.Database.update(this.Table, values,
+            this.database.update(this.Table, values,
                     Fields.ID_PHYSICAL_PERSON.name() + " = " + physicalPerson.getPhysicalPersonId(),
                     null);
 
@@ -126,7 +126,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try {
             if (physicalPerson.getPhysicalPersonId() > 0) {
-                this.Database.delete(this.Table,
+                this.database.delete(this.Table,
                         Fields.ID_PHYSICAL_PERSON.name() + " = " + physicalPerson.getPhysicalPersonId(),
                         null);
             }

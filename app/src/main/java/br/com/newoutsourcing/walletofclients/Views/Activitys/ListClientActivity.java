@@ -8,15 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
-import java.util.ArrayList;
-
-import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 
 public class ListClientActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar idToolbar;
@@ -60,7 +58,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void loadInformationView(){
-        //this.idRecycleView.setAdapter(this.getAdapter());
+        this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
     }
 
     View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){
@@ -87,9 +85,4 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             FunctionsApp.closeActivity(ListClientActivity.this);
         }
     };
-
-    private ClientAdapter getAdapter(){
-        ArrayList<Client> clientList = new ArrayList<Client>();
-        return new ClientAdapter(clientList);
-    }
 }

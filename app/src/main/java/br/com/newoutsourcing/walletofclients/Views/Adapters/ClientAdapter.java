@@ -14,7 +14,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     private List<Client> clientList;
 
-    public ClientAdapter(ArrayList clientList){
+    public ClientAdapter(List<Client> clientList){
         this.clientList = clientList;
     }
 
@@ -26,10 +26,23 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     @Override
     public void onBindViewHolder(ClientViewHolder viewHolder, int position) {
-
-        //viewHolder.idTxwName.setText(this.clientList.get(position).get());
-        //viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getCPF_CNPJ());
-        //viewHolder.idTxwTipo.setText(this.clientList.get(position).getTipo());
+        switch (this.clientList.get(position).getType()){
+            case 1:
+                viewHolder.idTxwName.setText(this.clientList.get(position).getPhysicalPerson().getName());
+                viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getPhysicalPerson().getCPF());
+                viewHolder.idTxwTipo.setText("PF");
+                break;
+            case 2:
+                viewHolder.idTxwName.setText(this.clientList.get(position).getLegalPerson().getSocialName());
+                viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getLegalPerson().getCNPJ());
+                viewHolder.idTxwTipo.setText("PJ");
+                break;
+            default:
+                viewHolder.idTxwName.setText("Não encontrado!");
+                viewHolder.idTxwCPF_CNPJ.setText("");
+                viewHolder.idTxwTipo.setText("");
+                break;
+        }
     }
 
     @Override

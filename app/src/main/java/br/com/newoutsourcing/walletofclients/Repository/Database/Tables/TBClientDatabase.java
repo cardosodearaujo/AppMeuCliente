@@ -4,8 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.newoutsourcing.walletofclients.Objects.AdditionalInformation;
+import br.com.newoutsourcing.walletofclients.Objects.Address;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
+import br.com.newoutsourcing.walletofclients.Objects.LegalPerson;
+import br.com.newoutsourcing.walletofclients.Objects.PhysicalPerson;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
 public class TBClientDatabase extends TableConfigurationDatabase {
 
@@ -41,23 +51,43 @@ public class TBClientDatabase extends TableConfigurationDatabase {
                         + " Order by " + Fields.ID_CLIENT.name();
             }
 
-            this.Cursor = this.Database.rawQuery(this.SQL,null);
+            this.cursor = this.database.rawQuery(this.SQL,null);
 
-            if (this.Cursor.getCount()>0){
-                this.Cursor.moveToFirst();
+            if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 Client client;
                 do{
                     client = new Client();
 
-                    client.setClientId(this.Cursor.getInt(0));
-                    client.setImage(this.Cursor.getString(1));
-                    client.setType(this.Cursor.getInt(2));
+                    client.setClientId(this.cursor.getInt(0));
+                    client.setImage(this.cursor.getString(1));
+                    client.setType(this.cursor.getInt(2));
+
+                    List<PhysicalPerson> physicalPersonList = TB_PHYSICAL_PERSON.Select(clientId);
+                    if (physicalPersonList != null && physicalPersonList.size() > 0 && physicalPersonList.get(0).getPhysicalPersonId() > 0){
+                        client.setPhysicalPerson(physicalPersonList.get(0));
+                    }
+
+                    List<LegalPerson> legalPersonList = TB_LEGAL_PERSON.Select(clientId);
+                    if (legalPersonList != null && legalPersonList.size() > 0 && legalPersonList.get(0).getLegalPersonId() > 0){
+                        client.setLegalPerson(legalPersonList.get(0));
+                    }
+
+                    List<Address> addressList = TB_ADDRESS.Select(clientId);
+                    if (addressList != null && addressList.size() > 0 && addressList.get(0).getAddressId() > 0){
+                        client.setAddress(addressList.get(0));
+                    }
+
+                    List<AdditionalInformation> additionalInformationList = TB_ADDITIONAL_INFORMATION.Select(clientId);
+                    if (additionalInformationList != null && additionalInformationList.size() > 0 && additionalInformationList.get(0).getAdditionalInformationId() > 0){
+                        client.setAdditionalInformation(additionalInformationList.get(0));
+                    }
 
                     list.add(client);
-                }while (this.Cursor.moveToNext());
+                }while (this.cursor.moveToNext());
             }
 
-            this.Cursor.close();
+            this.cursor.close();
 
             return list;
         }catch (Exception ex){
@@ -76,7 +106,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
             values.put(Fields.IMAGE.name(),client.getImage());
             values.put(Fields.TYPE.name(),client.getType());
 
-            return this.Database.insert(this.Table,null,values);
+            return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
             return 0;
@@ -94,7 +124,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
             values.put(Fields.IMAGE.name(), client.getImage());
             values.put(Fields.TYPE.name(), client.getType());
 
-            this.Database.update(this.Table, values,
+            this.database.update(this.Table, values,
                     Fields.ID_CLIENT.name() + " = " + client.getClientId(),
                     null);
 
@@ -110,7 +140,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try {
             if (client.getClientId() > 0) {
-                this.Database.delete(this.Table,
+                this.database.delete(this.Table,
                         Fields.ID_CLIENT.name() + " = " + client.getClientId(),
                         null);
             }

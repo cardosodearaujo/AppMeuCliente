@@ -47,25 +47,25 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
                         + " Order by " + Fields.ID_CLIENT;
             }
 
-            this.Cursor = this.Database.rawQuery(this.SQL,null);
+            this.cursor = this.database.rawQuery(this.SQL,null);
 
-            if (this.Cursor.getCount()>0){
-                this.Cursor.moveToFirst();
+            if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 Address address;
                 do{
                     address = new Address();
 
-                    address.setAddressId(this.Cursor.getInt(0));
-                    address.setClientId(this.Cursor.getInt(1));
-                    address.setCEP(this.Cursor.getString(2));
-                    address.setStreet(this.Cursor.getString(3));
-                    address.setNumber(this.Cursor.getInt(4));
-                    address.setNeighborhood(this.Cursor.getString(   5));
-                    address.setCity(this.Cursor.getString(6));
-                    address.setCountry(this.Cursor.getString(7));
+                    address.setAddressId(this.cursor.getInt(0));
+                    address.setClientId(this.cursor.getInt(1));
+                    address.setCEP(this.cursor.getString(2));
+                    address.setStreet(this.cursor.getString(3));
+                    address.setNumber(this.cursor.getInt(4));
+                    address.setNeighborhood(this.cursor.getString(   5));
+                    address.setCity(this.cursor.getString(6));
+                    address.setCountry(this.cursor.getString(7));
 
                     list.add(address);
-                }while (this.Cursor.moveToNext());
+                }while (this.cursor.moveToNext());
             }
             return list;
         }catch (Exception ex){
@@ -90,7 +90,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
             values.put(Fields.STATE.name(),address.getState());
             values.put(Fields.COUNTRY.name(),address.getCountry());
 
-            return this.Database.insert(this.Table,null,values);
+            return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
             return 0;
@@ -114,7 +114,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
             values.put(Fields.STATE.name(), address.getState());
             values.put(Fields.COUNTRY.name(), address.getCountry());
 
-            this.Database.update(this.Table, values,
+            this.database.update(this.Table, values,
                     Fields.ID_ADDRESS.name() + " = " + address.getAddressId(),
                     null);
 
@@ -130,7 +130,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try {
             if (address.getAddressId() > 0) {
-                this.Database.delete(this.Table,
+                this.database.delete(this.Table,
                         Fields.ID_ADDRESS.name() + " = " + address.getAddressId(),
                         null);
             }
