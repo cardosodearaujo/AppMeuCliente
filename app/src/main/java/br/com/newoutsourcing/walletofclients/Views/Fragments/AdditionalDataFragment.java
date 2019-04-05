@@ -11,9 +11,10 @@ import android.widget.EditText;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.AdditionalDataCallback;
 
 
-public class AdditionalDataFragment extends Fragment {
+public class AdditionalDataFragment extends Fragment implements AdditionalDataCallback {
 
     private EditText idEdtClientPFCellphone;
     private EditText idEdtClientPFTelephone;
@@ -42,5 +43,11 @@ public class AdditionalDataFragment extends Fragment {
     private void loadInformationToView(){
         this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CELULAR, this.idEdtClientPFCellphone));
         this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_TELEFONE, this.idEdtClientPFTelephone));
+    }
+
+    @Override
+    public Boolean Save() {
+        FunctionsApp.showAlertDialog(this.getContext(),"Teste","Passou 2","OK");
+        return true;
     }
 }

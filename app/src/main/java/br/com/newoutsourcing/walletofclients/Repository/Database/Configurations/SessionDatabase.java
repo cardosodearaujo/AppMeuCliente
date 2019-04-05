@@ -1,5 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Repository.Database.Configurations;
 
+import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAdditionalInformationDatabase;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAddressDatabase;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBClientDatabase;
@@ -12,4 +13,6 @@ public class SessionDatabase {
     public static TBPhysicalPersonDatabase TB_PHYSICAL_PERSON;
     public static TBAddressDatabase TB_ADDRESS;
     public static TBAdditionalInformationDatabase TB_ADDITIONAL_INFORMATION;
+    public static Client CLIENT;
+
 }

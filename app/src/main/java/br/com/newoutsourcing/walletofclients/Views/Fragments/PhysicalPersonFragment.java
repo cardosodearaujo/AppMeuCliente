@@ -32,10 +32,11 @@ import java.util.Calendar;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.PhysicalPersonCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 
-public class PhysicalPersonFragment extends Fragment {
+public class PhysicalPersonFragment extends Fragment implements PhysicalPersonCallback {
 
     private Toolbar idToolbar;
     private TextView idTxwClientPFDescriptionData;
@@ -215,5 +216,11 @@ public class PhysicalPersonFragment extends Fragment {
         }catch (Exception ex){
             FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
         }
+    }
+
+    @Override
+    public Boolean Save() {
+        FunctionsApp.showAlertDialog(this.getContext(),"Teste","Passou 1","OK");
+        return true;
     }
 }

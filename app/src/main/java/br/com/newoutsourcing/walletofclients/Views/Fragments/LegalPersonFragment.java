@@ -28,11 +28,12 @@ import java.util.ArrayList;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.LegalPersonCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
-public class LegalPersonFragment extends Fragment {
+public class LegalPersonFragment extends Fragment implements LegalPersonCallback {
     private Toolbar idToolbar;
     private TextView idTxwClientPJDescriptionData;
     private EditText idEdtClientPJSocialName;
@@ -176,5 +177,11 @@ public class LegalPersonFragment extends Fragment {
         }catch (Exception ex){
             FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
         }
+    }
+
+    @Override
+    public Boolean Save() {
+        FunctionsApp.showSnackBarLong(this.getView(),"Passou aqui 1");
+        return true;
     }
 }

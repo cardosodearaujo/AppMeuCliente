@@ -7,14 +7,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.AddressCallback;
 
-public class AddressFragment extends Fragment {
+public class AddressFragment extends Fragment implements AddressCallback {
 
     private EditText idEdtClientAddressCEP;
     private ViewPager idViewPager;
@@ -43,5 +43,11 @@ public class AddressFragment extends Fragment {
 
     private void loadInformationToView(){
         this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CEP, this.idEdtClientAddressCEP));
+    }
+
+    @Override
+    public Boolean Save() {
+        FunctionsApp.showAlertDialog(this.getContext(),"Teste","Passou 3","OK");
+        return true;
     }
 }
