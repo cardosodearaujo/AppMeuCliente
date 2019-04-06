@@ -64,22 +64,22 @@ public class TBClientDatabase extends TableConfigurationDatabase {
                     client.setType(this.cursor.getInt(2));
 
                     List<PhysicalPerson> physicalPersonList = TB_PHYSICAL_PERSON.Select(clientId);
-                    if (physicalPersonList != null && physicalPersonList.size() > 0 && physicalPersonList.get(0).getPhysicalPersonId() > 0){
+                    if (physicalPersonList != null && physicalPersonList.size() > 0 && physicalPersonList.get(0).getPhysicalPersonId() >= 0){
                         client.setPhysicalPerson(physicalPersonList.get(0));
                     }
 
                     List<LegalPerson> legalPersonList = TB_LEGAL_PERSON.Select(clientId);
-                    if (legalPersonList != null && legalPersonList.size() > 0 && legalPersonList.get(0).getLegalPersonId() > 0){
+                    if (legalPersonList != null && legalPersonList.size() > 0 && legalPersonList.get(0).getLegalPersonId() >= 0){
                         client.setLegalPerson(legalPersonList.get(0));
                     }
 
                     List<Address> addressList = TB_ADDRESS.Select(clientId);
-                    if (addressList != null && addressList.size() > 0 && addressList.get(0).getAddressId() > 0){
+                    if (addressList != null && addressList.size() > 0 && addressList.get(0).getAddressId() >= 0){
                         client.setAddress(addressList.get(0));
                     }
 
                     List<AdditionalInformation> additionalInformationList = TB_ADDITIONAL_INFORMATION.Select(clientId);
-                    if (additionalInformationList != null && additionalInformationList.size() > 0 && additionalInformationList.get(0).getAdditionalInformationId() > 0){
+                    if (additionalInformationList != null && additionalInformationList.size() > 0 && additionalInformationList.get(0).getAdditionalInformationId() >= 0){
                         client.setAdditionalInformation(additionalInformationList.get(0));
                     }
 

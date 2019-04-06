@@ -11,10 +11,7 @@ import android.widget.Button;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.AdditionalDataCallback;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.AddressCallback;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.LegalPersonCallback;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.PhysicalPersonCallback;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalDataFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
@@ -27,11 +24,12 @@ public class RegisterClientActivity extends AppCompatActivity {
     private Toolbar idToolbar;
     private TabPagerAdapter pagerAdapter;
     private TabLayout idTabLayout;
-    private PhysicalPersonCallback physicalPersonCallback;
-    private LegalPersonCallback legalPersonCallback;
-    private AddressCallback addressCallback;
-    private AdditionalDataCallback additionalDataCallback;
     private Button idBtnSave;
+    private FragmentsCallback physicalPersonCallback;
+    private FragmentsCallback legalPersonCallback;
+    private FragmentsCallback addressCallback;
+    private FragmentsCallback additionalDataCallback;
+    private String typePerson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +58,16 @@ public class RegisterClientActivity extends AppCompatActivity {
 
     private void onConfigurationFragments() {
         Fragment fragment;
-        switch (this.getIntent().getExtras().getString("TipoCadastro")) {
+        this.typePerson = this.getIntent().getExtras().getString("TipoCadastro");
+        switch (typePerson) {
             case "F":
                 fragment = PhysicalPersonFragment.newInstance();
-                this.physicalPersonCallback = (PhysicalPersonCallback) fragment;
+                this.physicalPersonCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Informações");
                 break;
             case "J":
                 fragment = LegalPersonFragment.newInstance();
-                this.legalPersonCallback = (LegalPersonCallback) fragment;
+                this.legalPersonCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Informações");
                 break;
             default:
@@ -79,11 +78,11 @@ public class RegisterClientActivity extends AppCompatActivity {
 
         if (this.pagerAdapter.getCount() > 0) {
             fragment = AdditionalDataFragment.newInstance();
-            this.additionalDataCallback = (AdditionalDataCallback) fragment;
+            this.additionalDataCallback = (FragmentsCallback) fragment;
             this.pagerAdapter.addFragment(fragment, "Inf.Adicionais");
 
             fragment = AddressFragment.newInstance();
-            this.addressCallback = (AddressCallback) fragment;
+            this.addressCallback = (FragmentsCallback) fragment;
             this.pagerAdapter.addFragment(fragment, "Endereço");
 
             this.idViewPager.setAdapter(pagerAdapter);
@@ -93,14 +92,28 @@ public class RegisterClientActivity extends AppCompatActivity {
     View.OnClickListener onClickSave = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            FragmentsCallback personCallback;
+
+            if (typePerson.equals("F")){
+                personCallback = physicalPersonCallback;
+            }else{
+                personCallback = legalPersonCallback;
+            }
+
             idViewPager.setCurrentItem(0);
-            if (physicalPersonCallback.Save()){
+            if (personCallback.onSave()){
                 idViewPager.setCurrentItem(1);
-                if (additionalDataCallback.Save()){
+                if (additionalDataCallback.onSave()){
                     idViewPager.setCurrentItem(2);
-                    if (addressCallback.Save()){
+                    if (addressCallback.onSave()){
                         idViewPager.setCurrentItem(0);
-                        FunctionsApp.showSnackBarLong(v, "Cliente salvo com sucesso!");
+
+                        personCallback.onClear();
+                        additionalDataCallback.onClear();
+                        addressCallback.onClear();
+
+                        FunctionsApp.showSnackBarLong(v,
+                                "Cliente salvo com sucesso!");
                     }
                 }
             }

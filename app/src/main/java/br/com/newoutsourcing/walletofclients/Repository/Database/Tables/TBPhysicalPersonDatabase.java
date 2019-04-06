@@ -81,7 +81,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             ContentValues values = new ContentValues();
 
             values.put(Fields.ID_PHYSICAL_PERSON.name(),physicalPerson.getPhysicalPersonId());
-            values.put(Fields.ID_CLIENT.name(),physicalPerson.getName());
+            values.put(Fields.ID_CLIENT.name(),physicalPerson.getClientId());
             values.put(Fields.NAME.name(),physicalPerson.getName());
             values.put(Fields.NICKNAME.name(),physicalPerson.getNickname());
             values.put(Fields.CPF.name(),physicalPerson.getCPF());

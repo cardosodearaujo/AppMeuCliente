@@ -11,13 +11,16 @@ import android.widget.EditText;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.AdditionalDataCallback;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 
 
-public class AdditionalDataFragment extends Fragment implements AdditionalDataCallback {
+public class AdditionalDataFragment extends Fragment implements FragmentsCallback {
 
     private EditText idEdtClientPFCellphone;
     private EditText idEdtClientPFTelephone;
+    private EditText idEdtClientPFEmail;
+    private EditText idEdtClientPFSite;
+    private EditText idEdtClientPFObservation;
 
     public AdditionalDataFragment() {
     }
@@ -30,24 +33,35 @@ public class AdditionalDataFragment extends Fragment implements AdditionalDataCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_additional_data, container, false);
-        this.loadConfigurationToView(view);
-        this.loadInformationToView();
+        this.onInflate(view);
+        this.onConfiguration();
         return view;
     }
 
-    private void loadConfigurationToView(View view){
+    private void onInflate(View view){
         this.idEdtClientPFCellphone = view.findViewById(R.id.idEdtClientPFCellphone);
         this.idEdtClientPFTelephone = view.findViewById(R.id.idEdtClientPFTelephone);
+        this.idEdtClientPFEmail = view.findViewById(R.id.idEdtClientPFEmail);
+        this.idEdtClientPFSite = view.findViewById(R.id.idEdtClientPFSite);
+        this.idEdtClientPFObservation = view.findViewById(R.id.idEdtClientPFObservation);
     }
 
-    private void loadInformationToView(){
+    private void onConfiguration(){
         this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CELULAR, this.idEdtClientPFCellphone));
         this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_TELEFONE, this.idEdtClientPFTelephone));
     }
 
     @Override
-    public Boolean Save() {
-        FunctionsApp.showAlertDialog(this.getContext(),"Teste","Passou 2","OK");
+    public boolean onSave() {
         return true;
+    }
+
+    @Override
+    public void onClear() {
+        this.idEdtClientPFCellphone.setText("");
+        this.idEdtClientPFTelephone.setText("");
+        this.idEdtClientPFEmail.setText("");
+        this.idEdtClientPFSite.setText("");
+        this.idEdtClientPFObservation.setText("");
     }
 }

@@ -28,8 +28,8 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_list_client);
-        this.loadConfigurationView();
-        this.loadInformationView();
+        this.onInflate();
+        this.onConfiguration();
         this.setSupportActionBar(this.idToolbar);
     }
 
@@ -38,26 +38,25 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         //Nada por enquanto....
     }
 
-    private void loadConfigurationView(){
-        //Inflando views:
+    private void onInflate(){
         this.idToolbar = this.findViewById(R.id.idToolbar);
         this.idBtnFam = this.findViewById(R.id.idBtnFam);
         this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson = this.findViewById(R.id.idBtnFabClientPhysicalPerson);
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
         this.idBtnClose = this.findViewById(R.id.idBtnClose);
-        //Eventos dos botões:
+    }
+
+    private void onConfiguration(){
         this.idBtnFabClientLegalPerson.setOnClickListener(this.onClickBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
         this.idBtnClose.setOnClickListener(this.onClickClose);
-        //Configurando a RecyclerView:
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         this.idRecycleView.setLayoutManager(linearLayoutManager);
         this.idRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-    }
 
-    private void loadInformationView(){
         this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
     }
 

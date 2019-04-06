@@ -28,12 +28,12 @@ import java.util.ArrayList;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.LegalPersonCallback;
+import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
-public class LegalPersonFragment extends Fragment implements LegalPersonCallback {
+public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     private Toolbar idToolbar;
     private TextView idTxwClientPJDescriptionData;
     private EditText idEdtClientPJSocialName;
@@ -63,12 +63,12 @@ public class LegalPersonFragment extends Fragment implements LegalPersonCallback
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_legal_person, container, false);
-        this.loadConfigurationToView(view);
-        this.loadInformationToView();
+        this.onInflate(view);
+        this.onConfiguration();
         return view;
     }
 
-    private void loadConfigurationToView(View view){
+    private void onInflate(View view){
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
         this.idEdtClientPJSocialName = view.findViewById(R.id.idEdtClientPJSocialName);
@@ -79,19 +79,11 @@ public class LegalPersonFragment extends Fragment implements LegalPersonCallback
         this.idImgClientPJPhoto = view.findViewById(R.id.idImgClientPJPhoto);
     }
 
-    private void loadInformationToView(){
+    private void onConfiguration(){
         this.idToolbar.setSubtitle("Pessoa juridica");
         this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CNPJ, this.idEdtClientPJCNPJ));
         this.idImgClientPJPhoto.setOnClickListener(this.onClickTakePhoto);
     }
-
-    /* Metodos para a camera */
-    private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){
-        @Override
-        public void onClick(View view){
-            getPermissions();
-        }
-    };
 
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
@@ -100,11 +92,11 @@ public class LegalPersonFragment extends Fragment implements LegalPersonCallback
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
         else{
-            this.takePhoto();
+            this.getPhoto();
         }
     }
 
-    private void takePhoto() {
+    private void getPhoto() {
         AlertDialog alert;
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -139,7 +131,7 @@ public class LegalPersonFragment extends Fragment implements LegalPersonCallback
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == 1){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                this.takePhoto();
+                this.getPhoto();
             } else {
                 FunctionsApp.showSnackBarShort(this.getView(),"Permissão negada!");
             }
@@ -180,8 +172,24 @@ public class LegalPersonFragment extends Fragment implements LegalPersonCallback
     }
 
     @Override
-    public Boolean Save() {
-        FunctionsApp.showSnackBarLong(this.getView(),"Passou aqui 1");
+    public boolean onSave() {
         return true;
     }
+
+    @Override
+    public void onClear() {
+        this.idEdtClientPJSocialName.setText("");
+        this.idEdtClientPJFantasyName.setText("");
+        this.idEdtClientPJCNPJ.setText("");
+        this.idEdtClientPJIE.setText("");
+        this.idEdtClientPJIM.setText("");
+        this.idImgClientPJPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
+    }
+
+    private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){
+        @Override
+        public void onClick(View view){
+            getPermissions();
+        }
+    };
 }
