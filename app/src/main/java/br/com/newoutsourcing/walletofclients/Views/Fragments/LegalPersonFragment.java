@@ -116,25 +116,21 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     }
 
     @Override
-    public boolean onSave(Client client) {
+    public Client onSave(Client client) {
         try{
+            if (this.onValidate()) {
+                client.setImage("");
 
-            if (client.getClientId() <= 0 || !this.onValidate()) return false;
-
-            client.getLegalPerson().setClientId(client.getClientId());
-            client.getLegalPerson().setSocialName(this.idEdtClientPJSocialName.getText().toString());
-            client.getLegalPerson().setFantasyName(this.idEdtClientPJFantasyName.getText().toString());
-            client.getLegalPerson().setCNPJ(this.idEdtClientPJCNPJ.getText().toString());
-            client.getLegalPerson().setIE(this.idEdtClientPJIE.getText().toString());
-            client.getLegalPerson().setIM(this.idEdtClientPJIM.getText().toString());
-
-            client.getLegalPerson().setLegalPersonId(TB_LEGAL_PERSON.Insert(client.getLegalPerson()));
-
-            if (client.getLegalPerson().getLegalPersonId() <= 0){
-                return false;
+                client.getLegalPerson().setSocialName(this.idEdtClientPJSocialName.getText().toString());
+                client.getLegalPerson().setFantasyName(this.idEdtClientPJFantasyName.getText().toString());
+                client.getLegalPerson().setCNPJ(this.idEdtClientPJCNPJ.getText().toString());
+                client.getLegalPerson().setIE(this.idEdtClientPJIE.getText().toString());
+                client.getLegalPerson().setIM(this.idEdtClientPJIM.getText().toString());
+                client.getLegalPerson().setSuccess(true);
+            }else{
+                client.getLegalPerson().setSuccess(false);
             }
-
-            return true;
+            return client;
         }catch (Exception ex){
             throw ex;
         }

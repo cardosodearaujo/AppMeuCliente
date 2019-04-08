@@ -127,38 +127,29 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     }
 
     @Override
-    public boolean onSave(Client client) {
+    public Client onSave(Client client) {
         try{
-            if ( client.getClientId() <= 0 || !this.onValidate()) return  false;
+            if (this.onValidate()){
+                client.setImage("");
 
-            client.setImage("");
-            TB_CLIENT.Update(client);
-
-            client.getPhysicalPerson().setClientId(client.getClientId());
-            client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
-            client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
-            client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());
-            client.getPhysicalPerson().setRG(this.idEdtClientPFRG.getText().toString());
-            client.getPhysicalPerson().setBirthDate(this.idEdtClientPFDate.getText().toString());
-            switch (this.idSpnClientPFSexo.getSelectedItemPosition()){
-                case 0:
-                    client.getPhysicalPerson().setSex("I");
-                    break;
-                case 1:
+                client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
+                client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
+                client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());
+                client.getPhysicalPerson().setRG(this.idEdtClientPFRG.getText().toString());
+                client.getPhysicalPerson().setBirthDate(this.idEdtClientPFDate.getText().toString());
+                if (this.idSpnClientPFSexo.getSelectedItemPosition() == 1){
                     client.getPhysicalPerson().setSex("F");
-                    break;
-                case 2:
+                }else if (this.idSpnClientPFSexo.getSelectedItemPosition() == 2){
                     client.getPhysicalPerson().setSex("M");
-                    break;
+                }else{
+                    client.getPhysicalPerson().setSex("I");
+                }
+
+                client.getPhysicalPerson().setSuccess(true);
+            }else{
+                client.getPhysicalPerson().setSuccess(false);
             }
-
-            client.getPhysicalPerson().setPhysicalPersonId(TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson()));
-
-            if (client.getPhysicalPerson().getPhysicalPersonId() <= 0){
-                return false;
-            }
-
-            return true;
+            return client;
         }catch (Exception ex){
             throw ex;
         }

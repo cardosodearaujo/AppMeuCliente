@@ -18,7 +18,11 @@ import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
 
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
 public class RegisterClientActivity extends AppCompatActivity {
 
@@ -98,33 +102,47 @@ public class RegisterClientActivity extends AppCompatActivity {
             try{
                 Client client = new Client();
                 client.setType(1);
-                client.setClientId(TB_CLIENT.Insert(client));
-
-                if (client.getClientId() > 0){
-
-                    FragmentsCallback personCallback;
-                    switch (typePerson){
-                        case "F":
-                            personCallback = physicalPersonCallback;
-                            break;
-                        default:
-                            personCallback = legalPersonCallback;
-                            break;
-                    }
-
+                client.setSuccess(true);
+                if (client.isSuccess()){
+                    boolean proceed;
                     idViewPager.setCurrentItem(0);
-                    if (personCallback.onSave(client)){
+                    if (typePerson.equals("F")){
+                        client = physicalPersonCallback.onSave(client);
+                        proceed = client.getPhysicalPerson().isSuccess();
+                    }else{
+                        client = legalPersonCallback.onSave(client);
+                        proceed = client.getLegalPerson().isSuccess();
+                    }
+                    if (proceed){
                         idViewPager.setCurrentItem(1);
-                        if (additionalDataCallback.onSave(client)){
+                        client = additionalDataCallback.onSave(client);
+                        if (client.getAdditionalInformation().isSuccess()){
                             idViewPager.setCurrentItem(2);
-                            if (addressCallback.onSave(client)){
+                            client = addressCallback.onSave(client);
+                            if (client.getAddress().isSuccess()){
                                 idViewPager.setCurrentItem(0);
-
-                                personCallback.onClear();
-                                additionalDataCallback.onClear();
-                                addressCallback.onClear();
-
-                                FunctionsApp.showSnackBarLong(v,"Cliente salvo com sucesso!");
+                                client.setClientId(TB_CLIENT.Insert(client));
+                                if (client.getClientId() > 0){
+                                    if (typePerson.equals("F")){
+                                        client.getPhysicalPerson().setClientId(client.getClientId());
+                                        TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());
+                                    }else{
+                                        client.getLegalPerson().setClientId(client.getClientId());
+                                        TB_LEGAL_PERSON.Insert(client.getLegalPerson());
+                                    }
+                                    client.getAdditionalInformation().setClientId(client.getClientId());
+                                    TB_ADDITIONAL_INFORMATION.Insert(client.getAdditionalInformation());
+                                    client.getAddress().setClientId(client.getClientId());
+                                    TB_ADDRESS.Insert(client.getAddress());
+                                    if (typePerson.equals("F")){
+                                        physicalPersonCallback.onClear();
+                                    }else{
+                                        legalPersonCallback.onClear();
+                                    }
+                                    additionalDataCallback.onClear();
+                                    addressCallback.onClear();
+                                    FunctionsApp.showSnackBarLong(v,"Cliente salvo com sucesso!");
+                                }
                             }
                         }
                     }

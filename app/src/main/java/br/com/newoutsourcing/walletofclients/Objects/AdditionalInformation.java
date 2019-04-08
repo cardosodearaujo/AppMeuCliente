@@ -8,6 +8,7 @@ public class AdditionalInformation {
     private String email;
     private String site;
     private String observation;
+    private boolean success;
 
     public AdditionalInformation(){
         this.setAdditionalInformationId(0);
@@ -17,10 +18,11 @@ public class AdditionalInformation {
         this.setEmail("");
         this.setSite("");
         this.setObservation("");
+        this.setSuccess(true);
     }
 
     public AdditionalInformation(long additionalInformationId, long clientId, String cellphone,
-                                 String telephone, String email, String site, String observation){
+                                 String telephone, String email, String site, String observation, boolean success){
         this.setAdditionalInformationId(additionalInformationId);
         this.setClientId(clientId);
         this.setCellphone(cellphone);
@@ -28,6 +30,7 @@ public class AdditionalInformation {
         this.setEmail(email);
         this.setSite(site);
         this.setObservation(observation);
+        this.setSuccess(success);
     }
 
     public static AdditionalInformation newInstance(){
@@ -88,5 +91,13 @@ public class AdditionalInformation {
 
     public void setObservation(String observation) {
         this.observation = observation;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

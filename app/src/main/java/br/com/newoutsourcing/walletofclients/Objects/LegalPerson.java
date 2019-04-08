@@ -8,6 +8,7 @@ public class LegalPerson {
     private String CNPJ;
     private String IE;
     private String IM;
+    private boolean success;
 
     public LegalPerson(){
         this.setLegalPersonId(0);
@@ -17,9 +18,10 @@ public class LegalPerson {
         this.setCNPJ("");
         this.setIE("");
         this.setIM("");
+        this.setSuccess(true);
     }
 
-    public LegalPerson(long legalPersonId, long clientId, String socialName, String fantasyName, String CNPJ, String IE, String IM){
+    public LegalPerson(long legalPersonId, long clientId, String socialName, String fantasyName, String CNPJ, String IE, String IM, boolean success){
         this.setLegalPersonId(legalPersonId);
         this.setClientId(clientId);
         this.setSocialName(socialName);
@@ -27,6 +29,7 @@ public class LegalPerson {
         this.setCNPJ(CNPJ);
         this.setIE(IE);
         this.setIM(IM);
+        this.setSuccess(success);
     }
 
     public static LegalPerson newInstance(){
@@ -87,5 +90,13 @@ public class LegalPerson {
 
     public void setIM(String IM) {
         this.IM = IM;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

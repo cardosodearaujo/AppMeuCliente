@@ -9,7 +9,8 @@ public class Address {
     private String neighborhood;
     private String city;
     private String state;
-    private String Country;
+    private String country;
+    private boolean success;
 
     public Address(){
         this.setAddressId(0);
@@ -21,10 +22,11 @@ public class Address {
         this.setCity("");
         this.setState("");
         this.setCountry("");
+        this.setSuccess(true);
     }
 
     public Address(long addressId, long clientId , String CEP, String street, int number,
-                   String neighborhood, String city, String state, String Country){
+                   String neighborhood, String city, String state, String Country, boolean success){
         this.setAddressId(addressId);
         this.setClientId(clientId);
         this.setCEP(CEP);
@@ -34,6 +36,7 @@ public class Address {
         this.setCity(city);
         this.setState(state);
         this.setCountry(Country);
+        this.setSuccess(success);
     }
 
     public static Address newInstance(){
@@ -105,10 +108,18 @@ public class Address {
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        Country = country;
+        this.country = country;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

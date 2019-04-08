@@ -56,13 +56,61 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
     public boolean onValidate(){
         boolean save = true;
 
+        if (this.idEdtClientPFCellphone.getText().toString().isEmpty()){
+            this.idEdtClientPFCellphone.setError("Informe o celular.");
+            save = false;
+        }else{
+            this.idEdtClientPFCellphone.setError(null);
+        }
+
+        if (this.idEdtClientPFTelephone.getText().toString().isEmpty()){
+            this.idEdtClientPFTelephone.setError("Informe o telefone.");
+            save = false;
+        }else{
+            this.idEdtClientPFTelephone.setError(null);
+        }
+
+        if (this.idEdtClientPFEmail.getText().toString().isEmpty()){
+            this.idEdtClientPFEmail.setError("Informe o email.");
+            save = false;
+        }else{
+            this.idEdtClientPFEmail.setError(null);
+        }
+
+        if (this.idEdtClientPFSite.getText().toString().isEmpty()){
+            this.idEdtClientPFSite.setError("Informe o site.");
+            save = false;
+        }else{
+            this.idEdtClientPFSite.setError(null);
+        }
+
+        if (this.idEdtClientPFObservation.getText().toString().isEmpty()){
+            this.idEdtClientPFObservation.setError("Informe o observação.");
+            save = false;
+        }else{
+            this.idEdtClientPFObservation.setError(null);
+        }
 
         return save;
     }
 
     @Override
-    public boolean onSave(Client client) {
-        return true;
+    public Client onSave(Client client) {
+        try{
+            if (this.onValidate()){
+                client.getAdditionalInformation().setCellphone(this.idEdtClientPFCellphone.getText().toString());
+                client.getAdditionalInformation().setTelephone(this.idEdtClientPFTelephone.getText().toString());
+                client.getAdditionalInformation().setEmail(this.idEdtClientPFEmail.getText().toString());
+                client.getAdditionalInformation().setSite(this.idEdtClientPFSite.getText().toString());
+                client.getAdditionalInformation().setObservation(this.idEdtClientPFObservation.getText().toString());
+                client.getAdditionalInformation().setSuccess(true);
+            }else{
+                client.getAdditionalInformation().setSuccess(false);
+            }
+            return client;
+        }catch (Exception ex){
+            throw ex;
+        }
     }
 
     @Override

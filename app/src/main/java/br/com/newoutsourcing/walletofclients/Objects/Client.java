@@ -9,6 +9,7 @@ public class Client{
     private LegalPerson legalPerson;
     private AdditionalInformation additionalInformation;
     private Address address;
+    private boolean success;
 
     public Client(){
         this.setClientId(0);
@@ -18,10 +19,11 @@ public class Client{
         this.setLegalPerson(LegalPerson.newInstance());
         this.setAdditionalInformation(AdditionalInformation.newInstance());
         this.setAddress(Address.newInstance());
+        this.setSuccess(true);
     }
 
     public Client(long clientId, String image, int type, PhysicalPerson physicalPerson, LegalPerson legalPerson,
-                  AdditionalInformation additionalInformation, Address addressEntity){
+                  AdditionalInformation additionalInformation, Address addressEntity, boolean success){
         this.setClientId(clientId);
         this.setImage(image);
         this.setType(type);
@@ -29,6 +31,7 @@ public class Client{
         this.setLegalPerson(legalPerson);
         this.setAdditionalInformation(additionalInformation);
         this.setAddress(addressEntity);
+        this.setSuccess(success);
     }
 
     public static Client newInstance(){
@@ -89,5 +92,13 @@ public class Client{
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

@@ -11,6 +11,7 @@ public class PhysicalPerson {
     private String RG;
     private String birthDate;
     private String sex;
+    private boolean success;
 
     public PhysicalPerson(){
         this.setPhysicalPersonId(0);
@@ -21,10 +22,11 @@ public class PhysicalPerson {
         this.setRG("");
         this.setBirthDate(FunctionsApp.getCurrentDate());
         this.setSex("");
+        this.setSuccess(true);
     }
 
     public PhysicalPerson(long physicalPersonId, long clientId, String name, String nickname,
-                          String CPF, String RG, String birthDate, String sex){
+                          String CPF, String RG, String birthDate, String sex, boolean success){
         this.setPhysicalPersonId(physicalPersonId);
         this.setClientId(clientId);
         this.setName(name);
@@ -33,6 +35,7 @@ public class PhysicalPerson {
         this.setRG(RG);
         this.setBirthDate(birthDate);
         this.setSex(sex);
+        this.setSuccess(true);
     }
 
     public static PhysicalPerson newInstance(){
@@ -101,5 +104,13 @@ public class PhysicalPerson {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

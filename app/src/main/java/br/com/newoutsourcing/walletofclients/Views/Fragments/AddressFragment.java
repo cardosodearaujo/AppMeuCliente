@@ -16,6 +16,8 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
+
 public class AddressFragment extends Fragment implements FragmentsCallback {
 
     private EditText idEdtClientAddressCEP;
@@ -61,13 +63,77 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     public boolean onValidate(){
         boolean save = true;
 
+        if (this.idEdtClientAddressCEP.getText().toString().isEmpty()){
+            this.idEdtClientAddressCEP.setError("Informe o CEP.");
+            save = false;
+        }else{
+            this.idEdtClientAddressCEP.setError(null);
+        }
+
+        if (this.idEdtClientAddressStreet.getText().toString().isEmpty()){
+            this.idEdtClientAddressStreet.setError("Informe a rua.");
+            save = false;
+        }else{
+            this.idEdtClientAddressStreet.setError(null);
+        }
+
+        if (this.idEdtClientAddressNumber.getText().toString().isEmpty()){
+            this.idEdtClientAddressNumber.setError("Informe o número.");
+            save = false;
+        }else{
+            this.idEdtClientAddressNumber.setError(null);
+        }
+
+        if (this.idEdtClientAddressNeighborhood.getText().toString().isEmpty()){
+            this.idEdtClientAddressNeighborhood.setError("Informe o bairro.");
+            save = false;
+        }else{
+            this.idEdtClientAddressNeighborhood.setError(null);
+        }
+
+        if (this.idEdtClientAddressCity.getText().toString().isEmpty()){
+            this.idEdtClientAddressCity.setError("Informe a cidade.");
+            save = false;
+        }else{
+            this.idEdtClientAddressCity.setError(null);
+        }
+
+        if (this.idSpnClientAddressState.getSelectedItem() == null){
+            this.idSpnClientAddressState.requestFocus();
+            FunctionsApp.showSnackBarLong(getView(),"Informe o estado.");
+            save = false;
+        }
+
+        if (this.idEdtClientAddressCounty.getText().toString().isEmpty()){
+            this.idEdtClientAddressCounty.setError("Informe o pais.");
+            save = true;
+        }else{
+            this.idEdtClientAddressCounty.setError(null);
+        }
 
         return save;
     }
 
     @Override
-    public boolean onSave(Client client) {
-        return true;
+    public Client onSave(Client client) {
+        try{
+            if (this.onValidate()){
+                client.getAddress().setClientId(client.getClientId());
+                client.getAddress().setCEP(this.idEdtClientAddressCEP.getText().toString());
+                client.getAddress().setStreet(this.idEdtClientAddressStreet.getText().toString());
+                client.getAddress().setNumber(Integer.parseInt(this.idEdtClientAddressNumber.getText().toString()));
+                client.getAddress().setNeighborhood(this.idEdtClientAddressNeighborhood.getText().toString());
+                client.getAddress().setCity(this.idEdtClientAddressCity.getText().toString());
+                client.getAddress().setState(this.idSpnClientAddressState.getSelectedItem().toString());
+                client.getAddress().setCountry(this.idEdtClientAddressCounty.getText().toString());
+                client.getAddress().setSuccess(true);
+            }else{
+                client.getAddress().setSuccess(false);
+            }
+            return client;
+        }catch (Exception ex) {
+            throw ex;
+        }
     }
 
     @Override
@@ -78,6 +144,6 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
         this.idEdtClientAddressNeighborhood.setText("");
         this.idEdtClientAddressCity.setText("");
         this.idSpnClientAddressState.setSelection(0);
-        this.idEdtClientAddressCounty.setText("");
+        this.idEdtClientAddressCounty.setText("Brasil");
     }
 }
