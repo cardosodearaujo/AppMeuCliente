@@ -60,8 +60,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_physical_person, container, false);
         this.onInflate(view);
         this.onConfiguration();
@@ -90,6 +89,95 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
         this.idEdtClientPFDate.setOnClickListener(this.onClickDate);
         this.idImgClientPFPhoto.setOnClickListener(this.onClickTakePhoto);
+    }
+
+    @Override
+    public boolean onValidate(){
+        Boolean save = true;
+
+        if (this.idEdtClientPFName.getText().toString().isEmpty()){
+            this.idEdtClientPFName.setError("Informe o nome.");
+            save = false;
+        }else{
+            this.idEdtClientPFName.setError(null);
+        }
+
+        if (this.idEdtClientPFCPF.getText().toString().isEmpty()){
+            this.idEdtClientPFCPF.setError("Informe o CPF.");
+            save = false;
+        }else{
+            this.idEdtClientPFCPF.setError(null);
+        }
+
+        if (this.idEdtClientPFRG.getText().toString().isEmpty()){
+            this.idEdtClientPFRG.setError("Informe o RG.");
+            save = false;
+        }else{
+            this.idEdtClientPFRG.setError(null);
+        }
+
+        if (this.idEdtClientPFDate.getText().toString().isEmpty()){
+            this.idEdtClientPFDate.setError("Informe a data de nascimento.");
+            save = false;
+        }else{
+            this.idEdtClientPFDate.setError(null);
+        }
+
+        return save;
+    }
+
+    @Override
+    public boolean onSave(Client client) {
+        try{
+            if ( client.getClientId() <= 0 || !this.onValidate()) return  false;
+
+            client.setImage("");
+            TB_CLIENT.Update(client);
+
+            client.getPhysicalPerson().setClientId(client.getClientId());
+            client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
+            client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
+            client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());
+            client.getPhysicalPerson().setRG(this.idEdtClientPFRG.getText().toString());
+            client.getPhysicalPerson().setBirthDate(this.idEdtClientPFDate.getText().toString());
+            switch (this.idSpnClientPFSexo.getSelectedItemPosition()){
+                case 0:
+                    client.getPhysicalPerson().setSex("I");
+                    break;
+                case 1:
+                    client.getPhysicalPerson().setSex("F");
+                    break;
+                case 2:
+                    client.getPhysicalPerson().setSex("M");
+                    break;
+            }
+
+            client.getPhysicalPerson().setPhysicalPersonId(TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson()));
+
+            if (client.getPhysicalPerson().getPhysicalPersonId() <= 0){
+                return false;
+            }
+
+            return true;
+        }catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    @Override
+    public void onClear() {
+        this.idEdtClientPFName.setError(null);
+        this.idEdtClientPFNickName.setError(null);
+        this.idEdtClientPFCPF.setError(null);
+        this.idEdtClientPFRG.setError(null);
+        this.idEdtClientPFDate.setError(null);
+        this.idEdtClientPFName.setText("");
+        this.idEdtClientPFNickName.setText("");
+        this.idEdtClientPFCPF.setText("");
+        this.idEdtClientPFRG.setText("");
+        this.idSpnClientPFSexo.setSelection(0);
+        this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
+        this.idImgClientPFPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
     }
 
     private void getPermissions() {
@@ -176,94 +264,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         }catch (Exception ex){
             FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
         }
-    }
-
-    private boolean onValidate(){
-        Boolean save = true;
-
-        if (this.idEdtClientPFName.getText().toString().isEmpty()){
-            this.idEdtClientPFName.setError("Informe o nome.");
-            save = false;
-        }else{
-            this.idEdtClientPFName.setError(null);
-        }
-
-        if (this.idEdtClientPFCPF.getText().toString().isEmpty()){
-            this.idEdtClientPFCPF.setError("Informe o CPF.");
-            save = false;
-        }else{
-            this.idEdtClientPFCPF.setError(null);
-        }
-
-        if (this.idEdtClientPFRG.getText().toString().isEmpty()){
-            this.idEdtClientPFRG.setError("Informe o RG.");
-            save = false;
-        }else{
-            this.idEdtClientPFRG.setError(null);
-        }
-
-        if (this.idEdtClientPFDate.getText().toString().isEmpty()){
-            this.idEdtClientPFDate.setError("Informe a data de nascimento.");
-            save = false;
-        }else{
-            this.idEdtClientPFDate.setError(null);
-        }
-
-        return save;
-    }
-
-    @Override
-    public boolean onSave() {
-        try{
-            if (!this.onValidate()){ return  false;}
-
-            Client client = new Client();
-            client.setImage("");
-            client.setType(1);
-
-            client.setClientId(TB_CLIENT.Insert(client));
-
-            client.getPhysicalPerson().setClientId(client.getClientId());
-            client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
-            client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
-            client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());
-            client.getPhysicalPerson().setRG(this.idEdtClientPFRG.getText().toString());
-            client.getPhysicalPerson().setBirthDate(this.idEdtClientPFDate.getText().toString());
-            switch (this.idSpnClientPFSexo.getSelectedItemPosition()){
-                case 0:
-                    client.getPhysicalPerson().setSex("I");
-                    break;
-                case 1:
-                    client.getPhysicalPerson().setSex("F");
-                    break;
-                case 2:
-                    client.getPhysicalPerson().setSex("M");
-                    break;
-            }
-
-            TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());
-
-            return true;
-        }catch (Exception ex){
-            FunctionsApp.showSnackBarShort(getView(),ex.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public void onClear() {
-        this.idEdtClientPFName.setError(null);
-        this.idEdtClientPFNickName.setError(null);
-        this.idEdtClientPFCPF.setError(null);
-        this.idEdtClientPFRG.setError(null);
-        this.idEdtClientPFDate.setError(null);
-        this.idEdtClientPFName.setText("");
-        this.idEdtClientPFNickName.setText("");
-        this.idEdtClientPFCPF.setText("");
-        this.idEdtClientPFRG.setText("");
-        this.idSpnClientPFSexo.setSelection(0);
-        this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
-        this.idImgClientPFPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
     }
 
     /*Metodos para o DatePicker*/

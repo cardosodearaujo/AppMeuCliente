@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -16,6 +17,8 @@ import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalDataFragm
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
+
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 
 public class RegisterClientActivity extends AppCompatActivity {
 
@@ -92,30 +95,42 @@ public class RegisterClientActivity extends AppCompatActivity {
     View.OnClickListener onClickSave = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FragmentsCallback personCallback;
+            try{
+                Client client = new Client();
+                client.setType(1);
+                client.setClientId(TB_CLIENT.Insert(client));
 
-            if (typePerson.equals("F")){
-                personCallback = physicalPersonCallback;
-            }else{
-                personCallback = legalPersonCallback;
-            }
+                if (client.getClientId() > 0){
 
-            idViewPager.setCurrentItem(0);
-            if (personCallback.onSave()){
-                idViewPager.setCurrentItem(1);
-                if (additionalDataCallback.onSave()){
-                    idViewPager.setCurrentItem(2);
-                    if (addressCallback.onSave()){
-                        idViewPager.setCurrentItem(0);
+                    FragmentsCallback personCallback;
+                    switch (typePerson){
+                        case "F":
+                            personCallback = physicalPersonCallback;
+                            break;
+                        default:
+                            personCallback = legalPersonCallback;
+                            break;
+                    }
 
-                        personCallback.onClear();
-                        additionalDataCallback.onClear();
-                        addressCallback.onClear();
+                    idViewPager.setCurrentItem(0);
+                    if (personCallback.onSave(client)){
+                        idViewPager.setCurrentItem(1);
+                        if (additionalDataCallback.onSave(client)){
+                            idViewPager.setCurrentItem(2);
+                            if (addressCallback.onSave(client)){
+                                idViewPager.setCurrentItem(0);
 
-                        FunctionsApp.showSnackBarLong(v,
-                                "Cliente salvo com sucesso!");
+                                personCallback.onClear();
+                                additionalDataCallback.onClear();
+                                addressCallback.onClear();
+
+                                FunctionsApp.showSnackBarLong(v,"Cliente salvo com sucesso!");
+                            }
+                        }
                     }
                 }
+            }catch (Exception ex) {
+                FunctionsApp.showSnackBarLong(v, ex.getMessage());
             }
         }
     };

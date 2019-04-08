@@ -27,24 +27,22 @@ import java.util.ArrayList;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
 public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     private Toolbar idToolbar;
-    private TextView idTxwClientPJDescriptionData;
     private EditText idEdtClientPJSocialName;
     private EditText idEdtClientPJFantasyName;
     private EditText idEdtClientPJCNPJ;
     private EditText idEdtClientPJIE;
     private EditText idEdtClientPJIM;
-    private TextView idTxwClientPJDescriptionAdditionalData;
-    private EditText idEdtClientPJSite;
-    private EditText idEdtClientPJObservation;
-    private ViewPager idViewPager;
     private CircleImageView idImgClientPJPhoto;
 
     public LegalPersonFragment() {
@@ -60,8 +58,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_legal_person, container, false);
         this.onInflate(view);
         this.onConfiguration();
@@ -70,7 +67,6 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
 
     private void onInflate(View view){
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
-        this.idViewPager = this.getActivity().findViewById(R.id.idViewPager);
         this.idEdtClientPJSocialName = view.findViewById(R.id.idEdtClientPJSocialName);
         this.idEdtClientPJFantasyName = view.findViewById(R.id.idEdtClientPJFantasyName);
         this.idEdtClientPJCNPJ = view.findViewById(R.id.idEdtClientPJCNPJ);
@@ -83,6 +79,75 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.idToolbar.setSubtitle("Pessoa juridica");
         this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CNPJ, this.idEdtClientPJCNPJ));
         this.idImgClientPJPhoto.setOnClickListener(this.onClickTakePhoto);
+    }
+
+    @Override
+    public boolean onValidate(){
+        boolean save = true;
+        if (this.idEdtClientPJSocialName.getText().toString().isEmpty()){
+            this.idEdtClientPJSocialName.setError("Informe a razão social.");
+            save = false;
+        }else{
+            this.idEdtClientPJSocialName.setError(null);
+        }
+
+        if (this.idEdtClientPJFantasyName.getText().toString().isEmpty()){
+            this.idEdtClientPJFantasyName.setError("Informe o nome fantásia.");
+            save = false;
+        }else{
+            this.idEdtClientPJFantasyName.setError(null);
+        }
+
+        if (this.idEdtClientPJCNPJ.getText().toString().isEmpty()){
+            this.idEdtClientPJCNPJ.setError("Informe o CNPJ.");
+            save = false;
+        }else{
+            this.idEdtClientPJCNPJ.setError(null);
+        }
+
+        if (this.idEdtClientPJIE.getText().toString().isEmpty()){
+            this.idEdtClientPJIE.setError("Informe o inscrição estadual.");
+            save = false;
+        }else{
+            this.idEdtClientPJIE.setError(null);
+        }
+
+        return save;
+    }
+
+    @Override
+    public boolean onSave(Client client) {
+        try{
+
+            if (client.getClientId() <= 0 || !this.onValidate()) return false;
+
+            client.getLegalPerson().setClientId(client.getClientId());
+            client.getLegalPerson().setSocialName(this.idEdtClientPJSocialName.getText().toString());
+            client.getLegalPerson().setFantasyName(this.idEdtClientPJFantasyName.getText().toString());
+            client.getLegalPerson().setCNPJ(this.idEdtClientPJCNPJ.getText().toString());
+            client.getLegalPerson().setIE(this.idEdtClientPJIE.getText().toString());
+            client.getLegalPerson().setIM(this.idEdtClientPJIM.getText().toString());
+
+            client.getLegalPerson().setLegalPersonId(TB_LEGAL_PERSON.Insert(client.getLegalPerson()));
+
+            if (client.getLegalPerson().getLegalPersonId() <= 0){
+                return false;
+            }
+
+            return true;
+        }catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    @Override
+    public void onClear() {
+        this.idEdtClientPJSocialName.setText("");
+        this.idEdtClientPJFantasyName.setText("");
+        this.idEdtClientPJCNPJ.setText("");
+        this.idEdtClientPJIE.setText("");
+        this.idEdtClientPJIM.setText("");
+        this.idImgClientPJPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
     }
 
     private void getPermissions() {
@@ -169,21 +234,6 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         }catch (Exception ex){
             FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
         }
-    }
-
-    @Override
-    public boolean onSave() {
-        return true;
-    }
-
-    @Override
-    public void onClear() {
-        this.idEdtClientPJSocialName.setText("");
-        this.idEdtClientPJFantasyName.setText("");
-        this.idEdtClientPJCNPJ.setText("");
-        this.idEdtClientPJIE.setText("");
-        this.idEdtClientPJIM.setText("");
-        this.idImgClientPJPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
     }
 
     private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){

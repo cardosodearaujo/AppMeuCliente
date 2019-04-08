@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 
@@ -52,7 +53,15 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
     }
 
     @Override
-    public boolean onSave() {
+    public boolean onValidate(){
+        boolean save = true;
+
+
+        return save;
+    }
+
+    @Override
+    public boolean onSave(Client client) {
         return true;
     }
 
