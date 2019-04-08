@@ -223,6 +223,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
             client.setClientId(TB_CLIENT.Insert(client));
 
+            client.getPhysicalPerson().setClientId(client.getClientId());
             client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
             client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
             client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());

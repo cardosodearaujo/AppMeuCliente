@@ -77,7 +77,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         try{
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_ADDITIONAL_INFORMATION.name(),additionalInformation.getAdditionalInformationId());
+            //values.put(Fields.ID_ADDITIONAL_INFORMATION.name(),additionalInformation.getAdditionalInformationId());
             values.put(Fields.ID_CLIENT.name(),additionalInformation.getClientId());
             values.put(Fields.CELLPHONE.name(),additionalInformation.getCellphone());
             values.put(Fields.TELEPHONE.name(),additionalInformation.getTelephone());
@@ -99,7 +99,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         try {
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_ADDITIONAL_INFORMATION.name(), additionalInformation.getAdditionalInformationId());
+            //values.put(Fields.ID_ADDITIONAL_INFORMATION.name(), additionalInformation.getAdditionalInformationId());
             values.put(Fields.ID_CLIENT.name(), additionalInformation.getClientId());
             values.put(Fields.CELLPHONE.name(), additionalInformation.getCellphone());
             values.put(Fields.TELEPHONE.name(), additionalInformation.getTelephone());

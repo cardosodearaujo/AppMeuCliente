@@ -1,5 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -57,7 +58,15 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idRecycleView.setLayoutManager(linearLayoutManager);
         this.idRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
+        //this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (this.idRecycleView != null){
+            this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
+        }
     }
 
     View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){

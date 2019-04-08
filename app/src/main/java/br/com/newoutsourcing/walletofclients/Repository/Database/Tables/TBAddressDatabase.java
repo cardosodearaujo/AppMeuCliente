@@ -80,7 +80,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         try{
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_ADDRESS.name(),address.getAddressId());
+            //values.put(Fields.ID_ADDRESS.name(),address.getAddressId());
             values.put(Fields.ID_CLIENT.name(),address.getClientId());
             values.put(Fields.CEP.name(),address.getCEP());
             values.put(Fields.STREET.name(),address.getStreet());
@@ -104,7 +104,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_ADDRESS.name(), address.getAddressId());
+            //values.put(Fields.ID_ADDRESS.name(), address.getAddressId());
             values.put(Fields.ID_CLIENT.name(), address.getClientId());
             values.put(Fields.CEP.name(), address.getCEP());
             values.put(Fields.STREET.name(), address.getStreet());

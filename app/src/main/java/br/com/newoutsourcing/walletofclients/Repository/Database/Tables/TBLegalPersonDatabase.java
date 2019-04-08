@@ -80,7 +80,7 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
         try{
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_LEGAL_PERSON.name(),legalPerson.getLegalPersonId());
+            //values.put(Fields.ID_LEGAL_PERSON.name(),legalPerson.getLegalPersonId());
             values.put(Fields.ID_CLIENT.name(),legalPerson.getClientId());
             values.put(Fields.SOCIAL_NAME.name(),legalPerson.getSocialName());
             values.put(Fields.FANTASY_NAME.name(),legalPerson.getFantasyName());
@@ -102,7 +102,7 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_LEGAL_PERSON.name(), legalPerson.getLegalPersonId());
+            //values.put(Fields.ID_LEGAL_PERSON.name(), legalPerson.getLegalPersonId());
             values.put(Fields.ID_CLIENT.name(), legalPerson.getClientId());
             values.put(Fields.SOCIAL_NAME.name(), legalPerson.getSocialName());
             values.put(Fields.FANTASY_NAME.name(), legalPerson.getFantasyName());

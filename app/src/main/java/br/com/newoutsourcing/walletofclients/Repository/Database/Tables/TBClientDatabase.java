@@ -63,12 +63,12 @@ public class TBClientDatabase extends TableConfigurationDatabase {
                     client.setImage(this.cursor.getString(1));
                     client.setType(this.cursor.getInt(2));
 
-                    List<PhysicalPerson> physicalPersonList = TB_PHYSICAL_PERSON.Select(clientId);
+                    List<PhysicalPerson> physicalPersonList = TB_PHYSICAL_PERSON.Select(client.getClientId());
                     if (physicalPersonList != null && physicalPersonList.size() > 0 && physicalPersonList.get(0).getPhysicalPersonId() >= 0){
                         client.setPhysicalPerson(physicalPersonList.get(0));
                     }
 
-                    List<LegalPerson> legalPersonList = TB_LEGAL_PERSON.Select(clientId);
+                    List<LegalPerson> legalPersonList = TB_LEGAL_PERSON.Select(client.getClientId());
                     if (legalPersonList != null && legalPersonList.size() > 0 && legalPersonList.get(0).getLegalPersonId() >= 0){
                         client.setLegalPerson(legalPersonList.get(0));
                     }
@@ -78,7 +78,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
                         client.setAddress(addressList.get(0));
                     }
 
-                    List<AdditionalInformation> additionalInformationList = TB_ADDITIONAL_INFORMATION.Select(clientId);
+                    List<AdditionalInformation> additionalInformationList = TB_ADDITIONAL_INFORMATION.Select(client.getClientId());
                     if (additionalInformationList != null && additionalInformationList.size() > 0 && additionalInformationList.get(0).getAdditionalInformationId() >= 0){
                         client.setAdditionalInformation(additionalInformationList.get(0));
                     }
@@ -102,7 +102,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         try{
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_CLIENT.name(),client.getClientId());
+            //values.put(Fields.ID_CLIENT.name(),client.getClientId());
             values.put(Fields.IMAGE.name(),client.getImage());
             values.put(Fields.TYPE.name(),client.getType());
 
@@ -120,7 +120,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(Fields.ID_CLIENT.name(), client.getClientId());
+            //values.put(Fields.ID_CLIENT.name(), client.getClientId());
             values.put(Fields.IMAGE.name(), client.getImage());
             values.put(Fields.TYPE.name(), client.getType());
 
