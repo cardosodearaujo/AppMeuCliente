@@ -36,7 +36,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        //Nada por enquanto....
+        FunctionsApp.showSnackBarLong(v,"Em desenvolvimento!");
     }
 
     private void onInflate(){
@@ -57,8 +57,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         this.idRecycleView.setLayoutManager(linearLayoutManager);
         this.idRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-        //this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
     }
 
     @Override

@@ -5,13 +5,18 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -113,4 +118,39 @@ public class FunctionsApp {
         } catch (ParseException e) {}
         return date;
     }
+
+    /**Tratamento de imagem**/
+    public static String parseBitmapToBase64(Bitmap bpm){
+        try{
+            if (bpm == null){return "";}
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bpm.compress(Bitmap.CompressFormat.JPEG,100, stream);
+            byte[] byteArray = stream.toByteArray();
+            String base64 = Base64.encodeToString(byteArray,Base64.NO_WRAP);
+            return "data:image/jpg;base64," + base64;
+        }catch (Exception ex){return null;}
+    }
+
+    public static Bitmap parseBase64ToBitmap(String b64){
+        try{
+            if (b64.isEmpty()) return null;
+            byte[] decodedString = Base64.decode(b64.split(",")[1], Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            return decodedByte;
+        }catch (Exception ex){
+            return null;
+        }
+    }
+
+    public static byte[] parseBitmapToByte(Bitmap bmp){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public static Bitmap parseByteToBitmap(byte[] bites){
+        return BitmapFactory.decodeByteArray(bites, 0, bites.length);
+    }
+
 }

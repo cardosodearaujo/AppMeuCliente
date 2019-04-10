@@ -3,12 +3,15 @@ package br.com.newoutsourcing.walletofclients.Views.Adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import java.util.ArrayList;
+import android.widget.ImageView;
+
 import java.util.List;
 
+import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
@@ -26,22 +29,19 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     @Override
     public void onBindViewHolder(ClientViewHolder viewHolder, int position) {
-        switch (this.clientList.get(position).getType()){
-            case 1:
-                viewHolder.idTxwName.setText(this.clientList.get(position).getPhysicalPerson().getName());
-                viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getPhysicalPerson().getCPF());
-                viewHolder.idTxwTipo.setText("PF");
-                break;
-            case 2:
-                viewHolder.idTxwName.setText(this.clientList.get(position).getLegalPerson().getSocialName());
-                viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getLegalPerson().getCNPJ());
-                viewHolder.idTxwTipo.setText("PJ");
-                break;
-            default:
-                viewHolder.idTxwName.setText("Não encontrado!");
-                viewHolder.idTxwCPF_CNPJ.setText("");
-                viewHolder.idTxwTipo.setText("");
-                break;
+        if (this.clientList.get(position).getImage() != null && !this.clientList.get(position).getImage().equals("")){
+            viewHolder.idPhotoProfile.setImageBitmap(FunctionsApp.parseBase64ToBitmap(this.clientList.get(position).getImage()));
+            viewHolder.idPhotoProfile.setScaleType(CircleImageView.ScaleType.CENTER_CROP);
+        }
+
+        if(this.clientList.get(position).getType() == 1){
+            viewHolder.idTxwName.setText(this.clientList.get(position).getPhysicalPerson().getName());
+            viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getPhysicalPerson().getCPF());
+            viewHolder.idTxwTipo.setText("PF");
+        }else{
+            viewHolder.idTxwName.setText(this.clientList.get(position).getLegalPerson().getSocialName());
+            viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getLegalPerson().getCNPJ());
+            viewHolder.idTxwTipo.setText("PJ");
         }
     }
 

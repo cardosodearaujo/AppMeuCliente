@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -119,7 +120,9 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     public Client onSave(Client client) {
         try{
             if (this.onValidate()) {
-                client.setImage("");
+                if (((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap() != null) {
+                    client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap()));
+                }
 
                 client.getLegalPerson().setSocialName(this.idEdtClientPJSocialName.getText().toString());
                 client.getLegalPerson().setFantasyName(this.idEdtClientPJFantasyName.getText().toString());

@@ -6,16 +6,15 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,8 +36,6 @@ import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
-import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
-import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
 public class PhysicalPersonFragment extends Fragment implements FragmentsCallback {
 
@@ -130,7 +127,9 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     public Client onSave(Client client) {
         try{
             if (this.onValidate()){
-                client.setImage("");
+                if (((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap() != null){
+                    client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap()));
+                }
 
                 client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
                 client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
