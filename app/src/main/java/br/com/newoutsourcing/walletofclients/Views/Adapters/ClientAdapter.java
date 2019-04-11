@@ -2,6 +2,7 @@ package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -12,6 +13,8 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
@@ -28,7 +31,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ClientViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ClientViewHolder viewHolder, final int position) {
         if (this.clientList.get(position).getImage() != null && !this.clientList.get(position).getImage().equals("")){
             viewHolder.idPhotoProfile.setImageBitmap(FunctionsApp.parseBase64ToBitmap(this.clientList.get(position).getImage()));
             viewHolder.idPhotoProfile.setScaleType(CircleImageView.ScaleType.CENTER_CROP);
@@ -43,6 +46,19 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
             viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getLegalPerson().getCNPJ());
             viewHolder.idTxwTipo.setText("PJ");
         }
+
+        viewHolder.idBtnEdit.setOnClickListener(onClickEdit);
+
+        viewHolder.idBtnDelete.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TB_CLIENT.Delete(clientList.get(position));
+                        removeItem(position);
+                        FunctionsApp.showSnackBarLong(v,"Cliente excluido com sucesso!");
+                    }
+                }
+        );
     }
 
     @Override
@@ -64,4 +80,12 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
         this.clientList.remove(position);
         notifyItemRemoved(position);
     }
+
+    View.OnClickListener onClickEdit = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FunctionsApp.showSnackBarLong(v,"Edição!");
+        }
+    };
+
 }

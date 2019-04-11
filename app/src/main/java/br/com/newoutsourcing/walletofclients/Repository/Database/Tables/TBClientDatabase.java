@@ -102,7 +102,6 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         try{
             ContentValues values = new ContentValues();
 
-            //values.put(Fields.ID_CLIENT.name(),client.getClientId());
             values.put(Fields.IMAGE.name(),client.getImage());
             values.put(Fields.TYPE.name(),client.getType());
 
@@ -120,7 +119,6 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         try {
             ContentValues values = new ContentValues();
 
-            //values.put(Fields.ID_CLIENT.name(), client.getClientId());
             values.put(Fields.IMAGE.name(), client.getImage());
             values.put(Fields.TYPE.name(), client.getType());
 
@@ -140,6 +138,14 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try {
             if (client.getClientId() > 0) {
+                if (client.getAddress() != null) TB_ADDRESS.Delete(client.getAddress());
+                if (client.getAdditionalInformation() != null) TB_ADDITIONAL_INFORMATION.Delete(client.getAdditionalInformation());
+                if (client.getType() == 1 && client.getPhysicalPerson() != null){
+                    TB_PHYSICAL_PERSON.Delete(client.getPhysicalPerson());
+                }else if (client.getType() == 2 && client.getLegalPerson() != null) {
+                    TB_LEGAL_PERSON.Delete(client.getLegalPerson());
+                }
+
                 this.database.delete(this.Table,
                         Fields.ID_CLIENT.name() + " = " + client.getClientId(),
                         null);

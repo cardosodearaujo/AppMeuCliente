@@ -101,46 +101,62 @@ public class RegisterClientActivity extends AppCompatActivity {
         public void onClick(View v) {
             try{
                 Client client = new Client();
-                client.setType(1);
+
+                if (typePerson.equals("F")){
+                    client.setType(1);
+                }else {
+                    client.setType(2);
+                }
                 client.setSuccess(true);
+
                 if (client.isSuccess()){
                     boolean proceed;
                     idViewPager.setCurrentItem(0);
-                    if (typePerson.equals("F")){
+
+                    if (client.getType()==1){
                         client = physicalPersonCallback.onSave(client);
                         proceed = client.getPhysicalPerson().isSuccess();
                     }else{
                         client = legalPersonCallback.onSave(client);
                         proceed = client.getLegalPerson().isSuccess();
                     }
+
                     if (proceed){
                         idViewPager.setCurrentItem(1);
                         client = additionalDataCallback.onSave(client);
+
                         if (client.getAdditionalInformation().isSuccess()){
                             idViewPager.setCurrentItem(2);
                             client = addressCallback.onSave(client);
+
                             if (client.getAddress().isSuccess()){
                                 idViewPager.setCurrentItem(0);
                                 client.setClientId(TB_CLIENT.Insert(client));
+
                                 if (client.getClientId() > 0){
-                                    if (typePerson.equals("F")){
+
+                                    if (client.getType() == 1){
                                         client.getPhysicalPerson().setClientId(client.getClientId());
                                         TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());
                                     }else{
                                         client.getLegalPerson().setClientId(client.getClientId());
                                         TB_LEGAL_PERSON.Insert(client.getLegalPerson());
                                     }
+
                                     client.getAdditionalInformation().setClientId(client.getClientId());
                                     TB_ADDITIONAL_INFORMATION.Insert(client.getAdditionalInformation());
+
                                     client.getAddress().setClientId(client.getClientId());
                                     TB_ADDRESS.Insert(client.getAddress());
-                                    if (typePerson.equals("F")){
+
+                                    if (client.getType() == 1){
                                         physicalPersonCallback.onClear();
                                     }else{
                                         legalPersonCallback.onClear();
                                     }
                                     additionalDataCallback.onClear();
                                     addressCallback.onClear();
+
                                     FunctionsApp.showSnackBarLong(v,"Cliente salvo com sucesso!");
                                 }
                             }
