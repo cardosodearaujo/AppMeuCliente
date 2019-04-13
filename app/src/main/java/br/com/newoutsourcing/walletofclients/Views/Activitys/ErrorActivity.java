@@ -15,24 +15,26 @@ public class ErrorActivity extends AppCompatActivity {
     private TextView idTxwErrorMessageCaption;
     private TextView idTxwErrorMessage;
     private Button idBtnErrorClose;
+    private View idView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_error);
-        this.loadConfigurationView();
-        this.loadInformationToView();
+        this.onInflate();
+        this.onConfiguration();
     }
 
-    public void loadConfigurationView(){
+    public void onInflate(){
+        this.idView = this.findViewById(android.R.id.content);
         this.idImgAlert = this.findViewById(R.id.idImgAlert);
         this.idTxwErrorMessageCaption = this.findViewById(R.id.idTxwErrorMessageCaption);
         this.idTxwErrorMessage = this.findViewById(R.id.idTxwErrorMessage);
         this.idBtnErrorClose = this.findViewById(R.id.idBtnErrorClose);
-        this.idBtnErrorClose.setOnClickListener(this.onClickClose);
     }
 
-    public void loadInformationToView(){
+    public void onConfiguration(){
+        this.idBtnErrorClose.setOnClickListener(this.onClickClose);
         if (!(this.getIntent().getExtras() == null)){
             if (!this.getIntent().getExtras().getString("MessageCaption").equals("")){
                 if (this.getIntent().getExtras().getString("MessageCaption")!= null){

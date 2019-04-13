@@ -1,6 +1,5 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -24,6 +23,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton idBtnFabClientPhysicalPerson;
     private RecyclerView idRecycleView;
     private Button idBtnClose;
+    private View idView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onInflate(){
+        this.idView = this.findViewById(android.R.id.content);
         this.idToolbar = this.findViewById(R.id.idToolbar);
         this.idBtnFam = this.findViewById(R.id.idBtnFam);
         this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
@@ -62,9 +63,14 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onResume(){
         super.onResume();
-        if (this.idRecycleView != null){
-            this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
+        try{
+            if (this.idRecycleView != null){
+                this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
+            }
+        }catch (Exception ex){
+            FunctionsApp.showSnackBarLong(this.idView,ex.getMessage());
         }
+
     }
 
     View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){

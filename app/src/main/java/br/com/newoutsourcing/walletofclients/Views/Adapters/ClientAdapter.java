@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.List;
 
@@ -47,7 +46,14 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
             viewHolder.idTxwTipo.setText("PJ");
         }
 
-        viewHolder.idBtnEdit.setOnClickListener(onClickEdit);
+        viewHolder.idBtnEdit.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
 
         viewHolder.idBtnDelete.setOnClickListener(
                 new View.OnClickListener() {

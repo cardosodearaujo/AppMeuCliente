@@ -37,17 +37,19 @@ public class RegisterClientActivity extends AppCompatActivity {
     private FragmentsCallback addressCallback;
     private FragmentsCallback additionalDataCallback;
     private String typePerson;
+    private View idView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setContentView(R.layout.activity_register_client);
         this.onInflate();
         this.onConfiguration();
         this.onConfigurationFragments();
     }
 
     private void onInflate(){
-        super.setContentView(R.layout.activity_register_client);
+        this.idView = this.findViewById(android.R.id.content);
         this.pagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
         this.idToolbar = this.findViewById(R.id.idToolbar);
         this.idViewPager = this.findViewById(R.id.idViewPager);
