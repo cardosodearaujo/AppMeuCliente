@@ -156,7 +156,22 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
     @Override
     public void onLoad(Client client){
-
+        this.idEdtClientPFName.setText(client.getPhysicalPerson().getName());
+        this.idEdtClientPFNickName.setText(client.getPhysicalPerson().getNickname());
+        this.idEdtClientPFCPF.setText(client.getPhysicalPerson().getCPF());
+        this.idEdtClientPFRG.setText(client.getPhysicalPerson().getRG());
+        this.idEdtClientPFDate.setText(client.getPhysicalPerson().getBirthDate());
+        if (!client.getImage().isEmpty()) this.idImgClientPFPhoto.setImageBitmap(FunctionsApp.parseBase64ToBitmap((client.getImage())));
+        switch (client.getPhysicalPerson().getSex()){
+            case "F":
+                this.idSpnClientPFSexo.setSelection(1);
+                break;
+            case "M":
+                this.idSpnClientPFSexo.setSelection(2);
+                break;
+            default:
+                this.idSpnClientPFSexo.setSelection(0);
+        }
     }
 
     @Override
