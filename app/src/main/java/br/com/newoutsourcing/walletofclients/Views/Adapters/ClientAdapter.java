@@ -60,7 +60,6 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
                         }
                         bundle.putSerializable("Client",clientList.get(position));
                         FunctionsApp.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
-                        FunctionsApp.closeActivity(v.getContext());
                     }
                 }
         );

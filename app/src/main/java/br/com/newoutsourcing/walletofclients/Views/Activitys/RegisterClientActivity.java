@@ -68,19 +68,20 @@ public class RegisterClientActivity extends AppCompatActivity {
     private void onConfigurationFragments() {
         Fragment fragment;
         this.typePerson = this.getIntent().getExtras().getString("TipoCadastro");
+        Bundle bundle = this.getIntent().getExtras();
         switch (typePerson) {
             case "F":
                 fragment = PhysicalPersonFragment.newInstance();
                 this.physicalPersonCallback = (FragmentsCallback) fragment;
-                this.pagerAdapter.addFragment(fragment, "Informações");
+                this.pagerAdapter.addFragment(fragment, "Informações",bundle);
                 break;
             case "J":
                 fragment = LegalPersonFragment.newInstance();
                 this.legalPersonCallback = (FragmentsCallback) fragment;
-                this.pagerAdapter.addFragment(fragment, "Informações");
+                this.pagerAdapter.addFragment(fragment, "Informações",bundle);
                 break;
             default:
-                FunctionsApp.startActivity(RegisterClientActivity.this, ErrorActivity.class, null);
+                FunctionsApp.startActivity(RegisterClientActivity.this, ErrorActivity.class, bundle);
                 FunctionsApp.closeActivity(RegisterClientActivity.this);
                 break;
         }
@@ -88,26 +89,13 @@ public class RegisterClientActivity extends AppCompatActivity {
         if (this.pagerAdapter.getCount() > 0) {
             fragment = AdditionalDataFragment.newInstance();
             this.additionalDataCallback = (FragmentsCallback) fragment;
-            this.pagerAdapter.addFragment(fragment, "Inf.Adicionais");
+            this.pagerAdapter.addFragment(fragment, "Inf.Adicionais",bundle);
 
             fragment = AddressFragment.newInstance();
             this.addressCallback = (FragmentsCallback) fragment;
-            this.pagerAdapter.addFragment(fragment, "Endereço");
+            this.pagerAdapter.addFragment(fragment, "Endereço",bundle);
 
             this.idViewPager.setAdapter(pagerAdapter);
-        }
-
-        if (this.idViewPager.getAdapter() != null){
-            Client client = (Client) this.getIntent().getExtras().getSerializable("Client");
-            if (client != null && client.getClientId() > 0){
-                if (typePerson.equals("F")){
-                    this.physicalPersonCallback.onLoad(client);
-                }else{
-                    this.legalPersonCallback.onLoad(client);
-                }
-                this.additionalDataCallback.onLoad(client);
-                this.addressCallback.onLoad(client);
-            }
         }
     }
 

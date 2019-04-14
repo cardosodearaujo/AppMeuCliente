@@ -1,5 +1,7 @@
 package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -30,7 +32,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         return lFragmentTitleList.get(position);
     }
 
-    public void addFragment(Fragment fragment,String title){
+    public void addFragment(Fragment fragment, String title, Bundle bundle){
+        if (bundle != null) fragment.setArguments(bundle);
         lFragmentList.add(fragment);
         lFragmentTitleList.add(title);
     }

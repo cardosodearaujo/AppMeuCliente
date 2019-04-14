@@ -113,8 +113,7 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
         }
     }
 
-    @Override
-    public void onLoad(Client client){
+    private void onLoad(Client client){
 
     }
 

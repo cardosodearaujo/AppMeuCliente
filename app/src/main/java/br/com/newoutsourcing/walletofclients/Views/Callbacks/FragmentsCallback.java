@@ -5,6 +5,5 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 public interface FragmentsCallback {
     boolean onValidate();
     Client onSave(Client client);
-    void onLoad(Client client);
     void onClear();
 }
