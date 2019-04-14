@@ -1,8 +1,10 @@
 package br.com.newoutsourcing.walletofclients.Objects;
 
+import java.io.Serializable;
+
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 
-public class PhysicalPerson {
+public class PhysicalPerson implements Serializable {
     private long physicalPersonId;
     private long clientId; //Chave estrangeira
     private String name;

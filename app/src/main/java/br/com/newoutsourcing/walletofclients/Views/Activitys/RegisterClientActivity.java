@@ -96,6 +96,19 @@ public class RegisterClientActivity extends AppCompatActivity {
 
             this.idViewPager.setAdapter(pagerAdapter);
         }
+
+        if (this.idViewPager.getAdapter() != null){
+            Client client = (Client) this.getIntent().getExtras().getSerializable("Client");
+            if (client != null && client.getClientId() > 0){
+                if (typePerson.equals("F")){
+                    this.physicalPersonCallback.onLoad(client);
+                }else{
+                    this.legalPersonCallback.onLoad(client);
+                }
+                this.additionalDataCallback.onLoad(client);
+                this.addressCallback.onLoad(client);
+            }
+        }
     }
 
     View.OnClickListener onClickSave = new View.OnClickListener() {

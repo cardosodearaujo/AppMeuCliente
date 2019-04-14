@@ -1,5 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import java.util.List;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Activitys.RegisterClientActivity;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,7 +32,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ClientViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final ClientViewHolder viewHolder, final int position) {
         if (this.clientList.get(position).getImage() != null && !this.clientList.get(position).getImage().equals("")){
             viewHolder.idPhotoProfile.setImageBitmap(FunctionsApp.parseBase64ToBitmap(this.clientList.get(position).getImage()));
             viewHolder.idPhotoProfile.setScaleType(CircleImageView.ScaleType.CENTER_CROP);
@@ -50,7 +52,15 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Bundle bundle = new Bundle();
+                        if (clientList.get(position).getType() == 1){
+                            bundle.putString("TipoCadastro","F");
+                        }else{
+                            bundle.putString("TipoCadastro","J");
+                        }
+                        bundle.putSerializable("Client",clientList.get(position));
+                        FunctionsApp.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
+                        FunctionsApp.closeActivity(v.getContext());
                     }
                 }
         );

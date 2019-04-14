@@ -114,6 +114,11 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
     }
 
     @Override
+    public void onLoad(Client client){
+
+    }
+
+    @Override
     public void onClear() {
         this.idEdtClientPFCellphone.setText("");
         this.idEdtClientPFTelephone.setText("");

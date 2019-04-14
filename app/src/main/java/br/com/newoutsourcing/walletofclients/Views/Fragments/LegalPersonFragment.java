@@ -140,6 +140,11 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     }
 
     @Override
+    public void onLoad(Client client){
+
+    }
+
+    @Override
     public void onClear() {
         this.idEdtClientPJSocialName.setText("");
         this.idEdtClientPJFantasyName.setText("");

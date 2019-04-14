@@ -1,6 +1,8 @@
 package br.com.newoutsourcing.walletofclients.Objects;
 
-public class LegalPerson {
+import java.io.Serializable;
+
+public class LegalPerson implements Serializable {
     private long legalPersonId;
     private long clientId; //Chave estrangeira
     private String socialName;

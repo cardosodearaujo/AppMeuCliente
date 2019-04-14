@@ -155,6 +155,11 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     }
 
     @Override
+    public void onLoad(Client client){
+
+    }
+
+    @Override
     public void onClear() {
         this.idEdtClientPFName.setError(null);
         this.idEdtClientPFNickName.setError(null);

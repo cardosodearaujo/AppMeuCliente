@@ -1,6 +1,8 @@
 package br.com.newoutsourcing.walletofclients.Objects;
 
-public class AdditionalInformation {
+import java.io.Serializable;
+
+public class AdditionalInformation implements Serializable {
     private long additionalInformationId;
     private long clientId;
     private String cellphone;

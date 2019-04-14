@@ -1,6 +1,8 @@
 package br.com.newoutsourcing.walletofclients.Objects;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private long addressId;
     private long clientId;
     private String CEP;

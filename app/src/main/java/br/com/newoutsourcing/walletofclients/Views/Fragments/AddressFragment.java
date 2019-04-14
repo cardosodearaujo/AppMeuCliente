@@ -137,6 +137,11 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     }
 
     @Override
+    public void onLoad(Client client){
+
+    }
+
+    @Override
     public void onClear() {
         this.idEdtClientAddressCEP.setText("");
         this.idEdtClientAddressStreet.setText("");

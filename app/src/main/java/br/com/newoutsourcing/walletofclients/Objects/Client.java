@@ -1,6 +1,8 @@
 package br.com.newoutsourcing.walletofclients.Objects;
 
-public class Client{
+import java.io.Serializable;
+
+public class Client implements Serializable {
 
     private long clientId;
     private String image;
