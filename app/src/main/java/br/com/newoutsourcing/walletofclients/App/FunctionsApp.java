@@ -24,7 +24,7 @@ import java.util.Date;
 
 public class FunctionsApp {
     /**Controles do banco de dados**/
-    public static final String DB_NAME = "DB_WalletOfClients";
+    public static final String DB_NAME = "BD_WalletOfClients";
     public static final int DB_VERSION = 1;
 
     /**Controles da camera**/
@@ -153,4 +153,107 @@ public class FunctionsApp {
         return BitmapFactory.decodeByteArray(bites, 0, bites.length);
     }
 
+    public static int getState(String UF){
+        int Index = 0;
+        switch (UF){
+            case "AC":
+                 Index = 0;
+                 break;
+            case "AL":
+                Index = 1;
+                break;
+            case "AP":
+                Index = 2;
+                break;
+            case "AM":
+                Index = 3;
+                break;
+            case "BA":
+                Index = 4;
+                break;
+            case "CE":
+                Index = 5;
+                break;
+            case "DF":
+                Index = 6;
+                break;
+            case "ES":
+                Index = 7;
+                break;
+            case "GO":
+                Index = 8;
+                break;
+            case "MA":
+                Index = 9;
+                break;
+            case "MT":
+                Index = 10;
+                break;
+            case "MS":
+                Index = 11;
+                break;
+            case "MG":
+                Index = 12;
+                break;
+            case "PA":
+                Index = 13;
+                break;
+            case "PB":
+                Index = 14;
+                break;
+            case "PR":
+                Index = 15;
+                break;
+            case "PE":
+                Index = 16;
+                break;
+            case "PI":
+                Index = 17;
+                break;
+            case "RJ":
+                Index = 18;
+                break;
+            case "RN":
+                Index = 19;
+                break;
+            case "RS":
+                Index = 20;
+                break;
+            case "RO":
+                Index = 21;
+                break;
+            case "RR":
+                Index = 22;
+                break;
+            case "SC":
+                Index = 23;
+                break;
+            case "SP":
+                Index = 24;
+                break;
+            case "SE":
+                Index = 25;
+                break;
+            case "TO":
+                Index = 26;
+                break;
+        }
+        return Index;
+    }
+
+    public static int getSex(String Sex){
+        int Index = 0;
+        switch (Sex){
+            case "I":
+                Index = 0;
+                break;
+            case "F":
+                Index = 1;
+                break;
+            case "M":
+                Index = 2;
+                break;
+        }
+        return Index;
+    }
 }

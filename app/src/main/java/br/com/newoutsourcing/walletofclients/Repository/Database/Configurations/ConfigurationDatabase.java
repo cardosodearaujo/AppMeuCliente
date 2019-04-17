@@ -32,6 +32,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             SQL += "    NAME TEXT NOT NULL , ";
             SQL += "    NICKNAME TEXT NULL , ";
             SQL += "    CPF TEXT NOT NULL , ";
+            SQL += "    RG TEXT NOT NULL ,";
             SQL += "    BIRTH_DATE DATETIME NOT NULL , ";
             SQL += "    SEX TEXT NOT NULL ";
             SQL += " ); ";
@@ -85,9 +86,6 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
         try {
             String SQL;
 
-            /**Tabela de Clientes**/
-            SQL  = " DROP TABLE CLIENT; ";
-            DbEnjoy.execSQL(SQL);
             /**Pessoa Fisica**/
             SQL = " DROP TABLE PHYSICAL_PERSON; ";
             DbEnjoy.execSQL(SQL);
@@ -99,6 +97,9 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             DbEnjoy.execSQL(SQL);
             /**Informações adicionais**/
             SQL = " DROP TABLE ADDITIONAL_INFORMATION; ";
+            DbEnjoy.execSQL(SQL);
+            /**Tabela de Clientes**/
+            SQL  = " DROP TABLE CLIENT; ";
             DbEnjoy.execSQL(SQL);
 
         } catch (Exception ex) {

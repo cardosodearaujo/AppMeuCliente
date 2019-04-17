@@ -36,6 +36,7 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
         View view = inflater.inflate(R.layout.fragment_additional_data, container, false);
         this.onInflate(view);
         this.onConfiguration();
+        this.onLoad((Client) getArguments().getSerializable("Client"));
         return view;
     }
 
@@ -114,7 +115,13 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
     }
 
     private void onLoad(Client client){
-
+        if (client != null){
+            this.idEdtClientPFCellphone.setText(client.getAdditionalInformation().getCellphone());
+            this.idEdtClientPFTelephone.setText(client.getAdditionalInformation().getTelephone());
+            this.idEdtClientPFEmail.setText(client.getAdditionalInformation().getEmail());
+            this.idEdtClientPFSite.setText(client.getAdditionalInformation().getSite());
+            this.idEdtClientPFObservation.setText(client.getAdditionalInformation().getObservation());
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         NAME,
         NICKNAME,
         CPF,
+        RG,
         BIRTH_DATE,
         SEX
     }
@@ -58,8 +59,9 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
                     physicalPerson.setName(this.cursor.getString(2));
                     physicalPerson.setNickname(this.cursor.getString(3));
                     physicalPerson.setCPF(this.cursor.getString(4));
-                    physicalPerson.setBirthDate(this.cursor.getString(   5));
-                    physicalPerson.setSex(this.cursor.getString(6));
+                    physicalPerson.setRG(this.cursor.getString(5));
+                    physicalPerson.setBirthDate(this.cursor.getString(   6));
+                    physicalPerson.setSex(this.cursor.getString(7));
 
                     list.add(physicalPerson);
                 }while (this.cursor.moveToNext());
@@ -85,6 +87,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             values.put(Fields.NAME.name(),physicalPerson.getName());
             values.put(Fields.NICKNAME.name(),physicalPerson.getNickname());
             values.put(Fields.CPF.name(),physicalPerson.getCPF());
+            values.put(Fields.RG.name(),physicalPerson.getRG());
             values.put(Fields.BIRTH_DATE.name(),physicalPerson.getBirthDate());
             values.put(Fields.SEX.name(),physicalPerson.getSex());
 
@@ -107,6 +110,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             values.put(Fields.NAME.name(), physicalPerson.getName());
             values.put(Fields.NICKNAME.name(), physicalPerson.getNickname());
             values.put(Fields.CPF.name(), physicalPerson.getCPF());
+            values.put(Fields.RG.name(), physicalPerson.getRG());
             values.put(Fields.BIRTH_DATE.name(), physicalPerson.getBirthDate());
             values.put(Fields.SEX.name(), physicalPerson.getSex());
 

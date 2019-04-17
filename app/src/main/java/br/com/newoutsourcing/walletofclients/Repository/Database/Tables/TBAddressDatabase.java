@@ -62,7 +62,8 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
                     address.setNumber(this.cursor.getInt(4));
                     address.setNeighborhood(this.cursor.getString(   5));
                     address.setCity(this.cursor.getString(6));
-                    address.setCountry(this.cursor.getString(7));
+                    address.setState(this.cursor.getString(7));
+                    address.setCountry(this.cursor.getString(8));
 
                     list.add(address);
                 }while (this.cursor.moveToNext());

@@ -38,6 +38,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
         View view = inflater.inflate(R.layout.fragment_address, container, false);
         this.onInflate(view);
         this.onConfiguration();
+        this.onLoad((Client) getArguments().getSerializable("Client"));
         return view;
     }
 
@@ -98,7 +99,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
             this.idEdtClientAddressCity.setError(null);
         }
 
-        if (this.idSpnClientAddressState.getSelectedItem() == null){
+        if (this.idSpnClientAddressState.getSelectedItem() == null || this.idSpnClientAddressState.getSelectedItem().toString().isEmpty()){
             this.idSpnClientAddressState.requestFocus();
             FunctionsApp.showSnackBarLong(getView(),"Informe o estado.");
             save = false;
@@ -124,7 +125,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
                 client.getAddress().setNumber(Integer.parseInt(this.idEdtClientAddressNumber.getText().toString()));
                 client.getAddress().setNeighborhood(this.idEdtClientAddressNeighborhood.getText().toString());
                 client.getAddress().setCity(this.idEdtClientAddressCity.getText().toString());
-                client.getAddress().setState(this.idSpnClientAddressState.getSelectedItem().toString());
+                client.getAddress().setState(this.idSpnClientAddressState.getSelectedItem().toString().substring(0,2));
                 client.getAddress().setCountry(this.idEdtClientAddressCounty.getText().toString());
                 client.getAddress().setSuccess(true);
             }else{
@@ -137,7 +138,15 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     }
 
     private void onLoad(Client client){
-
+        if (client != null){
+            this.idEdtClientAddressCEP.setText(client.getAddress().getCEP());
+            this.idEdtClientAddressStreet.setText(client.getAddress().getStreet());
+            this.idEdtClientAddressNumber.setText(String.valueOf(client.getAddress().getNumber()));
+            this.idEdtClientAddressNeighborhood.setText(client.getAddress().getNeighborhood());
+            this.idEdtClientAddressCity.setText(client.getAddress().getCity());
+            this.idSpnClientAddressState.setSelection(FunctionsApp.getState(client.getAddress().getState()));
+            this.idEdtClientAddressCounty.setText(client.getAddress().getCountry());
+        }
     }
 
     @Override

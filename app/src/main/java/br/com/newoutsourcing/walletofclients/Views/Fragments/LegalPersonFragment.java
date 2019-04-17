@@ -63,6 +63,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         View view = inflater.inflate(R.layout.fragment_legal_person, container, false);
         this.onInflate(view);
         this.onConfiguration();
+        this.onLoad((Client)getArguments().getSerializable("Client"));
         return view;
     }
 
@@ -140,7 +141,14 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     }
 
     private void onLoad(Client client){
-
+        if (client != null){
+            this.idEdtClientPJSocialName.setText(client.getLegalPerson().getSocialName());
+            this.idEdtClientPJFantasyName.setText(client.getLegalPerson().getFantasyName());
+            this.idEdtClientPJCNPJ.setText(client.getLegalPerson().getCNPJ());
+            this.idEdtClientPJIE.setText(client.getLegalPerson().getIE());
+            this.idEdtClientPJIM.setText(client.getLegalPerson().getIM());
+            if (!client.getImage().isEmpty()) this.idImgClientPJPhoto.setImageBitmap(FunctionsApp.parseBase64ToBitmap((client.getImage())));
+        }
     }
 
     @Override
