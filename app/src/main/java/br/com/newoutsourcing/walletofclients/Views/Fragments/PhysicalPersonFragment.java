@@ -131,7 +131,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
                 if (((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap() != null){
                     client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap()));
                 }
-
                 client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
                 client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
                 client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());
@@ -231,7 +230,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 this.getPhoto();
             } else {
-                FunctionsApp.showSnackBarShort(this.getView(),"Permissão negada!");
+                FunctionsApp.showSnackBarLong(this.getView(),"Permissão negada!");
             }
         }
     }
@@ -265,7 +264,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
                 }
             }
         }catch (Exception ex){
-            FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
+            FunctionsApp.showMessageError(getContext(),"Erro",ex.getMessage());
         }
     }
 

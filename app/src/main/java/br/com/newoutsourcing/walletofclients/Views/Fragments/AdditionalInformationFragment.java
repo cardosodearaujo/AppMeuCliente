@@ -15,7 +15,7 @@ import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 
 
-public class AdditionalDataFragment extends Fragment implements FragmentsCallback {
+public class AdditionalInformationFragment extends Fragment implements FragmentsCallback {
 
     private EditText idEdtClientPFCellphone;
     private EditText idEdtClientPFTelephone;
@@ -23,17 +23,17 @@ public class AdditionalDataFragment extends Fragment implements FragmentsCallbac
     private EditText idEdtClientPFSite;
     private EditText idEdtClientPFObservation;
 
-    public AdditionalDataFragment() {
+    public AdditionalInformationFragment() {
     }
 
-    public static AdditionalDataFragment newInstance(){
-        return new AdditionalDataFragment();
+    public static AdditionalInformationFragment newInstance(){
+        return new AdditionalInformationFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_additional_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_additional_information, container, false);
         this.onInflate(view);
         this.onConfiguration();
         this.onLoad((Client) getArguments().getSerializable("Client"));

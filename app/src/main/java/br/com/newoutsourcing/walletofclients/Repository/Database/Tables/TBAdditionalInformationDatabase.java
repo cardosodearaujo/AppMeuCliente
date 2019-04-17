@@ -66,7 +66,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
             }
             return list;
         }catch (Exception ex){
-            return null;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -77,7 +77,6 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         try{
             ContentValues values = new ContentValues();
 
-            //values.put(Fields.ID_ADDITIONAL_INFORMATION.name(),additionalInformation.getAdditionalInformationId());
             values.put(Fields.ID_CLIENT.name(),additionalInformation.getClientId());
             values.put(Fields.CELLPHONE.name(),additionalInformation.getCellphone());
             values.put(Fields.TELEPHONE.name(),additionalInformation.getTelephone());
@@ -88,7 +87,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
             return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
-            return 0;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -99,7 +98,6 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         try {
             ContentValues values = new ContentValues();
 
-            //values.put(Fields.ID_ADDITIONAL_INFORMATION.name(), additionalInformation.getAdditionalInformationId());
             values.put(Fields.ID_CLIENT.name(), additionalInformation.getClientId());
             values.put(Fields.CELLPHONE.name(), additionalInformation.getCellphone());
             values.put(Fields.TELEPHONE.name(), additionalInformation.getTelephone());
@@ -113,7 +111,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
 
             return true;
         }catch (Exception ex){
-            return false;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -129,7 +127,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
             }
             return  true;
         }catch (Exception ex){
-            return false;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }

@@ -91,7 +91,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
 
             return list;
         }catch (Exception ex){
-            return null;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -108,7 +108,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
             return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
-            return 0;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -128,7 +128,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
 
             return true;
         }catch (Exception ex){
-            return false;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -152,7 +152,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
             }
             return  true;
         }catch (Exception ex){
-            return false;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }

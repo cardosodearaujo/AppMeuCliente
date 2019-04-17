@@ -36,7 +36,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        FunctionsApp.showSnackBarLong(v,"Em desenvolvimento!");
     }
 
     private void onInflate(){
@@ -68,7 +67,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                 this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
             }
         }catch (Exception ex){
-            FunctionsApp.showSnackBarLong(this.idView,ex.getMessage());
+            FunctionsApp.showMessageError(ListClientActivity.this,"Erro",ex.getMessage());
         }
 
     }

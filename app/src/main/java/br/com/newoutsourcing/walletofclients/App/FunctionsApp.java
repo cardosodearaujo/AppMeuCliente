@@ -22,6 +22,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.newoutsourcing.walletofclients.Views.Activitys.ErrorActivity;
+
 public class FunctionsApp {
     /**Controles do banco de dados**/
     public static final String DB_NAME = "BD_WalletOfClients";
@@ -91,6 +93,13 @@ public class FunctionsApp {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static void showMessageError(Context context,String title, String message){
+        Bundle bundle = new Bundle();
+        bundle.putString("Title",title);
+        bundle.putString("Message",message);
+        startActivity(context, ErrorActivity.class, bundle);
+    }
+
     /**Funções de data**/
     public static String getCurrentDate(){
         Date data = new Date(System.currentTimeMillis());
@@ -153,6 +162,7 @@ public class FunctionsApp {
         return BitmapFactory.decodeByteArray(bites, 0, bites.length);
     }
 
+    /**Indices de Spinner**/
     public static int getState(String UF){
         int Index = 0;
         switch (UF){

@@ -13,7 +13,7 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
-import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalDataFragment;
+import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalInformationFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
@@ -38,6 +38,7 @@ public class RegisterClientActivity extends AppCompatActivity {
     private FragmentsCallback additionalDataCallback;
     private String typePerson;
     private View idView;
+    private Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class RegisterClientActivity extends AppCompatActivity {
     }
 
     private void onInflate(){
+        this.client = new Client();
         this.idView = this.findViewById(android.R.id.content);
         this.pagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
         this.idToolbar = this.findViewById(R.id.idToolbar);
@@ -66,36 +68,42 @@ public class RegisterClientActivity extends AppCompatActivity {
     }
 
     private void onConfigurationFragments() {
-        Fragment fragment;
-        this.typePerson = this.getIntent().getExtras().getString("TipoCadastro");
-        Bundle bundle = this.getIntent().getExtras();
-        switch (typePerson) {
-            case "F":
+        try{
+            Fragment fragment;
+            this.typePerson = this.getIntent().getExtras().getString("TipoCadastro");
+            Bundle bundle = this.getIntent().getExtras();
+
+            if (bundle != null && bundle.containsKey("Client")){
+                this.client = (Client)bundle.getSerializable("Client");
+            }
+
+            if (typePerson.equals("F")){
                 fragment = PhysicalPersonFragment.newInstance();
                 this.physicalPersonCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Informações",bundle);
-                break;
-            case "J":
+            }else if (typePerson.equals("J")){
                 fragment = LegalPersonFragment.newInstance();
                 this.legalPersonCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Informações",bundle);
-                break;
-            default:
+            }else{
                 FunctionsApp.startActivity(RegisterClientActivity.this, ErrorActivity.class, bundle);
+                FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro","Opção não encontrada!");
                 FunctionsApp.closeActivity(RegisterClientActivity.this);
-                break;
-        }
+            }
 
-        if (this.pagerAdapter.getCount() > 0) {
-            fragment = AdditionalDataFragment.newInstance();
-            this.additionalDataCallback = (FragmentsCallback) fragment;
-            this.pagerAdapter.addFragment(fragment, "Inf.Adicionais",bundle);
+            if (this.pagerAdapter.getCount() > 0) {
+                fragment = AdditionalInformationFragment.newInstance();
+                this.additionalDataCallback = (FragmentsCallback) fragment;
+                this.pagerAdapter.addFragment(fragment, "Inf.Adicionais",bundle);
 
-            fragment = AddressFragment.newInstance();
-            this.addressCallback = (FragmentsCallback) fragment;
-            this.pagerAdapter.addFragment(fragment, "Endereço",bundle);
+                fragment = AddressFragment.newInstance();
+                this.addressCallback = (FragmentsCallback) fragment;
+                this.pagerAdapter.addFragment(fragment, "Endereço",bundle);
 
-            this.idViewPager.setAdapter(pagerAdapter);
+                this.idViewPager.setAdapter(pagerAdapter);
+            }
+        }catch (Exception ex){
+            FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro",ex.getMessage());
         }
     }
 
@@ -103,13 +111,9 @@ public class RegisterClientActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             try{
-                Client client = new Client();
+                if (client == null || client.getClientId() <= 0){ client = new Client();}
 
-                if (typePerson.equals("F")){
-                    client.setType(1);
-                }else {
-                    client.setType(2);
-                }
+                if (typePerson.equals("F")){client.setType(1);}else{client.setType(2);}
                 client.setSuccess(true);
 
                 if (client.isSuccess()){
@@ -134,40 +138,49 @@ public class RegisterClientActivity extends AppCompatActivity {
 
                             if (client.getAddress().isSuccess()){
                                 idViewPager.setCurrentItem(0);
-                                client.setClientId(TB_CLIENT.Insert(client));
 
-                                if (client.getClientId() > 0){
+                                if (client.getClientId() <= 0){ /**Inclui cliente**/
+                                    client.setClientId(TB_CLIENT.Insert(client));
 
-                                    if (client.getType() == 1){
-                                        client.getPhysicalPerson().setClientId(client.getClientId());
-                                        TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());
-                                    }else{
-                                        client.getLegalPerson().setClientId(client.getClientId());
-                                        TB_LEGAL_PERSON.Insert(client.getLegalPerson());
+                                    if (client.getClientId() > 0){
+                                        if (client.getType() == 1){
+                                            client.getPhysicalPerson().setClientId(client.getClientId());
+                                            TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());
+                                        }else{
+                                            client.getLegalPerson().setClientId(client.getClientId());
+                                            TB_LEGAL_PERSON.Insert(client.getLegalPerson());
+                                        }
+
+                                        client.getAdditionalInformation().setClientId(client.getClientId());
+                                        TB_ADDITIONAL_INFORMATION.Insert(client.getAdditionalInformation());
+
+                                        client.getAddress().setClientId(client.getClientId());
+                                        TB_ADDRESS.Insert(client.getAddress());
+
+                                        if (client.getType() == 1){physicalPersonCallback.onClear();}else{legalPersonCallback.onClear();}
+                                        additionalDataCallback.onClear();
+                                        addressCallback.onClear();
+
+                                        FunctionsApp.showSnackBarLong(v,"Cliente salvo!");
                                     }
+                                }else{/**Atualiza cliente**/
+                                    TB_CLIENT.Update(client);
+                                    if (client.getType() == 1){TB_PHYSICAL_PERSON.Update(client.getPhysicalPerson());}else{TB_LEGAL_PERSON.Update(client.getLegalPerson());}
+                                    TB_ADDITIONAL_INFORMATION.Update(client.getAdditionalInformation());
+                                    TB_ADDRESS.Update(client.getAddress());
 
-                                    client.getAdditionalInformation().setClientId(client.getClientId());
-                                    TB_ADDITIONAL_INFORMATION.Insert(client.getAdditionalInformation());
-
-                                    client.getAddress().setClientId(client.getClientId());
-                                    TB_ADDRESS.Insert(client.getAddress());
-
-                                    if (client.getType() == 1){
-                                        physicalPersonCallback.onClear();
-                                    }else{
-                                        legalPersonCallback.onClear();
-                                    }
+                                    if (client.getType() == 1){physicalPersonCallback.onClear();}else{legalPersonCallback.onClear();}
                                     additionalDataCallback.onClear();
                                     addressCallback.onClear();
 
-                                    FunctionsApp.showSnackBarLong(v,"Cliente salvo com sucesso!");
+                                    FunctionsApp.showSnackBarLong(v,"Cliente atualizado!");
                                 }
                             }
                         }
                     }
                 }
             }catch (Exception ex) {
-                FunctionsApp.showSnackBarLong(v, ex.getMessage());
+                FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro",ex.getMessage());
             }
         }
     };

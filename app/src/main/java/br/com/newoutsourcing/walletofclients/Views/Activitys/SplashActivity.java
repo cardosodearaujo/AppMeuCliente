@@ -24,11 +24,16 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void onLoadDatabaseSession(){
-        SessionDatabase.TB_CLIENT = TBClientDatabase.newInstance(SplashActivity.this);
-        SessionDatabase.TB_PHYSICAL_PERSON = TBPhysicalPersonDatabase.newInstance(SplashActivity.this);
-        SessionDatabase.TB_LEGAL_PERSON = TBLegalPersonDatabase.newInstance(SplashActivity.this);
-        SessionDatabase.TB_ADDITIONAL_INFORMATION = TBAdditionalInformationDatabase.newInstance(SplashActivity.this);
-        SessionDatabase.TB_ADDRESS = TBAddressDatabase.newInstance(SplashActivity.this);
+        try{
+            SessionDatabase.TB_CLIENT = TBClientDatabase.newInstance(SplashActivity.this);
+            SessionDatabase.TB_PHYSICAL_PERSON = TBPhysicalPersonDatabase.newInstance(SplashActivity.this);
+            SessionDatabase.TB_LEGAL_PERSON = TBLegalPersonDatabase.newInstance(SplashActivity.this);
+            SessionDatabase.TB_ADDITIONAL_INFORMATION = TBAdditionalInformationDatabase.newInstance(SplashActivity.this);
+            SessionDatabase.TB_ADDRESS = TBAddressDatabase.newInstance(SplashActivity.this);
+        }catch (Exception ex){
+            FunctionsApp.showMessageError(SplashActivity.this,"Erro","Ocorreu um erro ao inicializar a aplicação. Tente novamente!");
+            FunctionsApp.closeActivity(SplashActivity.this);
+        }
     }
 
     private void onStartActivity(){

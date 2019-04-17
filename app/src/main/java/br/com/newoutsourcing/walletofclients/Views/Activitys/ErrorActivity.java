@@ -36,12 +36,12 @@ public class ErrorActivity extends AppCompatActivity {
     public void onConfiguration(){
         this.idBtnErrorClose.setOnClickListener(this.onClickClose);
         if (!(this.getIntent().getExtras() == null)){
-            if (!this.getIntent().getExtras().getString("MessageCaption").equals("")){
-                if (this.getIntent().getExtras().getString("MessageCaption")!= null){
-                    this.idTxwErrorMessageCaption.setText(this.getIntent().getExtras().getString("MessageCaption"));
+            if (!this.getIntent().getExtras().containsKey("Title")){
+                if (this.getIntent().getExtras().getString("Title")!= null){
+                    this.idTxwErrorMessageCaption.setText(this.getIntent().getExtras().getString("Title"));
                 }
             }
-            if (this.getIntent().getExtras().getString("Message")!= null){
+            if (this.getIntent().getExtras().containsKey("Message")){
                 if (!this.getIntent().getExtras().getString("Message").equals("")){
                     this.idTxwErrorMessage.setText(this.getIntent().getExtras().getString("Message"));
                 }

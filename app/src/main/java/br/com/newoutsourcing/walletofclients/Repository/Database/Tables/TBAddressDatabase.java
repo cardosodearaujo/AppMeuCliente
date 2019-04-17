@@ -70,7 +70,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
             }
             return list;
         }catch (Exception ex){
-            return null;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -81,7 +81,6 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         try{
             ContentValues values = new ContentValues();
 
-            //values.put(Fields.ID_ADDRESS.name(),address.getAddressId());
             values.put(Fields.ID_CLIENT.name(),address.getClientId());
             values.put(Fields.CEP.name(),address.getCEP());
             values.put(Fields.STREET.name(),address.getStreet());
@@ -94,7 +93,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
             return this.database.insert(this.Table,null,values);
 
         }catch (Exception ex){
-            return 0;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -105,7 +104,6 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         try {
             ContentValues values = new ContentValues();
 
-            //values.put(Fields.ID_ADDRESS.name(), address.getAddressId());
             values.put(Fields.ID_CLIENT.name(), address.getClientId());
             values.put(Fields.CEP.name(), address.getCEP());
             values.put(Fields.STREET.name(), address.getStreet());
@@ -121,7 +119,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
 
             return true;
         }catch (Exception ex){
-            return false;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
@@ -137,7 +135,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
             }
             return  true;
         }catch (Exception ex){
-            return false;
+            throw ex;
         }finally {
             super.closeDatabaseInstance();
         }
