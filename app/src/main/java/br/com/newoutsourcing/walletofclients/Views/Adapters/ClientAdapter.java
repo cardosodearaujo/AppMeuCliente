@@ -95,12 +95,4 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
         this.clientList.remove(position);
         notifyItemRemoved(position);
     }
-
-    View.OnClickListener onClickEdit = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.showSnackBarLong(v,"Edição!");
-        }
-    };
-
 }

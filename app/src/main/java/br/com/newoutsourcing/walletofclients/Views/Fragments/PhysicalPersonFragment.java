@@ -128,7 +128,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     public Client onSave(Client client) {
         try{
             if (this.onValidate()){
-                if (((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap() != null){
+                if (this.idImgClientPFPhoto.getDrawable() != null &&  ((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap() != null){
                     client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap()));
                 }
                 client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());

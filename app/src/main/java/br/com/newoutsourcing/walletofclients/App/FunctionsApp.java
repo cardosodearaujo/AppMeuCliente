@@ -26,7 +26,7 @@ import br.com.newoutsourcing.walletofclients.Views.Activitys.ErrorActivity;
 
 public class FunctionsApp {
     /**Controles do banco de dados**/
-    public static final String DB_NAME = "BD_WalletOfClients";
+    public static final String DB_NAME = "DB_WC";
     public static final int DB_VERSION = 1;
 
     /**Controles da camera**/

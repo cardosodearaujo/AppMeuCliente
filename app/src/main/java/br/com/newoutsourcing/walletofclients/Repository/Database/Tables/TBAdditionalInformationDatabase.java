@@ -62,7 +62,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
                     additionalInformation.setObservation(this.cursor.getString(6));
 
                     list.add(additionalInformation);
-                }while (this.cursor.moveToNext());
+                }while(this.cursor.moveToNext());
             }
             return list;
         }catch (Exception ex){

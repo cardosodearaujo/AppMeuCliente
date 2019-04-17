@@ -13,7 +13,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase DbEnjoy) {
+    public void onCreate(SQLiteDatabase DB) {
         try {
             String SQL;
 
@@ -23,7 +23,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             SQL += "    IMAGE TEXT NULL, ";
             SQL += "    TYPE INTEGER NOT NULL ";
             SQL += " ); ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
 
             /**Pessoa Fisica**/
             SQL =  " CREATE TABLE TB_PHYSICAL_PERSON( ";
@@ -36,7 +36,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             SQL += "    BIRTH_DATE DATETIME NOT NULL , ";
             SQL += "    SEX TEXT NOT NULL ";
             SQL += " ); ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
 
             /**Pessoa Juridica**/
             SQL =  " CREATE TABLE TB_LEGAL_PERSON( ";
@@ -48,7 +48,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             SQL += "    IE TEXT NOT NULL , ";
             SQL += "    IM TEXT NULL ";
             SQL += " ); ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
 
             /**Endereço**/
             SQL =  " CREATE TABLE TB_ADDRESS( ";
@@ -62,7 +62,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             SQL += "    STATE TEXT NULL, ";
             SQL += "    COUNTRY TEXT NULL ";
             SQL += " ); ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
 
             /**Informações adicionais**/
             SQL =  " CREATE TABLE TB_ADDITIONAL_INFORMATION( ";
@@ -74,7 +74,7 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
             SQL += "    SITE TEXT NULL, ";
             SQL += "    OBSERVATION TEXT NULL ";
             SQL += " ); ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
 
         } catch (Exception ex) {
             throw ex;
@@ -82,25 +82,25 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase DbEnjoy, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
         try {
             String SQL;
 
             /**Pessoa Fisica**/
             SQL = " DROP TABLE PHYSICAL_PERSON; ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
             /**Pessoa Juridica**/
             SQL = " DROP TABLE LEGAL_PERSON; ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
             /**Endereço**/
             SQL = " DROP TABLE ADDRESS; ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
             /**Informações adicionais**/
             SQL = " DROP TABLE ADDITIONAL_INFORMATION; ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
             /**Tabela de Clientes**/
             SQL  = " DROP TABLE CLIENT; ";
-            DbEnjoy.execSQL(SQL);
+            DB.execSQL(SQL);
 
         } catch (Exception ex) {
             throw ex;

@@ -31,7 +31,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
 
     @Override
     public List<PhysicalPerson> Select(long clientId){
-        super.Select(clientId);
+        super.openDatabaseInstance();
         try{
             List<PhysicalPerson> list = new ArrayList<PhysicalPerson>();
 

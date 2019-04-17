@@ -34,7 +34,6 @@ public class TableConfigurationDatabase<T> {
     }
 
     public List<T> Select(long id){
-        this.openDatabaseInstance();
         return null;
     }
 }

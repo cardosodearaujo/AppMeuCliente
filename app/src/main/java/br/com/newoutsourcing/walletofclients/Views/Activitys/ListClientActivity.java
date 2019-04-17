@@ -67,7 +67,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                 this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
             }
         }catch (Exception ex){
-            FunctionsApp.showMessageError(ListClientActivity.this,"Erro",ex.getMessage());
+            FunctionsApp.showSnackBarLong(this.idView,ex.getMessage());
         }
 
     }

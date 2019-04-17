@@ -35,7 +35,7 @@ public class RegisterClientActivity extends AppCompatActivity {
     private FragmentsCallback physicalPersonCallback;
     private FragmentsCallback legalPersonCallback;
     private FragmentsCallback addressCallback;
-    private FragmentsCallback additionalDataCallback;
+    private FragmentsCallback additionalInformationCallback;
     private String typePerson;
     private View idView;
     private Client client;
@@ -93,7 +93,7 @@ public class RegisterClientActivity extends AppCompatActivity {
 
             if (this.pagerAdapter.getCount() > 0) {
                 fragment = AdditionalInformationFragment.newInstance();
-                this.additionalDataCallback = (FragmentsCallback) fragment;
+                this.additionalInformationCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Inf.Adicionais",bundle);
 
                 fragment = AddressFragment.newInstance();
@@ -130,7 +130,7 @@ public class RegisterClientActivity extends AppCompatActivity {
 
                     if (proceed){
                         idViewPager.setCurrentItem(1);
-                        client = additionalDataCallback.onSave(client);
+                        client = additionalInformationCallback.onSave(client);
 
                         if (client.getAdditionalInformation().isSuccess()){
                             idViewPager.setCurrentItem(2);
@@ -158,7 +158,7 @@ public class RegisterClientActivity extends AppCompatActivity {
                                         TB_ADDRESS.Insert(client.getAddress());
 
                                         if (client.getType() == 1){physicalPersonCallback.onClear();}else{legalPersonCallback.onClear();}
-                                        additionalDataCallback.onClear();
+                                        additionalInformationCallback.onClear();
                                         addressCallback.onClear();
 
                                         FunctionsApp.showSnackBarLong(v,"Cliente salvo!");
@@ -170,7 +170,7 @@ public class RegisterClientActivity extends AppCompatActivity {
                                     TB_ADDRESS.Update(client.getAddress());
 
                                     if (client.getType() == 1){physicalPersonCallback.onClear();}else{legalPersonCallback.onClear();}
-                                    additionalDataCallback.onClear();
+                                    additionalInformationCallback.onClear();
                                     addressCallback.onClear();
 
                                     FunctionsApp.showSnackBarLong(v,"Cliente atualizado!");

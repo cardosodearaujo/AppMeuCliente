@@ -38,7 +38,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
     public List<Client> Select(long clientId){
         super.openDatabaseInstance();
         try{
-            List<Client> list = new ArrayList<Client>();
+            List<Client> list = new ArrayList();
 
             if (clientId > 0){
                 this.SQL

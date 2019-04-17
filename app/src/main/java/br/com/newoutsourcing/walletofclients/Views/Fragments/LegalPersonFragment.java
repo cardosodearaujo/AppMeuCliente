@@ -121,7 +121,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     public Client onSave(Client client) {
         try{
             if (this.onValidate()) {
-                if (((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap() != null) {
+                if (this.idImgClientPJPhoto.getDrawable() != null && ((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap() != null) {
                     client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap()));
                 }
 
