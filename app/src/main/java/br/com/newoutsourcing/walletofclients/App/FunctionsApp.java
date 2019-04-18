@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,8 +27,10 @@ import java.util.Date;
 import br.com.newoutsourcing.walletofclients.Views.Activitys.ErrorActivity;
 
 public class FunctionsApp {
+    /**Pasta do dispositivo**/
+    public static String APP_PATH;
     /**Controles do banco de dados**/
-    public static final String DB_NAME = "DB_WC";
+    public static final String DB_NAME = "DB_WalletOfClients";
     public static final int DB_VERSION = 1;
 
     /**Controles da camera**/
@@ -98,6 +102,12 @@ public class FunctionsApp {
         bundle.putString("Title",title);
         bundle.putString("Message",message);
         startActivity(context, ErrorActivity.class, bundle);
+    }
+
+    public static String createFolder(String path){
+        File rootPath = new File(Environment.getExternalStorageDirectory(), path);
+        if(!rootPath.exists()){rootPath.mkdirs();}
+        return rootPath.getAbsoluteFile().toString();
     }
 
     /**Funções de data**/

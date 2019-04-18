@@ -168,6 +168,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
         else{
+            FunctionsApp.APP_PATH = FunctionsApp.createFolder("WalletOfClients");
             this.getPhoto();
         }
     }
