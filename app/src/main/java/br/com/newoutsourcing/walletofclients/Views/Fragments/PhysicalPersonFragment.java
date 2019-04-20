@@ -27,6 +27,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -129,7 +132,10 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         try{
             if (this.onValidate()){
                 if (this.idImgClientPFPhoto.getDrawable() != null &&  ((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap() != null){
-                    client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap()));
+                    String pathImage = FunctionsApp.saveImage(((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap());
+                    if (!pathImage.isEmpty()){
+                        client.setImage(pathImage);
+                    }
                 }
                 client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
                 client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
@@ -162,7 +168,11 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
             this.idEdtClientPFRG.setText(client.getPhysicalPerson().getRG());
             this.idEdtClientPFDate.setText(client.getPhysicalPerson().getBirthDate());
             this.idSpnClientPFSexo.setSelection(FunctionsApp.getSex(client.getPhysicalPerson().getSex()));
-            if (!client.getImage().isEmpty()) this.idImgClientPFPhoto.setImageBitmap(FunctionsApp.parseBase64ToBitmap((client.getImage())));
+            Picasso.get()
+                    .load(Uri.fromFile(new File(client.getImage())))
+                    .error(R.mipmap.ic_client_circle)
+                    .into(this.idImgClientPFPhoto);
+            this.idImgClientPFPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 
@@ -189,7 +199,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
         else{
-            FunctionsApp.APP_PATH = FunctionsApp.createFolder("WalletOfClients");
             this.getPhoto();
         }
     }

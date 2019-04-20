@@ -24,6 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -122,7 +125,10 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         try{
             if (this.onValidate()) {
                 if (this.idImgClientPJPhoto.getDrawable() != null && ((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap() != null) {
-                    client.setImage(FunctionsApp.parseBitmapToBase64(((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap()));
+                    String pathImage = FunctionsApp.saveImage(((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap());
+                    if (!pathImage.isEmpty()){
+                        client.setImage(pathImage);
+                    }
                 }
 
                 client.getLegalPerson().setSocialName(this.idEdtClientPJSocialName.getText().toString());
@@ -147,7 +153,11 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
             this.idEdtClientPJCNPJ.setText(client.getLegalPerson().getCNPJ());
             this.idEdtClientPJIE.setText(client.getLegalPerson().getIE());
             this.idEdtClientPJIM.setText(client.getLegalPerson().getIM());
-            if (!client.getImage().isEmpty()) this.idImgClientPJPhoto.setImageBitmap(FunctionsApp.parseBase64ToBitmap((client.getImage())));
+            Picasso.get()
+                    .load(Uri.fromFile(new File(client.getImage())))
+                    .error(R.mipmap.ic_client_circle)
+                    .into(this.idImgClientPJPhoto);
+            this.idImgClientPJPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 
@@ -168,7 +178,6 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
         else{
-            FunctionsApp.APP_PATH = FunctionsApp.createFolder("WalletOfClients");
             this.getPhoto();
         }
     }

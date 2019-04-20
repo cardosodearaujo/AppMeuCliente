@@ -1,11 +1,16 @@
 package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.List;
 
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
@@ -13,8 +18,6 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Activitys.RegisterClientActivity;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
@@ -34,8 +37,11 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     @Override
     public void onBindViewHolder(final ClientViewHolder viewHolder, final int position) {
         if (this.clientList.get(position).getImage() != null && !this.clientList.get(position).getImage().equals("")){
-            viewHolder.idPhotoProfile.setImageBitmap(FunctionsApp.parseBase64ToBitmap(this.clientList.get(position).getImage()));
-            viewHolder.idPhotoProfile.setScaleType(CircleImageView.ScaleType.CENTER_CROP);
+            Picasso.get()
+                    .load(Uri.fromFile(new File(this.clientList.get(position).getImage())))
+                    .error(R.mipmap.ic_client_circle)
+                    .into(viewHolder.idPhotoProfile);
+            viewHolder.idPhotoProfile.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
         if(this.clientList.get(position).getType() == 1){

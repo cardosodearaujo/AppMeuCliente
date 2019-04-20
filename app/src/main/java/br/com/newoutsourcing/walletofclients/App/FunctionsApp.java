@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -110,6 +112,23 @@ public class FunctionsApp {
         return rootPath.getAbsoluteFile().toString();
     }
 
+    public static String saveImage(Bitmap bitmap){
+        try{
+            String  path = FunctionsApp.createFolder("WalletOfClients");
+            String name =  String.valueOf("ClientImage_" +  Math.random()) + ".png";
+            File file = new File(path,name);
+            if (file.exists())file.delete();
+
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100,outputStream);
+            outputStream.flush();
+            outputStream.close();
+            return file.getAbsolutePath();
+        }catch (IOException ex){
+            return "";
+        }
+    }
+
     /**Funções de data**/
     public static String getCurrentDate(){
         Date data = new Date(System.currentTimeMillis());
@@ -139,11 +158,11 @@ public class FunctionsApp {
     }
 
     /**Tratamento de imagem**/
-    public static String parseBitmapToBase64(Bitmap bpm){
+    public static String parseBitmapToBase64(Bitmap bitmap){
         try{
-            if (bpm == null){return "";}
+            if (bitmap == null){return "";}
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bpm.compress(Bitmap.CompressFormat.JPEG,100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100, stream);
             byte[] byteArray = stream.toByteArray();
             String base64 = Base64.encodeToString(byteArray,Base64.NO_WRAP);
             return "data:image/jpg;base64," + base64;
