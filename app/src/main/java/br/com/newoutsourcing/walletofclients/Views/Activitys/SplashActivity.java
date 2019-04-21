@@ -27,13 +27,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_splash);
+        this.onStartAds();
         this.onLoadDatabaseSession();
         this.onStartActivity();
     }
 
     private void onStartAds(){
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
-        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
+        MobileAds.initialize(this, "ca-app-pub-7022724497408656~5963597068");
     }
 
     private void onLoadDatabaseSession(){
