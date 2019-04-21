@@ -189,7 +189,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFRG.setText("");
         this.idSpnClientPFSexo.setSelection(0);
         this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
-        this.idImgClientPFPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
+        Picasso.get().load(R.mipmap.ic_client_circle).into(this.idImgClientPFPhoto);
     }
 
     private void getPermissions() {

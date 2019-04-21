@@ -17,9 +17,11 @@ import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -114,8 +116,9 @@ public class FunctionsApp {
 
     public static String saveImage(Bitmap bitmap){
         try{
-            String  path = FunctionsApp.createFolder("WalletOfClients");
-            String name =  String.valueOf("ClientImage_" +  Math.random()) + ".png";
+            FunctionsApp.createFolder("WalletOfClients");
+            String  path = FunctionsApp.createFolder("WalletOfClients/Images");
+            String name =  "Image_" +  String.valueOf(Math.random()) + ".png";
             File file = new File(path,name);
             if (file.exists())file.delete();
 
@@ -129,10 +132,31 @@ public class FunctionsApp {
         }
     }
 
+    public static String saveArchive(String archive, String name){
+        try{
+            String path = FunctionsApp.createFolder("WalletOfClients");
+            File file = new File(path,name);
+            if (file.exists())file.delete();
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(archive);
+            writer.flush();
+            writer.close();
+            return file.getCanonicalFile().getAbsolutePath();
+        }catch (IOException ex){
+            return "";
+        }
+    }
+
+
     /**Funções de data**/
     public static String getCurrentDate(){
+        return getCurrentDate("dd/MM/yyyy");
+    }
+
+    public static String getCurrentDate(String format){
         Date data = new Date(System.currentTimeMillis());
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatDate = new SimpleDateFormat(format);
         return formatDate.format(data);
     }
 

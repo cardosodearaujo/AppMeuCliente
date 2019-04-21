@@ -168,7 +168,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.idEdtClientPJCNPJ.setText("");
         this.idEdtClientPJIE.setText("");
         this.idEdtClientPJIM.setText("");
-        this.idImgClientPJPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_client_circle));
+        Picasso.get().load(R.mipmap.ic_client_circle).into(this.idImgClientPJPhoto);
     }
 
     private void getPermissions() {

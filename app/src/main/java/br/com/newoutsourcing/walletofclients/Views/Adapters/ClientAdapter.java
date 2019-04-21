@@ -1,7 +1,9 @@
 package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,10 +75,25 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
         viewHolder.idBtnDelete.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        TB_CLIENT.Delete(clientList.get(position));
-                        removeItem(position);
-                        FunctionsApp.showSnackBarLong(v,"Cliente excluido com sucesso!");
+                    public void onClick(final View v) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                        builder.setMessage("Tem certeza que deseja excluir?")
+                                .setCancelable(false)
+                                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    public void onClick(final DialogInterface dialog, final int id) {
+                                        TB_CLIENT.Delete(clientList.get(position));
+                                        removeItem(position);
+                                        FunctionsApp.showSnackBarLong(v,"Cliente excluido com sucesso!");
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                    public void onClick(final DialogInterface dialog, final int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        final AlertDialog alert = builder.create();
+                        alert.show();
                     }
                 }
         );
