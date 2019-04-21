@@ -32,4 +32,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.azimolabs.maskformatter:maskformatter:0.2'
     implementation 'br.com.jansenfelipe:androidmask:1.0.1'
+    implementation 'com.google.firebase:firebase-ads:17.1.3'
 }

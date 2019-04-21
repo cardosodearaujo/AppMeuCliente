@@ -210,6 +210,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
             }
         });
         alert = builder.create();
+        alert.setTitle("Escolha uma opção:");
         alert.show();
     }
 

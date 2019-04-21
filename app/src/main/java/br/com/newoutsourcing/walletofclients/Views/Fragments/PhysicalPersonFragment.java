@@ -231,6 +231,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
             }
         });
         alert = builder.create();
+        alert.setTitle("Escolha uma opção:");
         alert.show();
     }
 

@@ -17,6 +17,11 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
 
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="[ADMOB_APP_ID]"/>
+
         <activity
             android:name=".Views.Activitys.SplashActivity"
             android:screenOrientation="portrait"

@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.ads.MobileAds;
+
 import java.io.File;
 
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
@@ -27,6 +29,11 @@ public class SplashActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_splash);
         this.onLoadDatabaseSession();
         this.onStartActivity();
+    }
+
+    private void onStartAds(){
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
     }
 
     private void onLoadDatabaseSession(){
@@ -49,6 +56,6 @@ public class SplashActivity extends AppCompatActivity {
                 FunctionsApp.startActivity(SplashActivity.this,ListClientActivity.class,null);
                 FunctionsApp.closeActivity(SplashActivity.this);
             }
-        },3000);
+        },1000);
     }
 }

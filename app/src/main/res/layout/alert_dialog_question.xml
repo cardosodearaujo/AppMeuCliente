@@ -4,8 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="20sp"
-    android:textColor="@color/colorWhite"
+    android:textColor="@color/colorBlack"
     android:padding="10sp"
-    android:textStyle="bold"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     />
