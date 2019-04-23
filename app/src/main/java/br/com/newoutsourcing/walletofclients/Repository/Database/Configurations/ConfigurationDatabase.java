@@ -3,8 +3,8 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Configurations
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import static br.com.newoutsourcing.walletofclients.App.FunctionsApp.DB_NAME;
-import static br.com.newoutsourcing.walletofclients.App.FunctionsApp.DB_VERSION;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.DB_NAME;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.DB_VERSION;
 
 public class ConfigurationDatabase extends SQLiteOpenHelper {
 

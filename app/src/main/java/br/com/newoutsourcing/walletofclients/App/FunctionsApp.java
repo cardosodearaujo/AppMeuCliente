@@ -31,12 +31,6 @@ import java.util.Date;
 import br.com.newoutsourcing.walletofclients.Views.Activitys.ErrorActivity;
 
 public class FunctionsApp {
-    /**Pasta do dispositivo**/
-    public static String APP_PATH;
-    /**Controles do banco de dados**/
-    public static final String DB_NAME = "DB_WalletOfClients";
-    public static final int DB_VERSION = 1;
-
     /**Controles da camera**/
     public static int IMAGEM_CAMERA = 0;
     public static int IMAGEM_INTERNA = 1;
@@ -147,7 +141,6 @@ public class FunctionsApp {
             return "";
         }
     }
-
 
     /**Funções de data**/
     public static String getCurrentDate(){

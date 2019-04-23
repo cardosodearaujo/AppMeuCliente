@@ -119,7 +119,6 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     public Client onSave(Client client) {
         try{
             if (this.onValidate()){
-                client.getAddress().setClientId(client.getClientId());
                 client.getAddress().setCEP(this.idEdtClientAddressCEP.getText().toString());
                 client.getAddress().setStreet(this.idEdtClientAddressStreet.getText().toString());
                 client.getAddress().setNumber(Integer.parseInt(this.idEdtClientAddressNumber.getText().toString()));

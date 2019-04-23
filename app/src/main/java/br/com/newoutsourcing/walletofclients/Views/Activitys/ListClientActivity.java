@@ -19,6 +19,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onConfiguration(){
+        MobileAds.initialize(ListClientActivity.this, "@string/str_app_admob_id");
         AdRequest adRequest = new AdRequest.Builder().build();
         this.idAdsView.loadAd(adRequest);
 

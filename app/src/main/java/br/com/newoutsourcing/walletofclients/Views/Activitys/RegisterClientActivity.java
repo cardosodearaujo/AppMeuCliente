@@ -143,6 +143,7 @@ public class RegisterClientActivity extends AppCompatActivity {
                                     client.setClientId(TB_CLIENT.Insert(client));
 
                                     if (client.getClientId() > 0){
+
                                         if (client.getType() == 1){
                                             client.getPhysicalPerson().setClientId(client.getClientId());
                                             TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());

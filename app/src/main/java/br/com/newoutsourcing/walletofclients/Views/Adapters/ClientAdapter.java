@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
@@ -24,10 +26,12 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
-    private List<Client> clientList;
+    private List<Client> clientList = new ArrayList<>();
+    private List<Client> clientListRepository = new ArrayList<>();
 
     public ClientAdapter(List<Client> clientList){
-        this.clientList = clientList;
+        this.clientList.addAll(clientList);
+        this.clientListRepository.addAll(clientList);
     }
 
     @Override
@@ -38,21 +42,21 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     @Override
     public void onBindViewHolder(final ClientViewHolder viewHolder, final int position) {
-        if (this.clientList.get(position).getImage() != null && !this.clientList.get(position).getImage().equals("")){
+        if (this.clientListRepository.get(position).getImage() != null && !this.clientListRepository.get(position).getImage().equals("")){
             Picasso.get()
-                    .load(Uri.fromFile(new File(this.clientList.get(position).getImage())))
+                    .load(Uri.fromFile(new File(this.clientListRepository.get(position).getImage())))
                     .error(R.mipmap.ic_client_circle)
                     .into(viewHolder.idPhotoProfile);
             viewHolder.idPhotoProfile.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
-        if(this.clientList.get(position).getType() == 1){
-            viewHolder.idTxwName.setText(this.clientList.get(position).getPhysicalPerson().getName());
-            viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getPhysicalPerson().getCPF());
+        if(this.clientListRepository.get(position).getType() == 1){
+            viewHolder.idTxwName.setText(this.clientListRepository.get(position).getPhysicalPerson().getName());
+            viewHolder.idTxwCPF_CNPJ.setText(this.clientListRepository.get(position).getPhysicalPerson().getCPF());
             viewHolder.idTxwTipo.setText("PF");
         }else{
-            viewHolder.idTxwName.setText(this.clientList.get(position).getLegalPerson().getSocialName());
-            viewHolder.idTxwCPF_CNPJ.setText(this.clientList.get(position).getLegalPerson().getCNPJ());
+            viewHolder.idTxwName.setText(this.clientListRepository.get(position).getLegalPerson().getSocialName());
+            viewHolder.idTxwCPF_CNPJ.setText(this.clientListRepository.get(position).getLegalPerson().getCNPJ());
             viewHolder.idTxwTipo.setText("PJ");
         }
 
@@ -61,12 +65,12 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        if (clientList.get(position).getType() == 1){
+                        if (clientListRepository.get(position).getType() == 1){
                             bundle.putString("TipoCadastro","F");
                         }else{
                             bundle.putString("TipoCadastro","J");
                         }
-                        bundle.putSerializable("Client",clientList.get(position));
+                        bundle.putSerializable("Client",clientListRepository.get(position));
                         FunctionsApp.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
                     }
                 }
@@ -81,7 +85,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
                                 .setCancelable(false)
                                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                     public void onClick(final DialogInterface dialog, final int id) {
-                                        TB_CLIENT.Delete(clientList.get(position));
+                                        TB_CLIENT.Delete(clientListRepository.get(position));
                                         removeItem(position);
                                         FunctionsApp.showSnackBarLong(v,"Cliente excluido com sucesso!");
                                         dialog.cancel();
@@ -101,21 +105,11 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
 
     @Override
     public int getItemCount() {
-        return clientList != null ? clientList.size() : 0;
-    }
-
-    public void insertItem(Client client){
-        this.clientList.add(client);
-        this.notifyItemInserted(clientList.size());
-    }
-
-    private void updateItem(int position,Client client) {
-        this.clientList.set(position,client);
-        notifyItemChanged(position);
+        return this.clientList != null ? this.clientList.size() : 0;
     }
 
     public void removeItem(int position){
-        this.clientList.remove(position);
+        this.clientList.remove(clientListRepository.get(position));
         notifyItemRemoved(position);
     }
 }

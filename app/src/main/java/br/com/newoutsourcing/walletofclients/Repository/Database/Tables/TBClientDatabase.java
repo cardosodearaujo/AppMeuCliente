@@ -73,7 +73,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
                         client.setLegalPerson(legalPersonList.get(0));
                     }
 
-                    List<Address> addressList = TB_ADDRESS.Select(clientId);
+                    List<Address> addressList = TB_ADDRESS.Select(client.getClientId());
                     if (addressList != null && addressList.size() > 0 && addressList.get(0).getAddressId() >= 0){
                         client.setAddress(addressList.get(0));
                     }

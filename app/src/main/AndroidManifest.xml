@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.newoutsourcing.walletofclients">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -19,7 +21,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7022724497408656~5963597068"/>
+            android:value="@string/str_app_admob_id"/>
 
         <activity
             android:name=".Views.Activitys.SplashActivity"

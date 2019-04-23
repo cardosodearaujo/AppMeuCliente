@@ -1,16 +1,9 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.google.android.gms.ads.MobileAds;
-
-import java.io.File;
 
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
@@ -27,13 +20,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_splash);
-        this.onStartAds();
         this.onLoadDatabaseSession();
         this.onStartActivity();
-    }
-
-    private void onStartAds(){
-        MobileAds.initialize(this, "ca-app-pub-7022724497408656~5963597068");
     }
 
     private void onLoadDatabaseSession(){

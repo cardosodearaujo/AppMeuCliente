@@ -49,7 +49,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="11dp"
             android:layout_marginRight="11dp"
-            android:layout_marginBottom="11dp"
+            android:layout_marginBottom="35dp"
             fab:menu_animationDelayPerItem="55"
             fab:menu_backgroundColor="@android:color/transparent"
             fab:menu_buttonSpacing="0dp"
@@ -122,10 +122,6 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-7022724497408656/8505999922">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="@string/str_app_admob_banner_test_id"/>
     </RelativeLayout>
-
-
-
 </LinearLayout>

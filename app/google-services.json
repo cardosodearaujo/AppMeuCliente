@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "477719394721",
+    "firebase_url": "https://walletofclients.firebaseio.com",
+    "project_id": "walletofclients",
+    "storage_bucket": "walletofclients.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477719394721:android:0475c8f5a3552a2a",
+        "android_client_info": {
+          "package_name": "br.com.newoutsourcing.walletofclients"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477719394721-g0f0uarq852qri2mfmi4i61r1q1i1vaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.newoutsourcing.walletofclients",
+            "certificate_hash": "9c53b943420df3dc64c904488f1cd4e0f6732aba"
+          }
+        },
+        {
+          "client_id": "477719394721-vbdvt0g4v1pe7ntinialb6dk0h5g1aem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsUcfVHNRuWvQckPQP_k8I1MA3yiRlsG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477719394721-vbdvt0g4v1pe7ntinialb6dk0h5g1aem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-7022724497408656~5963597068"
+    }
+  ],
+  "configuration_version": "1"
+}
