@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdRequest;
@@ -42,6 +44,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private Button idBtnClose;
     private View idView;
     private AdView idAdsView;
+    private LinearLayout idLLMessageEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
         this.idBtnClose = this.findViewById(R.id.idBtnClose);
         this.idAdsView = this.findViewById(R.id.idAdsView);
+        this.idLLMessageEmpty = this.findViewById(R.id.idLLMessageEmpty);
     }
 
     private void onConfiguration(){
@@ -90,7 +94,16 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         super.onResume();
         try{
             if (this.idRecycleView != null && TB_CLIENT != null){
-                this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
+                List<Client> clientList = TB_CLIENT.Select();
+                if (clientList.size() > 0){
+                    this.idRecycleView.setAdapter(new ClientAdapter(ListClientActivity.this,clientList));
+                    this.idLLMessageEmpty.setVisibility(View.INVISIBLE);
+                    this.idRecycleView.setVisibility(View.VISIBLE);
+                }else{
+                    this.idLLMessageEmpty.setVisibility(View.VISIBLE);
+                    this.idRecycleView.setVisibility(View.INVISIBLE);
+                }
+
             }
         }catch (Exception ex){
             FunctionsApp.showSnackBarLong(this.idView,ex.getMessage());

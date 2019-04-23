@@ -1,5 +1,7 @@
 package br.com.newoutsourcing.walletofclients.Views.Adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,11 +27,12 @@ import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientVie
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
-
+    private Context context;
     private List<Client> clientList = new ArrayList<>();
     private List<Client> clientListRepository = new ArrayList<>();
 
-    public ClientAdapter(List<Client> clientList){
+    public ClientAdapter(Context context, List<Client> clientList){
+        this.context = context;
         this.clientList.addAll(clientList);
         this.clientListRepository.addAll(clientList);
     }
@@ -87,6 +90,10 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
                                     public void onClick(final DialogInterface dialog, final int id) {
                                         TB_CLIENT.Delete(clientListRepository.get(position));
                                         removeItem(position);
+                                        if (getItemCount() <= 0){
+                                            ((Activity) context).findViewById(R.id.idLLMessageEmpty).setVisibility(View.VISIBLE);
+                                            ((Activity) context).findViewById(R.id.idRecycleView).setVisibility(View.INVISIBLE);
+                                        }
                                         FunctionsApp.showSnackBarLong(v,"Cliente excluido com sucesso!");
                                         dialog.cancel();
                                     }

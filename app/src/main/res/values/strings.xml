@@ -24,6 +24,8 @@
     <string name="str_list_client_pj">Pessoa juridica</string>
     <string name="str_list_client_settings">Configurações</string>
     <string name="str_list_client_import_export">Importar/Exportar</string>
+    <string name="str_list_client_no_clients_message_1">Você ainda não tem clientes cadastrados.</string>
+    <string name="str_list_client_no_clients_message_2">Comece agora clicando no botão + abaixo.</string>
 
     <!-- TODO: Card de clientes-->
     <string name="str_card_client_name">Cliente:</string>
