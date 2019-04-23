@@ -89,7 +89,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     public void onResume(){
         super.onResume();
         try{
-            if (this.idRecycleView != null){
+            if (this.idRecycleView != null && TB_CLIENT != null){
                 this.idRecycleView.setAdapter(new ClientAdapter(TB_CLIENT.Select()));
             }
         }catch (Exception ex){
