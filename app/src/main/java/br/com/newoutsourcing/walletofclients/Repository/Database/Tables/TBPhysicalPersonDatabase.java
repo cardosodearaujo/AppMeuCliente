@@ -38,7 +38,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             if (clientId > 0){
                 this.SQL
                         = " Select " + this.getFields() + " From " + this.Table
-                        + " Where ID_CLIENT = " + clientId
+                        + " Where " + Fields.ID_CLIENT.name() + " = " + clientId
                         + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
             }else{
                 this.SQL
@@ -137,6 +137,30 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             throw ex;
         }finally {
             super.closeDatabaseInstance();
+        }
+    }
+
+    public long CheckCPF(String CPF){
+        super.openDatabaseInstance();
+        try{
+            if (CPF.isEmpty()) return 0;
+
+            this.SQL
+                    = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
+                    + " Where " + Fields.CPF.name() + " = '" + CPF + "'"
+                    + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
+
+            this.cursor = this.database.rawQuery(SQL,null);
+
+            if (this.cursor.getCount()>0){
+                return this.cursor.getInt(0);
+            }
+
+            return 0;
+        }catch (Exception ex){
+            throw ex;
+        }finally {
+            this.closeDatabaseInstance();
         }
     }
 
