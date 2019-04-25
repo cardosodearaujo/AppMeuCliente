@@ -13,7 +13,6 @@ public class ClientViewHolder  extends RecyclerView.ViewHolder {
     public TextView idTxwCPF_CNPJ;
     public TextView idTxwTipo;
     public ImageButton idBtnEdit;
-    public ImageButton idBtnDelete;
 
     public ClientViewHolder(View view){
         super(view);
@@ -22,6 +21,5 @@ public class ClientViewHolder  extends RecyclerView.ViewHolder {
         this.idTxwCPF_CNPJ = view.findViewById(R.id.idTxwCPF_CNPJ);
         this.idTxwTipo = view.findViewById(R.id.idTxwTipo);
         this.idBtnEdit = view.findViewById(R.id.idBtnEdit);
-        this.idBtnDelete = view.findViewById(R.id.idBtnDelete);
     }
 }

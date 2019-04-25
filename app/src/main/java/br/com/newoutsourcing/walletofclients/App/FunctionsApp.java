@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Activitys.ErrorActivity;
 
 public class FunctionsApp {
@@ -76,7 +77,7 @@ public class FunctionsApp {
     }
 
     public static AlertDialog showAlertDialog(Context context, String titulo, String menssagem, String mensagemBotao){
-        return new AlertDialog.Builder(context)
+        return new AlertDialog.Builder(context, R.style.Theme_MaterialComponents_Light_Dialog)
                 .setTitle(titulo)
                 .setMessage(menssagem)
                 .setNeutralButton(mensagemBotao, null).show();

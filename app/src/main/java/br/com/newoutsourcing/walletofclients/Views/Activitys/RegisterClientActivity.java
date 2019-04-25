@@ -1,5 +1,7 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
@@ -17,7 +21,6 @@ import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalInformati
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
-
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
@@ -39,6 +42,7 @@ public class RegisterClientActivity extends AppCompatActivity {
     private String typePerson;
     private View idView;
     private Client client;
+    private Button idBtnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +62,15 @@ public class RegisterClientActivity extends AppCompatActivity {
         this.idBtnClose = this.findViewById(R.id.idBtnClose);
         this.idTabLayout = this.findViewById(R.id.idTabLayout);
         this.idBtnSave = this.findViewById(R.id.idBtnSave);
+        this.idBtnDelete = this.findViewById(R.id.idBtnDelete);
     }
 
     private void onConfiguration() {
         this.setSupportActionBar(this.idToolbar);
         this.idTabLayout.setupWithViewPager(this.idViewPager);
         this.idBtnClose.setOnClickListener(this.onClickClose);
-        this.idBtnSave.setOnClickListener(onClickSave);
+        this.idBtnSave.setOnClickListener(this.onClickSave);
+        this.idBtnDelete.setOnClickListener(this.onClickDelete);
     }
 
     private void onConfigurationFragments() {
@@ -75,6 +81,8 @@ public class RegisterClientActivity extends AppCompatActivity {
 
             if (bundle != null && bundle.containsKey("Client")){
                 this.client = (Client)bundle.getSerializable("Client");
+            }else{
+                this.idBtnDelete.setEnabled(false);
             }
 
             if (typePerson.equals("F")){
@@ -106,6 +114,32 @@ public class RegisterClientActivity extends AppCompatActivity {
             FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro",ex.getMessage());
         }
     }
+
+    View.OnClickListener onClickDelete = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            if (client.getClientId() > 0){
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                TB_CLIENT.Delete(client);
+                                Toast.makeText(RegisterClientActivity.this,"Cliente excluido com sucesso!",Toast.LENGTH_LONG).show();
+                                FunctionsApp.closeActivity(RegisterClientActivity.this);
+                                dialog.cancel();
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                dialog.cancel();
+                            }
+                        })
+                        .setMessage("Tem ceteza que deseja excluir?");
+
+                final AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }
+    };
 
     View.OnClickListener onClickSave = new View.OnClickListener() {
         @Override

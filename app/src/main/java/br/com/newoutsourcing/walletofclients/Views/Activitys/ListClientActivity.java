@@ -106,7 +106,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             if (this.idRecycleView != null && TB_CLIENT != null){
                 List<Client> clientList = TB_CLIENT.Select();
                 if (clientList.size() > 0){
-                    this.idRecycleView.setAdapter(new ClientAdapter(ListClientActivity.this,clientList));
+                    this.idRecycleView.setAdapter(new ClientAdapter(clientList));
                     this.idLLMessageEmpty.setVisibility(View.INVISIBLE);
                     this.idRecycleView.setVisibility(View.VISIBLE);
                 }else{
@@ -158,7 +158,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                 itens.add("Exportar");
 
                 ArrayAdapter adapter = new ArrayAdapter(ListClientActivity.this, R.layout.alert_dialog_question, itens);
-                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ListClientActivity.this);
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ListClientActivity.this,R.style.Theme_MaterialComponents_Light_Dialog);
                 builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int idOption) {
                         Intent intent;

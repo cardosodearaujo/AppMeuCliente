@@ -211,7 +211,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         itens.add("Escolher da galeria");
 
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.alert_dialog_question, itens);
-        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity(),R.style.Theme_MaterialComponents_Light_Dialog);
         builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int idOption) {
                 Intent intent;

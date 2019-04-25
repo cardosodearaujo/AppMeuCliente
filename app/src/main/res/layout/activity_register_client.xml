@@ -41,6 +41,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:background="@mipmap/ic_close" />
+
+                <Button
+                    android:id="@+id/idBtnDelete"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:backgroundTint="@color/colorWhite"
+                    android:background="@mipmap/ic_delete" />
+
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
