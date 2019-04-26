@@ -21,12 +21,14 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="@string/str_list_client_list" >
 
-            <Button
-                android:id="@+id/idBtnClose"
-                android:layout_width="45dp"
+            <TextView
+                android:id="@+id/idTvwSizeClient"
+                android:layout_width="100dp"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@mipmap/ic_close" />
+                android:gravity="right"
+                android:textStyle="bold"
+                android:layout_gravity="right" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

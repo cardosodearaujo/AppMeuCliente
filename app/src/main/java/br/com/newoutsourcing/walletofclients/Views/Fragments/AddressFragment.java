@@ -64,6 +64,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     public boolean onValidate(){
         boolean save = true;
 
+        /**
         if (this.idEdtClientAddressCEP.getText().toString().isEmpty()){
             this.idEdtClientAddressCEP.setError("Informe o CEP.");
             save = false;
@@ -111,6 +112,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
         }else{
             this.idEdtClientAddressCounty.setError(null);
         }
+        **/
 
         return save;
     }
@@ -121,10 +123,10 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
             if (this.onValidate()){
                 client.getAddress().setCEP(this.idEdtClientAddressCEP.getText().toString());
                 client.getAddress().setStreet(this.idEdtClientAddressStreet.getText().toString());
-                client.getAddress().setNumber(Integer.parseInt(this.idEdtClientAddressNumber.getText().toString()));
+                if (!this.idEdtClientAddressNumber.getText().toString().isEmpty()) client.getAddress().setNumber(Integer.parseInt(this.idEdtClientAddressNumber.getText().toString()));
                 client.getAddress().setNeighborhood(this.idEdtClientAddressNeighborhood.getText().toString());
                 client.getAddress().setCity(this.idEdtClientAddressCity.getText().toString());
-                client.getAddress().setState(this.idSpnClientAddressState.getSelectedItem().toString().substring(0,2));
+                if (!this.idSpnClientAddressState.getSelectedItem().toString().isEmpty()) client.getAddress().setState(this.idSpnClientAddressState.getSelectedItem().toString().substring(0,2));
                 client.getAddress().setCountry(this.idEdtClientAddressCounty.getText().toString());
                 client.getAddress().setSuccess(true);
             }else{

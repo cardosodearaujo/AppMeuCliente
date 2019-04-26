@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
@@ -51,7 +52,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton idBtnFabClientExport;
     private FloatingActionButton idBtnFabClientConfig;
     private RecyclerView idRecycleView;
-    private Button idBtnClose;
+    private TextView idTvwSizeClient;
     private View idView;
     private AdView idAdsView;
     private LinearLayout idLLMessageEmpty;
@@ -78,7 +79,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFabClientExport = this.findViewById(R.id.idBtnFabClientExport);
         this.idBtnFabClientConfig = this.findViewById(R.id.idBtnFabClientConfig);
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
-        this.idBtnClose = this.findViewById(R.id.idBtnClose);
+        this.idTvwSizeClient = this.findViewById(R.id.idTvwSizeClient);
         this.idAdsView = this.findViewById(R.id.idAdsView);
         this.idLLMessageEmpty = this.findViewById(R.id.idLLMessageEmpty);
     }
@@ -90,7 +91,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
 
         this.idBtnFabClientLegalPerson.setOnClickListener(this.onClickBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
-        this.idBtnClose.setOnClickListener(this.onClickClose);
         this.idBtnFabClientExport.setOnClickListener(this.onClickExport);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
@@ -105,20 +105,21 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         try{
             if (this.idRecycleView != null && TB_CLIENT != null){
                 List<Client> clientList = TB_CLIENT.Select();
-                if (clientList.size() > 0){
+                if (clientList != null && clientList.size() > 0){
+                    this.idTvwSizeClient.setText("Total: " + clientList.size());
                     this.idRecycleView.setAdapter(new ClientAdapter(clientList));
+                    this.idTvwSizeClient.setVisibility(View.VISIBLE);
                     this.idLLMessageEmpty.setVisibility(View.INVISIBLE);
                     this.idRecycleView.setVisibility(View.VISIBLE);
                 }else{
+                    this.idTvwSizeClient.setVisibility(View.INVISIBLE);
                     this.idLLMessageEmpty.setVisibility(View.VISIBLE);
                     this.idRecycleView.setVisibility(View.INVISIBLE);
                 }
-
             }
         }catch (Exception ex){
             FunctionsApp.showSnackBarLong(this.idView,ex.getMessage());
         }
-
     }
 
     View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){
@@ -136,13 +137,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             Bundle bundle = new Bundle();
             bundle.putString("TipoCadastro","F");
             FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
-        }
-    };
-
-    View.OnClickListener onClickClose = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.closeActivity(ListClientActivity.this);
         }
     };
 

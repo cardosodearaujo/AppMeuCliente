@@ -82,7 +82,7 @@ public class RegisterClientActivity extends AppCompatActivity {
             if (bundle != null && bundle.containsKey("Client")){
                 this.client = (Client)bundle.getSerializable("Client");
             }else{
-                this.idBtnDelete.setEnabled(false);
+                this.idBtnDelete.setVisibility(View.INVISIBLE);
             }
 
             if (typePerson.equals("F")){

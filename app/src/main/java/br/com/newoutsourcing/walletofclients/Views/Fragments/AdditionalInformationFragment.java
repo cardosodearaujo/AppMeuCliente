@@ -57,6 +57,7 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
     public boolean onValidate(){
         boolean save = true;
 
+        /**
         if (this.idEdtClientPFCellphone.getText().toString().isEmpty()){
             this.idEdtClientPFCellphone.setError("Informe o celular.");
             save = false;
@@ -91,6 +92,7 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
         }else{
             this.idEdtClientPFObservation.setError(null);
         }
+        **/
 
         return save;
     }

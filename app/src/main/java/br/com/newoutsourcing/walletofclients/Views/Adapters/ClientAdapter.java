@@ -53,7 +53,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
             viewHolder.idTxwTipo.setText("PJ");
         }
 
-        viewHolder.idBtnEdit.setOnClickListener(
+        viewHolder.idCardView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
