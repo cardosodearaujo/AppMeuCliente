@@ -208,6 +208,8 @@ public class RegisterClientActivity extends AppCompatActivity {
                                     additionalInformationCallback.onClear();
                                     addressCallback.onClear();
 
+                                    idBtnDelete.setVisibility(View.INVISIBLE);
+
                                     FunctionsApp.showSnackBarLong(v,"Cliente atualizado!");
                                 }
                             }

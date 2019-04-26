@@ -57,14 +57,16 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        if (clientList.get(position).getType() == 1){
-                            bundle.putString("TipoCadastro","F");
-                        }else{
-                            bundle.putString("TipoCadastro","J");
-                        }
-                        bundle.putSerializable("Client", clientList.get(position));
-                        FunctionsApp.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
+                        onClickDetail(v,position);
+                    }
+                }
+        );
+
+        viewHolder.idBtnEdit.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickDetail(v,position);
                     }
                 }
         );
@@ -73,5 +75,17 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     @Override
     public int getItemCount() {
         return this.clientList != null ? this.clientList.size() : 0;
+    }
+
+
+    private void onClickDetail(View v,int position){
+        Bundle bundle = new Bundle();
+        if (clientList.get(position).getType() == 1){
+            bundle.putString("TipoCadastro","F");
+        }else{
+            bundle.putString("TipoCadastro","J");
+        }
+        bundle.putSerializable("Client", clientList.get(position));
+        FunctionsApp.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
     }
 }
