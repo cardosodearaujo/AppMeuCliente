@@ -140,7 +140,6 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try{
             if (CNPJ.isEmpty()) return 0;
-
             this.SQL
                     = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
                     + " Where " + Fields.CNPJ.name() + " = '" + CNPJ + "'"
@@ -149,6 +148,7 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
             this.cursor = this.database.rawQuery(SQL,null);
 
             if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 return this.cursor.getInt(0);
             }
 

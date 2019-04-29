@@ -144,7 +144,6 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         super.openDatabaseInstance();
         try{
             if (CPF.isEmpty()) return 0;
-
             this.SQL
                     = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
                     + " Where " + Fields.CPF.name() + " = '" + CPF + "'"
@@ -153,6 +152,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
             this.cursor = this.database.rawQuery(SQL,null);
 
             if (this.cursor.getCount()>0){
+                this.cursor.moveToFirst();
                 return this.cursor.getInt(0);
             }
 

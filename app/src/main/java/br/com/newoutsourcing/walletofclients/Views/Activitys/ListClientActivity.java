@@ -1,5 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.newoutsourcing.walletofclients.Objects.Client;
+import br.com.newoutsourcing.walletofclients.Repository.Tasks.ImportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
@@ -102,6 +104,10 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onResume(){
         super.onResume();
+        this.AtualizarLista();
+    }
+
+    public void AtualizarLista(){
         try{
             if (this.idRecycleView != null && TB_CLIENT != null){
                 List<Client> clientList = TB_CLIENT.Select();
@@ -150,6 +156,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
 
                 itens.add("Importar");
                 itens.add("Exportar");
+                itens.add("Apagar todos os clientes");
 
                 ArrayAdapter adapter = new ArrayAdapter(ListClientActivity.this, R.layout.alert_dialog_question, itens);
                 final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ListClientActivity.this,R.style.Theme_MaterialComponents_Light_Dialog);
@@ -169,6 +176,17 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                                 ExportClients();
                                 dialog.cancel();
                                 break;
+                            case 2: //Deletar tudo:
+                                FunctionsApp.showPgDialog(ListClientActivity.this);
+                                FunctionsApp.PG_DIALOG.setMessage("Apagando todos os clientes...");
+                                TB_ADDRESS.DeleteAll();
+                                TB_ADDITIONAL_INFORMATION.DeleteAll();
+                                TB_LEGAL_PERSON.DeleteAll();
+                                TB_PHYSICAL_PERSON.DeleteAll();
+                                TB_CLIENT.DeleteAll();
+                                AtualizarLista();
+                                FunctionsApp.closePgDialog();
+                                dialog.cancel();
                         }
                     }
                 });
@@ -265,115 +283,23 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void ImportClients(Uri uri) throws Exception {
+    private void ImportClients(Uri uri) {
         try{
-            FunctionsApp.showPgDialog(ListClientActivity.this);
-            FunctionsApp.PG_DIALOG.setTitle("Importando. Aguarde...");
-
-            InputStream inputStream = getContentResolver().openInputStream(uri);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String data;
-            while((data = reader.readLine()) != null){
-                String[] line = data.split(";");
-                if (line.length == 22){
-                    if (!line[0].equals("ID_CLIENT")){
-                        FunctionsApp.PG_DIALOG.setMessage("Cliente: " + line[3]);
-
-                        Client client = new Client();
-                        int typeClient = 1;
-                        long idCliente;
-
-                        if (line[2]!=null && line[5] != null){
-                            if (line[2].equals("F")){
-                                typeClient = 1;
-                                idCliente = TB_PHYSICAL_PERSON.CheckCPF(line[5]);
-                                if (idCliente > 0){
-                                    client = TB_CLIENT.Select(idCliente).get(0);
-                                }
-                            }else if (line[2].equals("J")){
-                                typeClient = 2;
-                                idCliente = TB_LEGAL_PERSON.CheckCNPJ(line[5]);
-                                if (idCliente > 0){
-                                    client = TB_CLIENT.Select(idCliente).get(0);
-                                }
-                            }
-                        }
-
-                        //Cliente:
-                        if (line[1]!=null) client.setImage(line[1]);
-                        if (line[2]!=null) client.setType(typeClient);
-
-                        if (client.getType()==1){ //Pessoa fisica:
-                            if (line[3]!=null) client.getPhysicalPerson().setName(line[3]);
-                            if (line[4]!=null) client.getPhysicalPerson().setNickname(line[4]);
-                            if (line[5]!=null) client.getPhysicalPerson().setCPF(line[5]);
-                            if (line[6]!=null) client.getPhysicalPerson().setRG(line[6]);
-                            if (line[8]!=null) client.getPhysicalPerson().setBirthDate(line[8]);
-                            if (line[9]!=null) client.getPhysicalPerson().setSex(line[9]);
-                        }else{ //Pessoa juridica:
-                            if (line[3]!=null) client.getLegalPerson().setSocialName(line[3]);
-                            if (line[4]!=null) client.getLegalPerson().setFantasyName(line[4]);
-                            if (line[5]!=null) client.getLegalPerson().setCNPJ(line[5]);
-                            if (line[6]!=null) client.getLegalPerson().setIE(line[6]);
-                            if (line[7]!=null) client.getLegalPerson().setIM(line[7]);
-                        }
-
-                        //Informação adicional:
-                        if (line[10]!=null) client.getAdditionalInformation().setCellphone(line[10]);
-                        if (line[11]!=null) client.getAdditionalInformation().setTelephone(line[11]);
-                        if (line[12]!=null) client.getAdditionalInformation().setEmail(line[12]);
-                        if (line[13]!=null) client.getAdditionalInformation().setSite(line[13]);
-                        if (line[14]!=null) client.getAdditionalInformation().setObservation(line[14]);
-
-                        //Endereço:
-                        if (line[15]!=null) client.getAddress().setCEP(line[15]);
-                        if (line[16]!=null) client.getAddress().setStreet(line[16]);
-                        if (line[17]!=null) client.getAddress().setNumber(Integer.parseInt(line[17]));
-                        if (line[18]!=null) client.getAddress().setNeighborhood(line[18]);
-                        if (line[19]!=null) client.getAddress().setCity(line[19]);
-                        if (line[20]!=null) client.getAddress().setState(line[20]);
-                        if (line[21]!=null) client.getAddress().setCountry(line[21]);
-
-                        if (client.getClientId() <= 0){//Insere:
-                            long clientId = TB_CLIENT.Insert(client);
-                            if (client.getType()==1){
-                                client.getPhysicalPerson().setClientId(clientId);
-                                TB_PHYSICAL_PERSON.Insert(client.getPhysicalPerson());
-                            }else{
-                                client.getLegalPerson().setClientId(clientId);
-                                TB_LEGAL_PERSON.Insert(client.getLegalPerson());
-                            }
-                            client.getAdditionalInformation().setClientId(clientId);
-                            TB_ADDITIONAL_INFORMATION.Insert(client.getAdditionalInformation());
-                            client.getAddress().setClientId(clientId);
-                            TB_ADDRESS.Insert(client.getAddress());
-                        }else{//Atualiza
-                            TB_CLIENT.Update(client);
-                            if (client.getType()==1){
-                                TB_PHYSICAL_PERSON.Update(client.getPhysicalPerson());
-                            }else{
-                                TB_LEGAL_PERSON.Update(client.getLegalPerson());
-                            }
-                            TB_ADDITIONAL_INFORMATION.Update(client.getAdditionalInformation());
-                            TB_ADDRESS.Update(client.getAddress());
-                        }
+            ImportAsyncTask importAsyncTask = new ImportAsyncTask(ListClientActivity.this){
+                @Override
+                protected void onPostExecute(Boolean isSuccess){
+                    FunctionsApp.closePgDialog();
+                    if (isSuccess) {
+                        AtualizarLista();
+                        FunctionsApp.showAlertDialog(ListClientActivity.this,"Atenção!","Clientes importados com sucesso!","Fechar");
+                    }else{
+                        FunctionsApp.showSnackBarLong(idView,"Não foi possivel importar os dados. Tente novamente!");
                     }
-                }else{
-                    throw new Exception("Arquivo fora do padrão!");
                 }
-            }
-            inputStream.close();
-            reader.close();
-
-            FunctionsApp.showAlertDialog(ListClientActivity.this,"Atenção!","Clientes importados com sucesso!","Fechar");
+            };
+            importAsyncTask.execute(uri);
         }catch (Exception ex){
             throw ex;
-        }finally {
-            FunctionsApp.closePgDialog();
         }
     }
-
-
-
 }

@@ -7,7 +7,7 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBLegalP
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBPhysicalPersonDatabase;
 
 public class SessionDatabase {
-    public static final String DB_NAME = "DB_WalletOfClients";
+    public static final String DB_NAME = "DB_WalletOfClients1";
     public static final int DB_VERSION = 1;
 
     public static TBClientDatabase TB_CLIENT;

@@ -36,4 +36,16 @@ public class TableConfigurationDatabase<T> {
     public List<T> Select(long id){
         return null;
     }
+
+    public Boolean DeleteAll(){
+        this.openDatabaseInstance();
+        try {
+            this.database.delete(this.Table,null,null);
+            return  true;
+        }catch (Exception ex){
+            throw ex;
+        }finally {
+            this.closeDatabaseInstance();
+        }
+    }
 }
