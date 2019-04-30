@@ -3,7 +3,6 @@ package br.com.newoutsourcing.walletofclients.Views.Activitys;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.android.gms.ads.MobileAds;
 
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
@@ -32,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
             SessionDatabase.TB_ADDITIONAL_INFORMATION = TBAdditionalInformationDatabase.newInstance(SplashActivity.this);
             SessionDatabase.TB_ADDRESS = TBAddressDatabase.newInstance(SplashActivity.this);
         }catch (Exception ex){
-            FunctionsApp.showMessageError(SplashActivity.this,"Erro","Ocorreu um erro ao inicializar a aplicação. Tente novamente!");
+            FunctionsApp.showAlertDialog(SplashActivity.this,"Erro","Ocorreu um erro ao inicializar a aplicação. Tente novamente!","Fechar");
             FunctionsApp.closeActivity(SplashActivity.this);
         }
     }

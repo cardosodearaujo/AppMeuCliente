@@ -25,12 +25,10 @@ public class ImportAsyncTask extends AsyncTask<Uri,String,Boolean> {
     public ImportAsyncTask(Context context){
         this.context = context;
     }
-
     @Override
     protected void onPreExecute(){
-        FunctionsApp.showPgDialog(this.context);
+        FunctionsApp.showPgDialog(this.context,"Importando clientes...");
     }
-
     @Override
     protected Boolean doInBackground(Uri... uri) {
         try{
@@ -137,8 +135,8 @@ public class ImportAsyncTask extends AsyncTask<Uri,String,Boolean> {
             return false;
         }
     }
-     @Override
-     protected void onProgressUpdate(String... Status){
+    @Override
+    protected void onProgressUpdate(String... Status){
         if (Status.length > 0) FunctionsApp.PG_DIALOG.setMessage(Status[0]);
      }
 }

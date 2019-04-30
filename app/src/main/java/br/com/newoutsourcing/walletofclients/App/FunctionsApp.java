@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Activitys.ErrorActivity;
 
 public class FunctionsApp {
     /**Controles da camera**/
@@ -63,9 +62,10 @@ public class FunctionsApp {
         fragmentTransaction.commit();
     }
 
-    public static void showPgDialog(Context context){
+    public static void showPgDialog(Context context, String Title){
+        if (Title == null) Title = "Processo em andamento";
         PG_DIALOG = new ProgressDialog(context);
-        PG_DIALOG.setMessage("Aguarde...");
+        PG_DIALOG.setTitle(Title);
         PG_DIALOG.setIndeterminate(false);
         PG_DIALOG.setCancelable(false);
         PG_DIALOG.setProgress(0);
@@ -94,13 +94,6 @@ public class FunctionsApp {
     public static void closeKeyboard(Context context, View view){
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public static void showMessageError(Context context,String title, String message){
-        Bundle bundle = new Bundle();
-        bundle.putString("Title",title);
-        bundle.putString("Message",message);
-        startActivity(context, ErrorActivity.class, bundle);
     }
 
     public static String createFolder(String path){

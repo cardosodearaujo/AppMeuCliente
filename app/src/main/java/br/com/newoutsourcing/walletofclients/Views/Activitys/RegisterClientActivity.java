@@ -94,8 +94,7 @@ public class RegisterClientActivity extends AppCompatActivity {
                 this.legalPersonCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Informações",bundle);
             }else{
-                FunctionsApp.startActivity(RegisterClientActivity.this, ErrorActivity.class, bundle);
-                FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro","Opção não encontrada!");
+                FunctionsApp.showAlertDialog(RegisterClientActivity.this,"Erro","Opção não encontrada!","Fechar");
                 FunctionsApp.closeActivity(RegisterClientActivity.this);
             }
 
@@ -111,7 +110,7 @@ public class RegisterClientActivity extends AppCompatActivity {
                 this.idViewPager.setAdapter(pagerAdapter);
             }
         }catch (Exception ex){
-            FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro",ex.getMessage());
+            FunctionsApp.showAlertDialog(RegisterClientActivity.this,"Erro",ex.getMessage(),"Fechar");
         }
     }
 
@@ -217,7 +216,7 @@ public class RegisterClientActivity extends AppCompatActivity {
                     }
                 }
             }catch (Exception ex) {
-                FunctionsApp.showMessageError(RegisterClientActivity.this,"Erro",ex.getMessage());
+                FunctionsApp.showAlertDialog(RegisterClientActivity.this,"Erro",ex.getMessage(),"Fechar");
             }
         }
     };

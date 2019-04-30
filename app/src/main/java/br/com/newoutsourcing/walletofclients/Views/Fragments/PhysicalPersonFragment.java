@@ -275,7 +275,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
                 }
             }
         }catch (Exception ex){
-            FunctionsApp.showMessageError(getContext(),"Erro",ex.getMessage());
+            FunctionsApp.showAlertDialog(getContext(),"Erro",ex.getMessage(),"Fechar");
         }
     }
 

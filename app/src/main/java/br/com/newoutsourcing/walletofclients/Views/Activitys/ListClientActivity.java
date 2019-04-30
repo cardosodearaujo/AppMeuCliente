@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.newoutsourcing.walletofclients.Objects.Client;
+import br.com.newoutsourcing.walletofclients.Repository.Tasks.ExportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Repository.Tasks.ImportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
@@ -150,7 +151,6 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         @Override
         public void onClick(View v){
             try{
-
                 AlertDialog alert;
                 ArrayList<String> itens = new ArrayList<String>();
 
@@ -177,8 +177,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                                 dialog.cancel();
                                 break;
                             case 2: //Deletar tudo:
-                                FunctionsApp.showPgDialog(ListClientActivity.this);
-                                FunctionsApp.PG_DIALOG.setMessage("Apagando todos os clientes...");
+                                FunctionsApp.showPgDialog(ListClientActivity.this,"Apagando os clientes...");
                                 TB_ADDRESS.DeleteAll();
                                 TB_ADDITIONAL_INFORMATION.DeleteAll();
                                 TB_LEGAL_PERSON.DeleteAll();
@@ -194,7 +193,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                 alert.setTitle("Escolha uma opção:");
                 alert.show();
             }catch (Exception ex){
-                FunctionsApp.showMessageError(v.getContext(),"Erro!",ex.getMessage());
+                FunctionsApp.showAlertDialog(v.getContext(),"Erro!",ex.getMessage(),"Fechar");
             }
         }
     };
@@ -204,82 +203,31 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         try{
             if (resultCode == RESULT_OK) this.ImportClients(data.getData());
         }catch (Exception ex){
-            FunctionsApp.showMessageError(ListClientActivity.this,"Erro",ex.getMessage());
+            FunctionsApp.showAlertDialog(ListClientActivity.this,"Erro",ex.getMessage(),"Fechar");
         }
     }
 
     private void ExportClients(){
         try{
-            List<Client> clientList = TB_CLIENT.Select();
-
-            if (clientList.size() > 0) {
-                FunctionsApp.showPgDialog(ListClientActivity.this);
-                FunctionsApp.PG_DIALOG.setTitle("Exportando. Aguarde...");
-
-                String CSV =
-                        "ID_CLIENT;IMAGE;TYPE;NAME_SOCIAL_NAME;NICKNAME_FANTASY_NAME;" +
-                        "CPF_CNPJ;RG_IE;IM;BIRTH_DATE;SEX;CELLPHONE;TELEPHONE;EMAIL;SITE;" +
-                        "OBSERVATION;CEP;STREET;NUMBER;NEIGHBORHOOD;CITY;STATE;COUNTRY;\n";
-
-                for (Client client : clientList) {
-                    CSV += client.getClientId() + ";";
-                    CSV += client.getImage() + ";";
-
-                    if (client.getType() == 1) {
-                        FunctionsApp.PG_DIALOG.setMessage("Cliente: " + client.getPhysicalPerson().getName());
-                        CSV += "F;";
-                        CSV += client.getPhysicalPerson().getName() + ";";
-                        CSV += client.getPhysicalPerson().getNickname() + ";";
-                        CSV += client.getPhysicalPerson().getCPF() + ";";
-                        CSV += client.getPhysicalPerson().getRG() + ";";
-                        CSV += ";";
-                        CSV += client.getPhysicalPerson().getBirthDate() + ";";
-                        CSV += client.getPhysicalPerson().getSex() + ";";
-                    } else {
-                        FunctionsApp.PG_DIALOG.setMessage("Cliente: " + client.getLegalPerson().getSocialName());
-                        CSV += "J;";
-                        CSV += client.getLegalPerson().getSocialName() + ";";
-                        CSV += client.getLegalPerson().getFantasyName() + ";";
-                        CSV += client.getLegalPerson().getCNPJ() + ";";
-                        CSV += client.getLegalPerson().getIE() + ";";
-                        CSV += client.getLegalPerson().getIM() + ";";
-                        CSV += ";";
-                        CSV += ";";
+            ExportAsyncTask exportAsyncTask = new ExportAsyncTask(ListClientActivity.this){
+                @Override
+                protected void onPostExecute(Boolean isSuccess) {
+                    FunctionsApp.closePgDialog();
+                    if (isSuccess){
+                        FunctionsApp.showAlertDialog(
+                                ListClientActivity.this,
+                                "Atenção!",
+                                "Clientes exportados com sucesso para a pasta /WalletOfClients/ListOfClients_" + FunctionsApp.getCurrentDate("dd-MM-yyyy") + ".csv",
+                                "Fechar");
+                    }else{
+                        FunctionsApp.showSnackBarLong(idView,"Não foi possivel importar os dados. Tente novamente!");
                     }
-
-                    //Dados adicionais:
-                    CSV += client.getAdditionalInformation().getCellphone() + ";";
-                    CSV += client.getAdditionalInformation().getTelephone() + ";";
-                    CSV += client.getAdditionalInformation().getEmail() + ";";
-                    CSV += client.getAdditionalInformation().getSite() + ";";
-                    CSV += client.getAdditionalInformation().getObservation() + ";";
-
-                    //Endereço
-                    CSV += client.getAddress().getCEP() + ";";
-                    CSV += client.getAddress().getStreet() + ";";
-                    CSV += client.getAddress().getNumber() + ";";
-                    CSV += client.getAddress().getNeighborhood() + ";";
-                    CSV += client.getAddress().getCity() + ";";
-                    CSV += client.getAddress().getState() + ";";
-                    CSV += client.getAddress().getCountry() + ";";
-
-                    CSV += "\n";
                 }
+            };
 
-                String path = FunctionsApp.saveArchive(CSV,"ListOfClients_" + FunctionsApp.getCurrentDate("dd-MM-yyyy") + ".csv");
-                FunctionsApp.closePgDialog();
-                if (!path.isEmpty()){
-                    FunctionsApp.showAlertDialog(ListClientActivity.this,"Atenção!","Arquivo de exportação salvo em: " + path,"Fechar");
-                }else{
-                    FunctionsApp.showSnackBarLong(this.idView,"Não foi possivel gerar o arquivo de exportação. Tente novamente!");
-                }
-            }else{
-                FunctionsApp.showSnackBarLong(this.idView,"Não há dados para exportar!");
-            }
+            exportAsyncTask.execute();
         }catch (Exception ex){
             throw ex;
-        }finally {
-            FunctionsApp.closePgDialog();
         }
     }
 
