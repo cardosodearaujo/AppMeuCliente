@@ -53,7 +53,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton idBtnFabClientLegalPerson;
     private FloatingActionButton idBtnFabClientPhysicalPerson;
     private FloatingActionButton idBtnFabClientExport;
-    private FloatingActionButton idBtnFabClientConfig;
+    private FloatingActionButton idBtnFabContact;
     private RecyclerView idRecycleView;
     private TextView idTvwSizeClient;
     private View idView;
@@ -80,7 +80,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson = this.findViewById(R.id.idBtnFabClientPhysicalPerson);
         this.idBtnFabClientExport = this.findViewById(R.id.idBtnFabClientExport);
-        this.idBtnFabClientConfig = this.findViewById(R.id.idBtnFabClientConfig);
+        this.idBtnFabContact = this.findViewById(R.id.idBtnFabContact);
         this.idRecycleView = this.findViewById(R.id.idRecycleView);
         this.idTvwSizeClient = this.findViewById(R.id.idTvwSizeClient);
         this.idAdsView = this.findViewById(R.id.idAdsView);
@@ -95,6 +95,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFabClientLegalPerson.setOnClickListener(this.onClickBtnFabClientLegalPerson);
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
         this.idBtnFabClientExport.setOnClickListener(this.onClickExport);
+        this.idBtnFabContact.setOnClickListener(this.onClickBtnFabContact);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -144,6 +145,13 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             Bundle bundle = new Bundle();
             bundle.putString("TipoCadastro","F");
             FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
+        }
+    };
+
+    View.OnClickListener onClickBtnFabContact = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FunctionsApp.startActivity(ListClientActivity.this,ContactActivity.class,null);
         }
     };
 

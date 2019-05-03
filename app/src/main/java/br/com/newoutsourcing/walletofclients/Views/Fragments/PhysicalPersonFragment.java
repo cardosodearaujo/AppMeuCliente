@@ -35,6 +35,11 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     public PhysicalPersonFragment() {
     }
 
+
+    public static PhysicalPersonFragment newInstance() {
+        return new PhysicalPersonFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +54,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         return view;
     }
 
-    public static PhysicalPersonFragment newInstance() {
-        return new PhysicalPersonFragment();
-    }
 
     private void onInflate(View view){
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
@@ -196,7 +198,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.onCreateFragment(true);
     }
 
-    /*Metodos para o DatePicker*/
     private View.OnClickListener onClickDate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -217,9 +218,9 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
     private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            String data = String.valueOf(dayOfMonth) + "/"
-                    + String.valueOf(monthOfYear + 1) + "/"
-                    + String.valueOf(year);
+            String data = dayOfMonth + "/"
+                    + (monthOfYear + 1) + "/"
+                    + year;
             idEdtClientPFDate.setText(data);
         }
     };

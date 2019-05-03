@@ -28,21 +28,11 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="30dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/idImgClientPJPhoto"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                <FrameLayout
+                    android:id="@+id/idFrlImg"
                     android:layout_gravity="center"
-                    android:background="@mipmap/ic_client_circle"
-                    android:backgroundTint="@color/colorAccent"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/str_take_photo"
-                    android:textSize="10dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"/>
+                    android:layout_width="56dp"
+                    android:layout_height="60dp"/>
 
             </LinearLayout>
 

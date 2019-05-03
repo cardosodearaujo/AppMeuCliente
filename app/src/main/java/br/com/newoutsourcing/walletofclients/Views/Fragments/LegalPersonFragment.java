@@ -47,7 +47,8 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     private EditText idEdtClientPJCNPJ;
     private EditText idEdtClientPJIE;
     private EditText idEdtClientPJIM;
-    private CircleImageView idImgClientPJPhoto;
+    private FragmentsCallback imageCallback;
+    private ImageFragment imageFragment;
 
     public LegalPersonFragment() {
     }
@@ -77,13 +78,22 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.idEdtClientPJCNPJ = view.findViewById(R.id.idEdtClientPJCNPJ);
         this.idEdtClientPJIE = view.findViewById(R.id.idEdtClientPJIE);
         this.idEdtClientPJIM = view.findViewById(R.id.idEdtClientPJIM);
-        this.idImgClientPJPhoto = view.findViewById(R.id.idImgClientPJPhoto);
     }
 
     private void onConfiguration(){
         this.idToolbar.setSubtitle("Pessoa juridica");
         this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CNPJ, this.idEdtClientPJCNPJ));
-        this.idImgClientPJPhoto.setOnClickListener(this.onClickTakePhoto);
+        this.onCreateFragment(false);
+    }
+
+    private void onCreateFragment(Boolean createClean){
+        this.imageFragment = ImageFragment.newInstance();
+        this.imageCallback = imageFragment;
+        if (createClean){
+            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),null);
+        }else{
+            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),this.getArguments());
+        }
     }
 
     @Override
@@ -147,13 +157,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     public Client onSave(Client client) {
         try{
             if (this.onValidate()) {
-                if (this.idImgClientPJPhoto.getDrawable() != null && ((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap() != null) {
-                    String pathImage = FunctionsApp.saveImage(((BitmapDrawable) this.idImgClientPJPhoto.getDrawable()).getBitmap());
-                    if (!pathImage.isEmpty()){
-                        client.setImage(pathImage);
-                    }
-                }
-
+                client = this.imageCallback.onSave(client);
                 client.getLegalPerson().setSocialName(this.idEdtClientPJSocialName.getText().toString());
                 client.getLegalPerson().setFantasyName(this.idEdtClientPJFantasyName.getText().toString());
                 client.getLegalPerson().setCNPJ(this.idEdtClientPJCNPJ.getText().toString());
@@ -177,11 +181,6 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
             this.idEdtClientPJCNPJ.setText(client.getLegalPerson().getCNPJ());
             this.idEdtClientPJIE.setText(client.getLegalPerson().getIE());
             this.idEdtClientPJIM.setText(client.getLegalPerson().getIM());
-            Picasso.get()
-                    .load(Uri.fromFile(new File(client.getImage())))
-                    .error(R.mipmap.ic_client_circle)
-                    .into(this.idImgClientPJPhoto);
-            this.idImgClientPJPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 
@@ -192,100 +191,6 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.idEdtClientPJCNPJ.setText("");
         this.idEdtClientPJIE.setText("");
         this.idEdtClientPJIM.setText("");
-        Picasso.get().load(R.mipmap.ic_client_circle).into(this.idImgClientPJPhoto);
+        this.onCreateFragment(true);
     }
-
-    private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }
-        else{
-            this.getPhoto();
-        }
-    }
-
-    private void getPhoto() {
-        AlertDialog alert;
-        ArrayList<String> itens = new ArrayList<String>();
-
-        itens.add("Tirar foto");
-        itens.add("Escolher da galeria");
-
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.alert_dialog_question, itens);
-        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity(),R.style.Theme_MaterialComponents_Light_Dialog);
-        builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int idOption) {
-                Intent intent;
-                switch (idOption) {
-                    case 0: //Tirar Foto
-                        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, FunctionsApp.IMAGEM_CAMERA);
-                        dialog.cancel();
-                        break;
-                    case 1: //Pegar da galeria
-                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                        intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"),FunctionsApp.IMAGEM_INTERNA);
-                        dialog.cancel();
-                        break;
-                }
-            }
-        });
-        alert = builder.create();
-        alert.setTitle("Escolha uma opção:");
-        alert.show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == 1){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                this.getPhoto();
-            } else {
-                FunctionsApp.showSnackBarShort(this.getView(),"Permissão negada!");
-            }
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try{
-            if (resultCode == RESULT_OK){
-                Bitmap bitmap;
-                if (requestCode == FunctionsApp.IMAGEM_INTERNA){
-                    Uri imagemSelecionada = data.getData();
-                    String[] colunas = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContext().getContentResolver().query(imagemSelecionada, colunas, null, null, null);
-                    cursor.moveToFirst();
-
-                    int indexColuna = cursor.getColumnIndex(colunas[0]);
-                    String pathImg = cursor.getString(indexColuna);
-                    cursor.close();
-
-                    bitmap = BitmapFactory.decodeFile(pathImg);
-                    if (bitmap != null){
-                        this.idImgClientPJPhoto.setImageBitmap(bitmap);
-                        this.idImgClientPJPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    }
-                }else if(requestCode == FunctionsApp.IMAGEM_CAMERA){
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                    if (bitmap != null){
-                        this.idImgClientPJPhoto.setImageBitmap(bitmap);
-                        this.idImgClientPJPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    }
-                }
-            }
-        }catch (Exception ex){
-            FunctionsApp.showSnackBarShort(this.getView(),ex.getMessage());
-        }
-    }
-
-    private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){
-        @Override
-        public void onClick(View view){
-            getPermissions();
-        }
-    };
 }
