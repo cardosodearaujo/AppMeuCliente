@@ -64,55 +64,14 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     public boolean onValidate(){
         boolean save = true;
 
-        /**
-        if (this.idEdtClientAddressCEP.getText().toString().isEmpty()){
-            this.idEdtClientAddressCEP.setError("Informe o CEP.");
-            save = false;
-        }else{
-            this.idEdtClientAddressCEP.setError(null);
+        if (!this.idEdtClientAddressCEP.getText().toString().isEmpty()){
+            if (FunctionsApp.formatCEP(this.idEdtClientAddressCEP.getText().toString()).length()!=8){
+                this.idEdtClientAddressCEP.setError("O CEP deve conter ");
+                save = false;
+            }else{
+                this.idEdtClientAddressCEP.setError(null);
+            }
         }
-
-        if (this.idEdtClientAddressStreet.getText().toString().isEmpty()){
-            this.idEdtClientAddressStreet.setError("Informe a rua.");
-            save = false;
-        }else{
-            this.idEdtClientAddressStreet.setError(null);
-        }
-
-        if (this.idEdtClientAddressNumber.getText().toString().isEmpty()){
-            this.idEdtClientAddressNumber.setError("Informe o número.");
-            save = false;
-        }else{
-            this.idEdtClientAddressNumber.setError(null);
-        }
-
-        if (this.idEdtClientAddressNeighborhood.getText().toString().isEmpty()){
-            this.idEdtClientAddressNeighborhood.setError("Informe o bairro.");
-            save = false;
-        }else{
-            this.idEdtClientAddressNeighborhood.setError(null);
-        }
-
-        if (this.idEdtClientAddressCity.getText().toString().isEmpty()){
-            this.idEdtClientAddressCity.setError("Informe a cidade.");
-            save = false;
-        }else{
-            this.idEdtClientAddressCity.setError(null);
-        }
-
-        if (this.idSpnClientAddressState.getSelectedItem() == null || this.idSpnClientAddressState.getSelectedItem().toString().isEmpty()){
-            this.idSpnClientAddressState.requestFocus();
-            FunctionsApp.showSnackBarLong(getView(),"Informe o estado.");
-            save = false;
-        }
-
-        if (this.idEdtClientAddressCounty.getText().toString().isEmpty()){
-            this.idEdtClientAddressCounty.setError("Informe o pais.");
-            save = true;
-        }else{
-            this.idEdtClientAddressCounty.setError(null);
-        }
-        **/
 
         return save;
     }
@@ -138,7 +97,8 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
         }
     }
 
-    private void onLoad(Client client){
+    @Override
+    public void onLoad(Client client){
         if (client != null){
             this.idEdtClientAddressCEP.setText(client.getAddress().getCEP());
             this.idEdtClientAddressStreet.setText(client.getAddress().getStreet());

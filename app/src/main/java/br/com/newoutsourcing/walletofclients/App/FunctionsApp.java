@@ -55,7 +55,8 @@ public class FunctionsApp {
         ((Activity) context).finish();
     }
 
-    public static void startFragment(Fragment fragment, int id, FragmentManager fragmentManager){
+    public static void startFragment(Fragment fragment, int id, FragmentManager fragmentManager, Bundle bundle){
+        if (bundle != null) fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(id,fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -134,6 +135,39 @@ public class FunctionsApp {
         }catch (IOException ex){
             return "";
         }
+    }
+
+    public static String formatCNPJ(String CNPJ){
+        return CNPJ
+                .replace(".","")
+                .replace("/","")
+                .replace("-","");
+    }
+
+    public static String formatCPF(String CPF){
+        return CPF
+                .replace(".","")
+                .replace("-","");
+    }
+
+    public static String formatCellphone(String cellphone){
+        return  cellphone
+                .replace("(","")
+                .replace(")","")
+                .replace("-","");
+    }
+
+    public static String formatTelephone(String phone){
+        return phone
+                .replace("(","")
+                .replace(")","")
+                .replace("-","");
+    }
+
+    public static String formatCEP(String CEP){
+        return CEP
+                .replace(".","")
+                .replace("-","");
     }
 
     /**Funções de data**/

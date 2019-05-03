@@ -57,42 +57,23 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
     public boolean onValidate(){
         boolean save = true;
 
-        /**
-        if (this.idEdtClientPFCellphone.getText().toString().isEmpty()){
-            this.idEdtClientPFCellphone.setError("Informe o celular.");
-            save = false;
-        }else{
-            this.idEdtClientPFCellphone.setError(null);
+        if (!this.idEdtClientPFCellphone.getText().toString().isEmpty()){
+            if (FunctionsApp.formatCellphone(this.idEdtClientPFCellphone.getText().toString()).length()!=11){
+                this.idEdtClientPFCellphone.setError("O celular deve conter 2 digitos do DDD e 9 do número.");
+                save = false;
+            }else{
+                this.idEdtClientPFCellphone.setError(null);
+            }
         }
 
-        if (this.idEdtClientPFTelephone.getText().toString().isEmpty()){
-            this.idEdtClientPFTelephone.setError("Informe o telefone.");
-            save = false;
-        }else{
-            this.idEdtClientPFTelephone.setError(null);
+        if (!this.idEdtClientPFTelephone.getText().toString().isEmpty()){
+            if (FunctionsApp.formatTelephone(this.idEdtClientPFTelephone.getText().toString()).length()!=10){
+                this.idEdtClientPFTelephone.setError("O telephone deve conter 2 digitos do DDD e 8 do número.");
+                save = false;
+            }else{
+                this.idEdtClientPFTelephone.setError(null);
+            }
         }
-
-        if (this.idEdtClientPFEmail.getText().toString().isEmpty()){
-            this.idEdtClientPFEmail.setError("Informe o email.");
-            save = false;
-        }else{
-            this.idEdtClientPFEmail.setError(null);
-        }
-
-        if (this.idEdtClientPFSite.getText().toString().isEmpty()){
-            this.idEdtClientPFSite.setError("Informe o site.");
-            save = false;
-        }else{
-            this.idEdtClientPFSite.setError(null);
-        }
-
-        if (this.idEdtClientPFObservation.getText().toString().isEmpty()){
-            this.idEdtClientPFObservation.setError("Informe o observação.");
-            save = false;
-        }else{
-            this.idEdtClientPFObservation.setError(null);
-        }
-        **/
 
         return save;
     }
@@ -116,7 +97,8 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
         }
     }
 
-    private void onLoad(Client client){
+    @Override
+    public void onLoad(Client client){
         if (client != null){
             this.idEdtClientPFCellphone.setText(client.getAdditionalInformation().getCellphone());
             this.idEdtClientPFTelephone.setText(client.getAdditionalInformation().getTelephone());

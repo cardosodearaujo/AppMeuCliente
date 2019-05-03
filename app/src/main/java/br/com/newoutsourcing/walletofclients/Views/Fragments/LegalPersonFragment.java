@@ -89,28 +89,51 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     @Override
     public boolean onValidate(){
         boolean save = true;
-        if (this.idEdtClientPJSocialName.getText().toString().isEmpty()){
+        if (this.idEdtClientPJSocialName.getText().toString().trim().isEmpty()){
             this.idEdtClientPJSocialName.setError("Informe a razão social.");
             save = false;
         }else{
             this.idEdtClientPJSocialName.setError(null);
         }
 
-        if (this.idEdtClientPJFantasyName.getText().toString().isEmpty()){
+        if (this.idEdtClientPJFantasyName.getText().toString().trim().isEmpty()){
             this.idEdtClientPJFantasyName.setError("Informe o nome fantásia.");
             save = false;
         }else{
             this.idEdtClientPJFantasyName.setError(null);
         }
 
-        if (this.idEdtClientPJCNPJ.getText().toString().isEmpty()){
+        if (this.idEdtClientPJCNPJ.getText().toString().trim().isEmpty()){
             this.idEdtClientPJCNPJ.setError("Informe o CNPJ.");
             save = false;
         }else{
             this.idEdtClientPJCNPJ.setError(null);
         }
 
-        if (this.idEdtClientPJIE.getText().toString().isEmpty()){
+        if (!this.idEdtClientPJCNPJ.getText().toString().trim().isEmpty()){
+            if (FunctionsApp.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() != 14){
+                this.idEdtClientPJCNPJ.setError("O CNPJ deve conter 14 digitos.");
+                this.idEdtClientPJCNPJ.requestFocus();
+                save = false;
+            }else{
+                this.idEdtClientPJCNPJ.setError(null);
+            }
+        }
+
+        if (!this.idEdtClientPJCNPJ.getText().toString().trim().isEmpty()){
+            if (FunctionsApp.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() == 14){
+                if (TB_LEGAL_PERSON.CheckCNPJ(this.idEdtClientPJCNPJ.getText().toString()) > 0) {
+                    this.idEdtClientPJCNPJ.setError("O CNPJ está em uso em outro cadastro!");
+                    this.idEdtClientPJCNPJ.requestFocus();
+                    save = false;
+                }else{
+                    this.idEdtClientPJCNPJ.setError(null);
+                }
+            }
+        }
+
+
+        if (this.idEdtClientPJIE.getText().toString().trim().isEmpty()){
             this.idEdtClientPJIE.setError("Informe o inscrição estadual.");
             save = false;
         }else{
@@ -146,7 +169,8 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         }
     }
 
-    private void onLoad(Client client){
+    @Override
+    public void onLoad(Client client){
         if (client != null){
             this.idEdtClientPJSocialName.setText(client.getLegalPerson().getSocialName());
             this.idEdtClientPJFantasyName.setText(client.getLegalPerson().getFantasyName());

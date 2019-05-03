@@ -88,7 +88,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="11dp"
             android:layout_marginRight="11dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="0dp"
             fab:menu_animationDelayPerItem="55"
             fab:menu_backgroundColor="@android:color/transparent"
             fab:menu_buttonSpacing="0dp"

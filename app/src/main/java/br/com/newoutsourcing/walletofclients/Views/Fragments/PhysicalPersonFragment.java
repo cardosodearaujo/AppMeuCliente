@@ -1,55 +1,36 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
-import de.hdodenhof.circleimageview.CircleImageView;
-import static android.app.Activity.RESULT_OK;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
 public class PhysicalPersonFragment extends Fragment implements FragmentsCallback {
 
     private Toolbar idToolbar;
-    private CircleImageView idImgClientPFPhoto;
     private EditText idEdtClientPFName;
     private EditText idEdtClientPFNickName;
     private EditText idEdtClientPFCPF;
     private EditText idEdtClientPFRG;
     private Spinner idSpnClientPFSexo;
     private EditText idEdtClientPFDate;
+    private FragmentsCallback imageCallback;
+    private ImageFragment imageFragment;
 
     public PhysicalPersonFragment() {
     }
@@ -64,7 +45,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         View view = inflater.inflate(R.layout.fragment_physical_person, container, false);
         this.onInflate(view);
         this.onConfiguration();
-        this.onLoad((Client)getArguments().getSerializable("Client"));
+        this.onLoad((Client)this.getArguments().getSerializable("Client"));
         return view;
     }
 
@@ -80,7 +61,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFRG = view.findViewById(R.id.idEdtClientPFRG);
         this.idSpnClientPFSexo = view.findViewById(R.id.idSpnClientPFSexo);
         this.idEdtClientPFDate = view.findViewById(R.id.idEdtClientPFDate);
-        this.idImgClientPFPhoto = view.findViewById(R.id.idImgClientPFPhoto);
     }
 
     private void onConfiguration(){
@@ -89,35 +69,68 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CPF, this.idEdtClientPFCPF));
         this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
         this.idEdtClientPFDate.setOnClickListener(this.onClickDate);
-        this.idImgClientPFPhoto.setOnClickListener(this.onClickTakePhoto);
+        this.onCreateFragment(false);
+    }
+
+    private void onCreateFragment(Boolean createClean){
+        this.imageFragment = ImageFragment.newInstance();
+        this.imageCallback = imageFragment;
+        if (createClean){
+            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),null);
+        }else{
+            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),this.getArguments());
+        }
     }
 
     @Override
     public boolean onValidate(){
         Boolean save = true;
 
-        if (this.idEdtClientPFName.getText().toString().isEmpty()){
+        if (this.idEdtClientPFName.getText().toString().trim().isEmpty()){
             this.idEdtClientPFName.setError("Informe o nome.");
             save = false;
         }else{
             this.idEdtClientPFName.setError(null);
         }
 
-        if (this.idEdtClientPFCPF.getText().toString().isEmpty()){
+        if (this.idEdtClientPFCPF.getText().toString().trim().isEmpty()){
             this.idEdtClientPFCPF.setError("Informe o CPF.");
+            this.idEdtClientPFCPF.requestFocus();
             save = false;
         }else{
             this.idEdtClientPFCPF.setError(null);
         }
 
-        if (this.idEdtClientPFRG.getText().toString().isEmpty()){
+        if (!this.idEdtClientPFCPF.getText().toString().trim().isEmpty()){
+            if ( FunctionsApp.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() != 11){
+                this.idEdtClientPFCPF.setError("O CPF deve conter 11 digitos.");
+                this.idEdtClientPFCPF.requestFocus();
+                save = false;
+            }else{
+                this.idEdtClientPFCPF.setError(null);
+            }
+        }
+
+        if (!this.idEdtClientPFCPF.getText().toString().trim().isEmpty()){
+            if (FunctionsApp.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() == 11){
+                if (TB_PHYSICAL_PERSON.CheckCPF(this.idEdtClientPFCPF.getText().toString()) > 0) {
+                    this.idEdtClientPFCPF.setError("O CPF está em uso em outro cadastro!");
+                    this.idEdtClientPFCPF.requestFocus();
+                    save = false;
+                }else{
+                    this.idEdtClientPFCPF.setError(null);
+                }
+            }
+        }
+
+        if (this.idEdtClientPFRG.getText().toString().trim().isEmpty()){
             this.idEdtClientPFRG.setError("Informe o RG.");
             save = false;
         }else{
             this.idEdtClientPFRG.setError(null);
         }
 
-        if (this.idEdtClientPFDate.getText().toString().isEmpty()){
+        if (this.idEdtClientPFDate.getText().toString().trim().isEmpty()){
             this.idEdtClientPFDate.setError("Informe a data de nascimento.");
             save = false;
         }else{
@@ -131,12 +144,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     public Client onSave(Client client) {
         try{
             if (this.onValidate()){
-                if (this.idImgClientPFPhoto.getDrawable() != null &&  ((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap() != null){
-                    String pathImage = FunctionsApp.saveImage(((BitmapDrawable) this.idImgClientPFPhoto.getDrawable()).getBitmap());
-                    if (!pathImage.isEmpty()){
-                        client.setImage(pathImage);
-                    }
-                }
+                client = this.imageCallback.onSave(client);
                 client.getPhysicalPerson().setName(this.idEdtClientPFName.getText().toString());
                 client.getPhysicalPerson().setNickname(this.idEdtClientPFNickName.getText().toString());
                 client.getPhysicalPerson().setCPF(this.idEdtClientPFCPF.getText().toString());
@@ -160,7 +168,8 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         }
     }
 
-    private void onLoad(Client client){
+    @Override
+    public void onLoad(Client client){
         if (client != null){
             this.idEdtClientPFName.setText(client.getPhysicalPerson().getName());
             this.idEdtClientPFNickName.setText(client.getPhysicalPerson().getNickname());
@@ -168,11 +177,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
             this.idEdtClientPFRG.setText(client.getPhysicalPerson().getRG());
             this.idEdtClientPFDate.setText(client.getPhysicalPerson().getBirthDate());
             this.idSpnClientPFSexo.setSelection(FunctionsApp.getSex(client.getPhysicalPerson().getSex()));
-            Picasso.get()
-                    .load(Uri.fromFile(new File(client.getImage())))
-                    .error(R.mipmap.ic_client_circle)
-                    .into(this.idImgClientPFPhoto);
-            this.idImgClientPFPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 
@@ -189,94 +193,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFRG.setText("");
         this.idSpnClientPFSexo.setSelection(0);
         this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
-        Picasso.get().load(R.mipmap.ic_client_circle).into(this.idImgClientPFPhoto);
-    }
-
-    private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }
-        else{
-            this.getPhoto();
-        }
-    }
-
-    private void getPhoto() {
-        AlertDialog alert;
-        ArrayList<String> itens = new ArrayList<String>();
-
-        itens.add("Tirar foto");
-        itens.add("Escolher da galeria");
-
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.alert_dialog_question, itens);
-        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity(),R.style.Theme_MaterialComponents_Light_Dialog);
-        builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int idOption) {
-                Intent intent;
-                switch (idOption) {
-                    case 0: //Tirar Foto
-                        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, FunctionsApp.IMAGEM_CAMERA);
-                        dialog.cancel();
-                        break;
-                    case 1: //Pegar da galeria
-                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                        intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"),FunctionsApp.IMAGEM_INTERNA);
-                        dialog.cancel();
-                        break;
-                }
-            }
-        });
-        alert = builder.create();
-        alert.setTitle("Escolha uma opção:");
-        alert.show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == 1){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                this.getPhoto();
-            } else {
-                FunctionsApp.showSnackBarLong(this.getView(),"Permissão negada!");
-            }
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try{
-            if (resultCode == RESULT_OK){
-                Bitmap bitmap;
-                if (requestCode == FunctionsApp.IMAGEM_INTERNA){
-                    Uri imagemSelecionada = data.getData();
-                    String[] colunas = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContext().getContentResolver().query(imagemSelecionada, colunas, null, null, null);
-                    cursor.moveToFirst();
-
-                    int indexColuna = cursor.getColumnIndex(colunas[0]);
-                    String pathImg = cursor.getString(indexColuna);
-                    cursor.close();
-
-                    bitmap = BitmapFactory.decodeFile(pathImg);
-                    if (bitmap != null){
-                        this.idImgClientPFPhoto.setImageBitmap(bitmap);
-                        this.idImgClientPFPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    }
-                }else if(requestCode == FunctionsApp.IMAGEM_CAMERA){
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                    if (bitmap != null){
-                        this.idImgClientPFPhoto.setImageBitmap(bitmap);
-                        this.idImgClientPFPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    }
-                }
-            }
-        }catch (Exception ex){
-            FunctionsApp.showAlertDialog(getContext(),"Erro",ex.getMessage(),"Fechar");
-        }
+        this.onCreateFragment(true);
     }
 
     /*Metodos para o DatePicker*/
@@ -304,14 +221,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
                     + String.valueOf(monthOfYear + 1) + "/"
                     + String.valueOf(year);
             idEdtClientPFDate.setText(data);
-        }
-    };
-
-    /* Metodos para a camera */
-    private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){
-        @Override
-        public void onClick(View view){
-            getPermissions();
         }
     };
 }
