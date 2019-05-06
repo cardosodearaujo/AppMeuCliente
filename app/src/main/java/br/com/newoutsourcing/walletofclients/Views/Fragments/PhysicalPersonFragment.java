@@ -31,6 +31,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     private EditText idEdtClientPFDate;
     private FragmentsCallback imageCallback;
     private ImageFragment imageFragment;
+    private String clientId;
 
     public PhysicalPersonFragment() {
     }
@@ -56,6 +57,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
 
     private void onInflate(View view){
+        this.clientId = null;
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idEdtClientPFName = view.findViewById(R.id.idEdtClientPFName);
         this.idEdtClientPFNickName = view.findViewById(R.id.idEdtClientPFNickName);
@@ -115,7 +117,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
         if (!this.idEdtClientPFCPF.getText().toString().trim().isEmpty()){
             if (FunctionsApp.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() == 11){
-                if (TB_PHYSICAL_PERSON.CheckCPF(this.idEdtClientPFCPF.getText().toString()) > 0) {
+                if (TB_PHYSICAL_PERSON.CheckCPF(this.idEdtClientPFCPF.getText().toString(),this.clientId ) > 0) {
                     this.idEdtClientPFCPF.setError("O CPF está em uso em outro cadastro!");
                     this.idEdtClientPFCPF.requestFocus();
                     save = false;
@@ -173,6 +175,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     @Override
     public void onLoad(Client client){
         if (client != null){
+            this.clientId = String.valueOf(client.getClientId());
             this.idEdtClientPFName.setText(client.getPhysicalPerson().getName());
             this.idEdtClientPFNickName.setText(client.getPhysicalPerson().getNickname());
             this.idEdtClientPFCPF.setText(client.getPhysicalPerson().getCPF());
@@ -184,6 +187,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
     @Override
     public void onClear() {
+        this.clientId = null;
         this.idEdtClientPFName.setError(null);
         this.idEdtClientPFNickName.setError(null);
         this.idEdtClientPFCPF.setError(null);

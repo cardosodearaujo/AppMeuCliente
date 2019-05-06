@@ -49,6 +49,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     private EditText idEdtClientPJIM;
     private FragmentsCallback imageCallback;
     private ImageFragment imageFragment;
+    private String clientId;
 
     public LegalPersonFragment() {
     }
@@ -78,6 +79,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.idEdtClientPJCNPJ = view.findViewById(R.id.idEdtClientPJCNPJ);
         this.idEdtClientPJIE = view.findViewById(R.id.idEdtClientPJIE);
         this.idEdtClientPJIM = view.findViewById(R.id.idEdtClientPJIM);
+        this.clientId = null;
     }
 
     private void onConfiguration(){
@@ -132,7 +134,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
 
         if (!this.idEdtClientPJCNPJ.getText().toString().trim().isEmpty()){
             if (FunctionsApp.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() == 14){
-                if (TB_LEGAL_PERSON.CheckCNPJ(this.idEdtClientPJCNPJ.getText().toString()) > 0) {
+                if (TB_LEGAL_PERSON.CheckCNPJ(this.idEdtClientPJCNPJ.getText().toString(),this.clientId) > 0) {
                     this.idEdtClientPJCNPJ.setError("O CNPJ está em uso em outro cadastro!");
                     this.idEdtClientPJCNPJ.requestFocus();
                     save = false;
@@ -176,6 +178,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     @Override
     public void onLoad(Client client){
         if (client != null){
+            this.clientId = String.valueOf(client.getClientId());
             this.idEdtClientPJSocialName.setText(client.getLegalPerson().getSocialName());
             this.idEdtClientPJFantasyName.setText(client.getLegalPerson().getFantasyName());
             this.idEdtClientPJCNPJ.setText(client.getLegalPerson().getCNPJ());
@@ -186,6 +189,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
 
     @Override
     public void onClear() {
+        this.clientId = null;
         this.idEdtClientPJSocialName.setText("");
         this.idEdtClientPJFantasyName.setText("");
         this.idEdtClientPJCNPJ.setText("");

@@ -50,13 +50,13 @@ public class ImportAsyncTask extends AsyncTask<Uri,String,Boolean> {
                         if (line[2]!=null && line[5] != null){
                             if (line[2].equals("F")){
                                 typeClient = 1;
-                                idCliente = TB_PHYSICAL_PERSON.CheckCPF(line[5]);
+                                idCliente = TB_PHYSICAL_PERSON.CheckCPF(line[5],null);
                                 if (idCliente > 0){
                                     client = TB_CLIENT.Select(idCliente).get(0);
                                 }
                             }else if (line[2].equals("J")){
                                 typeClient = 2;
-                                idCliente = TB_LEGAL_PERSON.CheckCNPJ(line[5]);
+                                idCliente = TB_LEGAL_PERSON.CheckCNPJ(line[5],null);
                                 if (idCliente > 0){
                                     client = TB_CLIENT.Select(idCliente).get(0);
                                 }

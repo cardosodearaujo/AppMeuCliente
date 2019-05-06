@@ -140,14 +140,21 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         }
     }
 
-    public long CheckCPF(String CPF){
+    public long CheckCPF(String CPF,String clientId){
         super.openDatabaseInstance();
         try{
             if (CPF.isEmpty()) return 0;
-            this.SQL
-                    = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
-                    + " Where " + Fields.CPF.name() + " = '" + CPF + "'"
-                    + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
+
+            if (clientId == null){
+                this.SQL= " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
+                        + " Where " + Fields.CPF.name() + " = '" + CPF + "'"
+                        + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
+            }else{
+                this.SQL= " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
+                        + " Where " + Fields.CPF.name() + " = '" + CPF + "'"
+                        + " And " + Fields.ID_CLIENT.name() + " <> " + clientId
+                        + " Order By " + Fields.ID_PHYSICAL_PERSON.name();
+            }
 
             this.cursor = this.database.rawQuery(SQL,null);
 

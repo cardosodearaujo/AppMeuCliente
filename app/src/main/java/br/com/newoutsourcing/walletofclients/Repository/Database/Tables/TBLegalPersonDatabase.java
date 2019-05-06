@@ -136,14 +136,24 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase {
         }
     }
 
-    public long CheckCNPJ(String CNPJ){
+    public long CheckCNPJ(String CNPJ, String clientId){
         super.openDatabaseInstance();
         try{
             if (CNPJ.isEmpty()) return 0;
-            this.SQL
-                    = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
-                    + " Where " + Fields.CNPJ.name() + " = '" + CNPJ + "'"
-                    + " Order By " + Fields.ID_LEGAL_PERSON.name();
+
+            if (clientId == null){
+                this.SQL
+                        = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
+                        + " Where " + Fields.CNPJ.name() + " = '" + CNPJ + "'"
+                        + " Order By " + Fields.ID_LEGAL_PERSON.name();
+
+            }else{
+                this.SQL
+                        = " Select " + Fields.ID_CLIENT.name() + " From " + this.Table
+                        + " Where " + Fields.CNPJ.name() + " = '" + CNPJ + "'"
+                        + " And " + Fields.ID_CLIENT.name() + " <> " + clientId
+                        + " Order By " + Fields.ID_LEGAL_PERSON.name();
+            }
 
             this.cursor = this.database.rawQuery(SQL,null);
 
