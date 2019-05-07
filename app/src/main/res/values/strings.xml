@@ -3,8 +3,8 @@
     <string name="str_app_admob_id">ca-app-pub-7022724497408656~5963597068</string>
     <string name="str_app_admob_banner_id">ca-app-pub-7022724497408656/8505999922</string>
     <string name="str_app_admob_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="str_app_name">Carteira de clientes</string>
-    <string name="str_app_name_en">Wallet of clients</string>
+    <string name="str_app_name">New: Clients</string>
+    <string name="str_app_name_en">New: Clients</string>
     <string name="str_client_title">Cadastro de clientes</string>
     <string name="str_save">Salvar</string>
     <string name="str_back">Anterior</string>
