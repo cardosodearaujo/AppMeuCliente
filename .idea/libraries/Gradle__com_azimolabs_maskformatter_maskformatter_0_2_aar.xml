@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.azimolabs.maskformatter:maskformatter:0.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6704fc49e17a8ad1a09a28fb71a7b27c/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6704fc49e17a8ad1a09a28fb71a7b27c/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.azimolabs.maskformatter/maskformatter/0.2/878718e91645b6ff55314977b2197d4e5aeaf683/maskformatter-0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

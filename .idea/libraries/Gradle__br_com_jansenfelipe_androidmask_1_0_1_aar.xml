@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: br.com.jansenfelipe:androidmask:1.0.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c382b9d4da67f45838e0f482e9cea95e/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c382b9d4da67f45838e0f482e9cea95e/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/br.com.jansenfelipe/androidmask/1.0.1/a48724770b8b69a821169b9e7c71f56c229372c3/androidmask-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
