@@ -86,7 +86,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:inputType="textFilter"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="15dp"
                         android:hint="@string/str_search_hint" />
 
                 </LinearLayout>
