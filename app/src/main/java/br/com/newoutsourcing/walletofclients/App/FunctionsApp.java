@@ -97,6 +97,11 @@ public class FunctionsApp {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static void showKeybord(Context context){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+    }
+
     public static String createFolder(String path){
         File rootPath = new File(Environment.getExternalStorageDirectory(), path);
         if(!rootPath.exists()){rootPath.mkdirs();}

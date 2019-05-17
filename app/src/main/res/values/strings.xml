@@ -4,6 +4,8 @@
     <string name="str_app_admob_banner_id">ca-app-pub-7022724497408656/8505999922</string>
     <string name="str_app_admob_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="str_app_name">New: Clients</string>
+    <string name="str_search_hint">Digite sua pesquisa</string>
+    <string name="str_client_selected">Clientes encontrados</string>
     <string name="str_app_name_en">New: Clients</string>
     <string name="str_client_title">Cadastro de clientes</string>
     <string name="str_save">Salvar</string>
@@ -25,6 +27,7 @@
     <string name="str_list_client_pj">Pessoa juridica</string>
     <string name="str_list_client_contact">Ajuda</string>
     <string name="str_list_client_import_export">Importar/Exportar</string>
+    <string name="str_list_client_no_clients_message_0">Nenhum resultado encontrado.</string>
     <string name="str_list_client_no_clients_message_1">Você ainda não tem clientes cadastrados.</string>
     <string name="str_list_client_no_clients_message_2">Comece agora clicando no botão + abaixo.</string>
 

@@ -9,7 +9,7 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.
 
 public class TBAdditionalInformationDatabase extends TableConfigurationDatabase {
 
-    private enum Fields {
+    public enum Fields {
         ID_ADDITIONAL_INFORMATION,
         ID_CLIENT,
         CELLPHONE,

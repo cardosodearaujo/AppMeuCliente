@@ -7,162 +7,261 @@
     android:orientation="vertical"
     tools:context=".Views.Activitys.ListClientActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/idToolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/idAppBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:logo="@mipmap/ic_list_client"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/str_list_client_list" >
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <TextView
-                android:id="@+id/idTvwSizeClient"
-                android:layout_width="100dp"
-                android:layout_marginRight="10dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:textStyle="bold"
-                android:layout_gravity="right" />
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/idToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:logo="@mipmap/ic_list_client"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/str_list_client_list">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
+                <Button
+                    android:id="@+id/idBtnSearch"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:background="@mipmap/ic_search"
+                    android:backgroundTint="@color/colorWhite"
+                    android:gravity="right" />
+
+                <TextView
+                    android:id="@+id/idTvwSizeClient"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp"
+                    android:gravity="right"
+                    android:textStyle="bold" />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/idAppBarLayoutSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:visibility="invisible">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/idToolbarSearch"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="5dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/idBtnSearchExit"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:background="@mipmap/ic_arrow_left"
+                        android:backgroundTint="@color/colorWhite"
+                        android:gravity="center" />
+
+                    <EditText
+                        android:id="@+id/idEdtSearch"
+                        style="@style/StyledTilEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:inputType="textFilter"
+                        android:layout_marginRight="5dp"
+                        android:hint="@string/str_search_hint" />
+
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </RelativeLayout>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/idSwipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <RelativeLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:fab="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/idRecycleView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp" />
+                android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/idLLMessageEmpty"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:background="@mipmap/ic_add_clients"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/idRecycleView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/str_list_client_no_clients_message_1"/>
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp" />
 
-                <TextView
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                <LinearLayout
+                    android:id="@+id/idLLMessageEmpty"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@mipmap/ic_add_clients" />
+
+                    <TextView
+                        android:visibility="invisible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/str_list_client_no_clients_message_0"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/str_list_client_no_clients_message_1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/str_list_client_no_clients_message_2"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/idLLMessageEmptySearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@mipmap/ic_add_clients" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/str_list_client_no_clients_message_0"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/idBtnFam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:layout_marginBottom="0dp"
+                fab:menu_animationDelayPerItem="55"
+                fab:menu_backgroundColor="@android:color/transparent"
+                fab:menu_buttonSpacing="0dp"
+                fab:menu_colorNormal="#da3c2f"
+                fab:menu_colorPressed="#dc4b3f"
+                fab:menu_colorRipple="#99d4d4d4"
+                fab:menu_fab_size="normal"
+                fab:menu_icon="@drawable/fab_add"
+                fab:menu_labels_colorNormal="#333"
+                fab:menu_labels_colorPressed="#444"
+                fab:menu_labels_colorRipple="#66efecec"
+                fab:menu_labels_cornerRadius="3dp"
+                fab:menu_labels_ellipsize="none"
+                fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                fab:menu_labels_margin="0dp"
+                fab:menu_labels_maxLines="-1"
+                fab:menu_labels_padding="8dp"
+                fab:menu_labels_position="left"
+                fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+                fab:menu_labels_showShadow="true"
+                fab:menu_labels_singleLine="false"
+                fab:menu_labels_textColor="#f2f1f1"
+                fab:menu_labels_textSize="15sp"
+                fab:menu_openDirection="up"
+                fab:menu_shadowColor="@color/colorPrimaryLight"
+                fab:menu_shadowRadius="4dp"
+                fab:menu_shadowXOffset="1dp"
+                fab:menu_shadowYOffset="4dp"
+                fab:menu_showShadow="true">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/idBtnFabClientPhysicalPerson"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/str_list_client_no_clients_message_2"/>
-            </LinearLayout>
+                    android:src="@mipmap/ic_client"
+                    fab:fab_label="@string/str_list_client_pf"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/idBtnFabClientLegalPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_company"
+                    fab:fab_label="@string/str_list_client_pj"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/idBtnFabClientExport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_import_export"
+                    fab:fab_label="@string/str_list_client_import_export"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/idBtnFabContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_contact"
+                    fab:fab_label="@string/str_list_client_contact"
+                    fab:fab_size="mini" />
+
+            </com.github.clans.fab.FloatingActionMenu>
 
         </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-        <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/idBtnFam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
-            android:layout_marginBottom="0dp"
-            fab:menu_animationDelayPerItem="55"
-            fab:menu_backgroundColor="@android:color/transparent"
-            fab:menu_buttonSpacing="0dp"
-            fab:menu_colorNormal="#da3c2f"
-            fab:menu_colorPressed="#dc4b3f"
-            fab:menu_colorRipple="#99d4d4d4"
-            fab:menu_fab_size="normal"
-            fab:menu_icon="@drawable/fab_add"
-            fab:menu_labels_colorNormal="#333"
-            fab:menu_labels_colorPressed="#444"
-            fab:menu_labels_colorRipple="#66efecec"
-            fab:menu_labels_cornerRadius="3dp"
-            fab:menu_labels_ellipsize="none"
-            fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
-            fab:menu_labels_margin="0dp"
-            fab:menu_labels_maxLines="-1"
-            fab:menu_labels_padding="8dp"
-            fab:menu_labels_position="left"
-            fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
-            fab:menu_labels_showShadow="true"
-            fab:menu_labels_singleLine="false"
-            fab:menu_labels_textColor="#f2f1f1"
-            fab:menu_labels_textSize="15sp"
-            fab:menu_openDirection="up"
-            fab:menu_shadowColor="@color/colorPrimaryLight"
-            fab:menu_shadowRadius="4dp"
-            fab:menu_shadowXOffset="1dp"
-            fab:menu_shadowYOffset="4dp"
-            fab:menu_showShadow="true">
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/idBtnFabClientPhysicalPerson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_client"
-                fab:fab_label="@string/str_list_client_pf"
-                fab:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/idBtnFabClientLegalPerson"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_company"
-                fab:fab_label="@string/str_list_client_pj"
-                fab:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/idBtnFabClientExport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_import_export"
-                fab:fab_label="@string/str_list_client_import_export"
-                fab:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/idBtnFabContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_contact"
-                fab:fab_label="@string/str_list_client_contact"
-                fab:fab_size="mini" />
-
-        </com.github.clans.fab.FloatingActionMenu>
-
-    </RelativeLayout>
-
-    <com.google.android.gms.ads.AdView
-        android:layout_gravity="center"
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/idAdsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/str_app_admob_banner_id"/>
+        ads:adUnitId="@string/str_app_admob_banner_id" />
 </LinearLayout>

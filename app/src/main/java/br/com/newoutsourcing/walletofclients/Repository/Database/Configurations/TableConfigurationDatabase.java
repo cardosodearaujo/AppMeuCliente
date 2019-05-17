@@ -10,7 +10,7 @@ public class TableConfigurationDatabase<T> {
     protected SQLiteDatabase database;
     protected Cursor cursor;
     protected String SQL;
-    protected String Table;
+    public String Table;
     protected Context context;
 
     public TableConfigurationDatabase(Context context){
@@ -47,5 +47,9 @@ public class TableConfigurationDatabase<T> {
         }finally {
             this.closeDatabaseInstance();
         }
+    }
+
+    public String QuoteParam(String param){
+        return param.replace("'","''");
     }
 }

@@ -19,7 +19,7 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 
 public class TBClientDatabase extends TableConfigurationDatabase {
 
-    private enum Fields {
+    public enum Fields {
         ID_CLIENT,
         IMAGE,
         TYPE
@@ -36,20 +36,46 @@ public class TBClientDatabase extends TableConfigurationDatabase {
 
     @Override
     public List<Client> Select(long clientId){
+        this.SQL
+                = " Select " + this.getFields() + " From " + this.Table
+                + " Where " + Fields.ID_CLIENT.name() + " = " + clientId
+                + " Order by " + Fields.ID_CLIENT.name();
+        return this.Consulta(SQL);
+    }
+
+    public List<Client> Select(String search){
+        this.SQL
+                = " Select " + this.getFields() + " From " + this.Table
+                + " Left Join " + TB_PHYSICAL_PERSON.Table + " On " + this.Table + "." + Fields.ID_CLIENT.name() + " = " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.ID_CLIENT.name()
+                + " Left Join " + TB_LEGAL_PERSON.Table + " On " + this.Table + "." + Fields.ID_CLIENT.name() + " = " + TB_LEGAL_PERSON.Table + "." + TBLegalPersonDatabase.Fields.ID_CLIENT.name();
+                if (!search.isEmpty()){
+                    this.SQL
+                            = this.SQL
+                            + " Where " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.NAME.name() + " Like '%" + QuoteParam(search) + "%'"
+                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.NICKNAME.name() + " Like '%"+ QuoteParam(search) +"%'"
+                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.CPF.name() + " Like '%"+ QuoteParam(search) +"%'"
+                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.RG.name() + " Like '%"+ QuoteParam(search) +"%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.SOCIAL_NAME.name() + " Like '%"+QuoteParam(search)+"%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.FANTASY_NAME.name() + " Like '%" + QuoteParam(search) + "%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.CNPJ.name()+ " Like '%" + QuoteParam(search) + "%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.IE.name() + " Like '%" + QuoteParam(search) + "%'";
+                }
+
+        return this.Consulta(SQL);
+    }
+
+    public List<Client> Select(){
+        this.SQL
+                = " Select " + this.getFields() + " From " + this.Table
+                + " Order by " + Fields.ID_CLIENT.name();
+        return this.Consulta(SQL);
+    }
+
+    private List<Client> Consulta(String SQL){
+        if (SQL.isEmpty()) return new ArrayList<Client>();
         super.openDatabaseInstance();
         try{
             List<Client> list = new ArrayList();
-
-            if (clientId > 0){
-                this.SQL
-                        = " Select " + this.getFields() + " From " + this.Table
-                        + " Where " + Fields.ID_CLIENT.name() + " = " + clientId
-                        + " Order by " + Fields.ID_CLIENT.name();
-            }else{
-                this.SQL
-                        = " Select " + this.getFields() + " From " + this.Table
-                        + " Order by " + Fields.ID_CLIENT.name();
-            }
 
             this.cursor = this.database.rawQuery(this.SQL,null);
 
@@ -162,7 +188,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         String StringFields = "";
 
         for(Fields Field: Fields.values()){
-            StringFields += Field.name() + ",";
+            StringFields += "TB_CLIENT." + Field.name() + ",";
         }
 
         if (StringFields.length() > 0){

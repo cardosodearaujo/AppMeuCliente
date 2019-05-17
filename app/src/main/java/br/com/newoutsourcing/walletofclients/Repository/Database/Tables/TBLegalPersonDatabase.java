@@ -9,7 +9,7 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.
 
 public class TBLegalPersonDatabase extends TableConfigurationDatabase {
 
-    private enum Fields {
+    public enum Fields {
         ID_LEGAL_PERSON,
         ID_CLIENT,
         SOCIAL_NAME,
