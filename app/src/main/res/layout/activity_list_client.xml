@@ -263,5 +263,5 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/str_app_admob_banner_id" />
+        ads:adUnitId="@string/str_app_admob_banner_test_id" />
 </LinearLayout>

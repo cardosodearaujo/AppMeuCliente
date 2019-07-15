@@ -132,12 +132,12 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
                     this.idRecycleView.setAdapter(new ClientAdapter(clientList));
                     this.idTvwSizeClient.setVisibility(View.VISIBLE);
                     this.idLLMessageEmpty.setVisibility(View.INVISIBLE);
-                    idLLMessageEmptySearch.setVisibility(View.INVISIBLE);
+                    this.idLLMessageEmptySearch.setVisibility(View.INVISIBLE);
                     this.idRecycleView.setVisibility(View.VISIBLE);
                 }else{
                     this.idTvwSizeClient.setVisibility(View.INVISIBLE);
                     this.idLLMessageEmpty.setVisibility(View.VISIBLE);
-                    idLLMessageEmptySearch.setVisibility(View.INVISIBLE);
+                    this.idLLMessageEmptySearch.setVisibility(View.INVISIBLE);
                     this.idRecycleView.setVisibility(View.INVISIBLE);
                 }
             }
@@ -175,6 +175,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             idTvwSizeClient.setVisibility(View.INVISIBLE);
             idLLMessageEmptySearch.setVisibility(View.VISIBLE);
             idRecycleView.setVisibility(View.INVISIBLE);
+            if (idLLMessageEmpty.getVisibility() == View.VISIBLE) idLLMessageEmpty.setVisibility(View.INVISIBLE);
             FunctionsApp.closeKeyboard(ListClientActivity.this,this.idView);
         }
     }
