@@ -35,4 +35,11 @@
         <item id="SE">SE - Sergipe</item>
         <item id="TO">TO - Tocantins</item>
     </array>
+
+    <array name="array_client_test">
+        <item>Selecione um cliente</item>
+        <item>Everaldo Cardoso de Araújo</item>
+        <item>Suellene Moledo da Conceição de Araújo</item>
+        <item>Eduardo da Silva de Araújo</item>
+    </array>
 </resources>

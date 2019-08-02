@@ -43,6 +43,7 @@ public class FunctionsApp {
     public static final String MASCARA_CNPJ = "##.###.###/####-##";
     public static final String MASCARA_CEP = "##.###-###";
     public static final String MASCARA_DATA = "##/##/####";
+    public static final String MASCARA_HORA = "##:##";
 
     /**Funções de Layout**/
     public static void startActivity(Context context, Class classe, Bundle paramentros){
@@ -180,7 +181,17 @@ public class FunctionsApp {
         return getCurrentDate("dd/MM/yyyy");
     }
 
+    public static String getCurrentTime(){
+        return getCurrentTime("kk:mm");
+    }
+
     public static String getCurrentDate(String format){
+        Date data = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatDate = new SimpleDateFormat(format);
+        return formatDate.format(data);
+    }
+
+    public  static String getCurrentTime(String format){
         Date data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatDate = new SimpleDateFormat(format);
         return formatDate.format(data);

@@ -25,7 +25,16 @@
     <style name="StyledTilEditText">
         <item name="android:theme">@style/StyledTilEditTextTheme</item>
         <item name="android:paddingTop">4dp</item>
-        <item name="android:textColorHint">#c8ffffff</item> // Cor texto(hint) sem foco
+        <item name="android:textColorHint">#e6ffffff</item> // Cor texto(hint) sem foco
+    </style>
+
+    <style name="StyledTilEditTextThemeClean">
+        <item name="colorControlNormal">@android:color/transparent</item> // Cor padrão da linha
+        <item name="colorControlActivated">@android:color/transparent</item> // Cor linha e texto quando recebe foco
+    </style>
+
+    <style name="StyledTilEditTextClean">
+        <item name="android:theme">@style/StyledTilEditTextThemeClean</item>
     </style>
 
 </resources>

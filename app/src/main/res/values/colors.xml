@@ -8,4 +8,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorRed">#FF0F23</color>
     <color name="colorBlue">#448AFF</color>
+    <color name="colorCinza">#808183</color>
+    <color name="colorOrange">#FFAA00</color>
 </resources>

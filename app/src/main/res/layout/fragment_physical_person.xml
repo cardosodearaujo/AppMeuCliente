@@ -156,6 +156,12 @@
                     android:entries="@array/array_client_pf_sexo"
                     android:prompt="@string/str_client_pf_sex"
                     android:spinnerMode="dialog" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorAccent" />
             </LinearLayout>
 
 

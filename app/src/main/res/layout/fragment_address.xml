@@ -129,6 +129,11 @@
                     android:prompt="@string/str_client_address_state"
                     android:spinnerMode="dialog" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorAccent" />
+
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout

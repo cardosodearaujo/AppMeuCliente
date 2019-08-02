@@ -205,26 +205,50 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
     private View.OnClickListener onClickDate = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int day,month,year;
 
-            DatePickerDialog dialog = new DatePickerDialog(
-                    getActivity(),
-                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                    onDateSetListener,
-                    year, month, day);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            if (!idEdtClientPFDate.getText().toString().equals("") && idEdtClientPFDate.getText().toString().split("/").length > 0 ) {
+                String data[] = idEdtClientPFDate.getText().toString().split("/");
+                day  = Integer.parseInt(data[0]);
+                month = Integer.parseInt(data[1]) - 1;
+                year = Integer.parseInt(data[2]);
+            }else{
+                Calendar cal = Calendar.getInstance();
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                month = cal.get(Calendar.MONTH);
+                year = cal.get(Calendar.YEAR);
+            }
+
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+                    onDateSetListener,year,month,day);
+
             dialog.show();
+
         }
     };
 
     private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            String data = dayOfMonth + "/"
-                    + (monthOfYear + 1) + "/"
-                    + year;
+            String data = "";
+
+            if (dayOfMonth < 10){
+                data += "0" + dayOfMonth;
+            }else{
+                data += dayOfMonth;
+            }
+
+            data += "/";
+
+            monthOfYear = monthOfYear + 1;
+
+            if (monthOfYear < 10){
+                data += "0" + monthOfYear;
+            }else{
+                data += (monthOfYear );
+            }
+
+            data += "/" + year;
+
             idEdtClientPFDate.setText(data);
         }
     };

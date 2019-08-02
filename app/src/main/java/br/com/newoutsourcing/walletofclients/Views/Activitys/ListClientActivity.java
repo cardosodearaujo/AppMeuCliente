@@ -48,6 +48,8 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton idBtnFabClientPhysicalPerson;
     private FloatingActionButton idBtnFabClientExport;
     private FloatingActionButton idBtnFabContact;
+    private FloatingActionButton idBtnFabNewTaks;
+    private FloatingActionButton idBtnFabConsultTasks;
     private RecyclerView idRecycleView;
     private TextView idTvwSizeClient;
     private View idView;
@@ -93,6 +95,8 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idEdtSearch = this.findViewById(R.id.idEdtSearch);
         this.idSwipeContainer = this.findViewById(R.id.idSwipeContainer);
         this.idLLMessageEmptySearch = this.findViewById(R.id.idLLMessageEmptySearch);
+        this.idBtnFabNewTaks = this.findViewById(R.id.idBtnFabNewTaks);
+        this.idBtnFabConsultTasks = this.findViewById(R.id.idBtnFabConsultTasks);
     }
 
     private void onConfiguration(){
@@ -104,6 +108,8 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
         this.idBtnFabClientExport.setOnClickListener(this.onClickExport);
         this.idBtnFabContact.setOnClickListener(this.onClickBtnFabContact);
+        this.idBtnFabNewTaks.setOnClickListener(this.onClickBtnFabNewTaks);
+        this.idBtnFabConsultTasks.setOnClickListener(this.onClickBtnFabConsultTasks);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -326,6 +332,20 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
             Bundle bundle = new Bundle();
             bundle.putString("TipoCadastro","F");
             FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
+        }
+    };
+
+    View.OnClickListener onClickBtnFabNewTaks = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            FunctionsApp.startActivity(ListClientActivity.this,NewTaskActivity.class,null);
+        }
+    };
+
+    View.OnClickListener onClickBtnFabConsultTasks = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            FunctionsApp.startActivity(ListClientActivity.this,SearchTaksActivity.class,null);
         }
     };
 
