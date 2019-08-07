@@ -2,11 +2,6 @@ package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
@@ -14,39 +9,27 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
-import java.util.Date;
-
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import butterknife.BindView;
 
-public class NewTaskActivity extends AppCompatActivity {
+public class NewTaskActivity extends BaseActivity {
 
-    private EditText idEdtTaksDate;
-    private EditText idEdtTaksHour;
-    private Switch idSwtTaskDiaInteiro;
-    private Button idBtnSave;
-    private Button idBtnClose;
+    protected @BindView(R.id.idEdtTaksDate) EditText idEdtTaksDate;
+    protected @BindView(R.id.idEdtTaksHour) EditText idEdtTaksHour;
+    protected @BindView(R.id.idSwtTaskDiaInteiro) Switch idSwtTaskDiaInteiro;
+    protected @BindView(R.id.idBtnSave) Button idBtnSave;
+    protected @BindView(R.id.idBtnClose) Button idBtnClose;
+
+    public NewTaskActivity() {
+        super(R.layout.activity_new_task);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_task);
-        this.onInflate();
-        this.onConfiguration();
-    }
-
-    private void onInflate(){
-        this.idEdtTaksDate = this.findViewById(R.id.idEdtTaksDate);
-        this.idEdtTaksHour = this.findViewById(R.id.idEdtTaksHour);
-        this.idSwtTaskDiaInteiro = this.findViewById(R.id.idSwtTaskDiaInteiro);
-        this.idBtnSave = this.findViewById(R.id.idBtnSave);
-        this.idBtnClose = this.findViewById(R.id.idBtnClose);
-    }
-
-    private void onConfiguration(){
+    protected void onConfiguration(){
         this.idEdtTaksDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_DATA, this.idEdtTaksDate));
         this.idEdtTaksDate.setText(FunctionsApp.getCurrentDate());
         this.idEdtTaksDate.setOnClickListener(this.onClickDate);
@@ -58,19 +41,9 @@ public class NewTaskActivity extends AppCompatActivity {
         this.idBtnClose.setOnClickListener(this.onClickClose);
     }
 
-    private View.OnClickListener onClickClose = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FunctionsApp.closeActivity(NewTaskActivity.this);
-        }
-    };
+    private View.OnClickListener onClickClose = view -> FunctionsApp.closeActivity(NewTaskActivity.this);
 
-    private View.OnClickListener onClickSave = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FunctionsApp.showSnackBarLong(view,"Em desenvolvimento, aguarde...");
-        }
-    };
+    private View.OnClickListener onClickSave = view -> FunctionsApp.showSnackBarLong(view,"Em desenvolvimento, aguarde...");
 
     private View.OnClickListener onClickAllDay = new View.OnClickListener() {
         @Override
@@ -82,7 +55,6 @@ public class NewTaskActivity extends AppCompatActivity {
             }
         }
     };
-
 
     private View.OnClickListener onClickDate = new View.OnClickListener() {
         @Override
@@ -154,7 +126,6 @@ public class NewTaskActivity extends AppCompatActivity {
             dialog.show();
         }
     };
-
 
     private TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override

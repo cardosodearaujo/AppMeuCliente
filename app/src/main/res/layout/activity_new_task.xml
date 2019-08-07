@@ -7,12 +7,12 @@
     tools:context=".Views.Activitys.NewTaskActivity"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/idToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -28,8 +28,17 @@
                 android:layout_gravity="right"
                 android:background="@mipmap/ic_close" />
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+            <Button
+                android:id="@+id/idBtnDelete"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/colorWhite"
+                android:background="@mipmap/ic_delete" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="30dp"
-                    android:checked="true"
+                    android:checked="false"
                     android:shadowColor="@color/colorPrimaryDark"
                     android:layout_weight="1"/>
 
@@ -123,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -141,9 +150,9 @@
                         android:hint="@string/str_taks_date"
                         android:inputType="date"
                         android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -161,11 +170,11 @@
                         android:hint="@string/str_taks_hour"
                         android:inputType="datetime"
                         android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
@@ -184,7 +193,7 @@
                 android:lines="10"
                 android:maxLines="10"
                 android:scrollbars="vertical" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

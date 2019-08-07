@@ -17,7 +17,7 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class TBClientDatabase extends TableConfigurationDatabase {
+public class TBClientDatabase extends TableConfigurationDatabase<Client> {
 
     public enum Fields {
         ID_CLIENT,
@@ -64,6 +64,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         return this.Consulta(SQL);
     }
 
+    @Override
     public List<Client> Select(){
         this.SQL
                 = " Select " + this.getFields() + " From " + this.Table
@@ -123,6 +124,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public long Insert(Client client){
         super.openDatabaseInstance();
         try{
@@ -140,6 +142,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public Boolean Update(Client client){
         super.openDatabaseInstance();
         try {
@@ -160,6 +163,7 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public Boolean Delete(Client client){
         super.openDatabaseInstance();
         try {
@@ -184,7 +188,8 @@ public class TBClientDatabase extends TableConfigurationDatabase {
         }
     }
 
-    private String getFields(){
+    @Override
+    protected String getFields(){
         String StringFields = "";
 
         for(Fields Field: Fields.values()){

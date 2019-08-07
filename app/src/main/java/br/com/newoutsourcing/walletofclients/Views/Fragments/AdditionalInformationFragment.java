@@ -1,13 +1,11 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;

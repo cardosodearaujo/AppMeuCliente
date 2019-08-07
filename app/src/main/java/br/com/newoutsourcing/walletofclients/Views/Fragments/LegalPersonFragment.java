@@ -1,46 +1,21 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.util.ArrayList;
-
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.app.Activity.RESULT_OK;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
-import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
 public class LegalPersonFragment extends Fragment implements FragmentsCallback {
+
     private Toolbar idToolbar;
     private EditText idEdtClientPJSocialName;
     private EditText idEdtClientPJFantasyName;

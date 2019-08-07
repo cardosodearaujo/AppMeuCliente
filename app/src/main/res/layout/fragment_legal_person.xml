@@ -36,7 +36,7 @@
 
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -52,11 +52,11 @@
                     android:layout_marginBottom="15dp"
                     android:hint="@string/str_client_pj_social_name"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -71,9 +71,9 @@
                     android:layout_marginBottom="15dp"
                     android:hint="@string/str_client_pj_fantasy_name"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -89,9 +89,9 @@
                     android:hint="@string/str_client_pj_CNPJ"
                     android:singleLine="true"
                     android:inputType="number"/>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -106,9 +106,9 @@
                     android:layout_marginBottom="15dp"
                     android:hint="@string/str_client_pj_IE"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -123,7 +123,7 @@
                     android:layout_marginBottom="15dp"
                     android:hint="@string/str_client_pj_IM"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

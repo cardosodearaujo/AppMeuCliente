@@ -1,15 +1,16 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
 
-public class SearchTaksActivity extends AppCompatActivity {
+public class SearchTaksActivity extends BaseActivity {
+
+    public SearchTaksActivity() {
+        super(R.layout.activity_search_taks);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_taks);
+    protected void onConfiguration() {
+
     }
 }

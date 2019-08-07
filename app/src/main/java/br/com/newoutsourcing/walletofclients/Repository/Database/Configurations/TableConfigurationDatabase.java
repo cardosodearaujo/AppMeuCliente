@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.List;
 
-public class TableConfigurationDatabase<T> {
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAddressDatabase;
+
+public abstract class TableConfigurationDatabase<obj> {
 
     protected SQLiteDatabase database;
     protected Cursor cursor;
@@ -29,13 +31,17 @@ public class TableConfigurationDatabase<T> {
         }
     }
 
-    public List<T> Select(){
+    public List<obj> Select(){
         return this.Select(0);
     }
 
-    public List<T> Select(long id){
-        return null;
-    }
+    public abstract List<obj> Select(long id);
+
+    public abstract long Insert(obj obj);
+
+    public abstract Boolean Update(obj obj);
+
+    public abstract Boolean Delete(obj obj);
 
     public Boolean DeleteAll(){
         this.openDatabaseInstance();
@@ -52,4 +58,6 @@ public class TableConfigurationDatabase<T> {
     public String QuoteParam(String param){
         return param.replace("'","''");
     }
+
+    protected abstract String getFields();
 }

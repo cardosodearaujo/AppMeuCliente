@@ -1,14 +1,12 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
 import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -35,7 +33,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
     public PhysicalPersonFragment() {
     }
-
 
     public static PhysicalPersonFragment newInstance() {
         return new PhysicalPersonFragment();

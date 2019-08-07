@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:layout_weight="9">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/idAppBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:background="@color/colorPrimary">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/idToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,15 +51,15 @@
                     android:backgroundTint="@color/colorWhite"
                     android:background="@mipmap/ic_delete" />
 
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/idTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/idViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

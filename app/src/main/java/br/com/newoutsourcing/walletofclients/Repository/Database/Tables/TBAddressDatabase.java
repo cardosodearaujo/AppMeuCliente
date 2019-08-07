@@ -7,7 +7,7 @@ import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Address;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBAddressDatabase extends TableConfigurationDatabase {
+public class TBAddressDatabase extends TableConfigurationDatabase<Address> {
 
     public enum Fields {
         ID_ADDRESS,
@@ -76,6 +76,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public long Insert(Address address){
         super.openDatabaseInstance();
         try{
@@ -99,6 +100,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public Boolean Update(Address address){
         super.openDatabaseInstance();
         try {
@@ -125,6 +127,7 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public Boolean Delete(Address address){
         super.openDatabaseInstance();
         try {
@@ -141,7 +144,8 @@ public class TBAddressDatabase extends TableConfigurationDatabase {
         }
     }
 
-    private String getFields(){
+    @Override
+    protected String getFields(){
         String StringFields = "";
 
         for(Fields Field: Fields.values()){

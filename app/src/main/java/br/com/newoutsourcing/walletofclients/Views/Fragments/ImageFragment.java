@@ -2,7 +2,6 @@ package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,26 +11,22 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.squareup.picasso.Picasso;
-
 import java.io.File;
 import java.util.ArrayList;
-
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import static android.app.Activity.RESULT_OK;
 
 public class ImageFragment extends Fragment implements FragmentsCallback {
@@ -71,12 +66,7 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
         this.idLLImgClient.setOnClickListener(this.onClickTakePhoto);
     }
 
-    private View.OnClickListener onClickTakePhoto = new View.OnClickListener(){
-        @Override
-        public void onClick(View view){
-            getPermissions();
-        }
-    };
+    private View.OnClickListener onClickTakePhoto = view -> getPermissions();
 
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
@@ -98,22 +88,20 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
 
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.alert_dialog_question, itens);
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity(),R.style.Theme_MaterialComponents_Light_Dialog);
-        builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int idOption) {
-                Intent intent;
-                switch (idOption) {
-                    case 0: //Tirar Foto
-                        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, FunctionsApp.IMAGEM_CAMERA);
-                        dialog.cancel();
-                        break;
-                    case 1: //Pegar da galeria
-                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                        intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"),FunctionsApp.IMAGEM_INTERNA);
-                        dialog.cancel();
-                        break;
-                }
+        builder.setSingleChoiceItems(adapter, 0, (dialog, idOption) -> {
+            Intent intent;
+            switch (idOption) {
+                case 0: //Tirar Foto
+                    intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, FunctionsApp.IMAGEM_CAMERA);
+                    dialog.cancel();
+                    break;
+                case 1: //Pegar da galeria
+                    intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"),FunctionsApp.IMAGEM_INTERNA);
+                    dialog.cancel();
+                    break;
             }
         });
         alert = builder.create();

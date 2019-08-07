@@ -3,16 +3,14 @@ package br.com.newoutsourcing.walletofclients.Views.Activitys;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,8 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdRequest;
@@ -35,71 +31,47 @@ import br.com.newoutsourcing.walletofclients.Repository.Tasks.ImportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import butterknife.BindView;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class ListClientActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
-    private Toolbar idToolbar;
-    private FloatingActionMenu idBtnFam;
-    private FloatingActionButton idBtnFabClientLegalPerson;
-    private FloatingActionButton idBtnFabClientPhysicalPerson;
-    private FloatingActionButton idBtnFabClientExport;
-    private FloatingActionButton idBtnFabContact;
-    private FloatingActionButton idBtnFabNewTaks;
-    private FloatingActionButton idBtnFabConsultTasks;
-    private RecyclerView idRecycleView;
-    private TextView idTvwSizeClient;
-    private View idView;
-    private AdView idAdsView;
-    private LinearLayout idLLMessageEmpty;
-    private Button idBtnSearch;
-    private AppBarLayout idAppBarLayoutSearch;
-    private AppBarLayout idAppBarLayout;
-    private Button idBtnSearchExit;
-    private EditText idEdtSearch;
-    private SwipeRefreshLayout idSwipeContainer;
-    private LinearLayout idLLMessageEmptySearch;
+public class ListClientActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_list_client);
-        this.onInflate();
-        this.onConfiguration();
-        this.setSupportActionBar(this.idToolbar);
+    protected @BindView(R.id.idToolbar) Toolbar idToolbar;
+    protected @BindView(R.id.idBtnFam) FloatingActionMenu idBtnFam;
+    protected @BindView(R.id.idBtnFabClientLegalPerson) FloatingActionButton idBtnFabClientLegalPerson;
+    protected @BindView(R.id.idBtnFabClientPhysicalPerson) FloatingActionButton idBtnFabClientPhysicalPerson;
+    protected @BindView(R.id.idBtnFabClientExport) FloatingActionButton idBtnFabClientExport;
+    protected @BindView(R.id.idBtnFabContact) FloatingActionButton idBtnFabContact;
+    protected @BindView(R.id.idBtnFabNewTaks) FloatingActionButton idBtnFabNewTaks;
+    protected @BindView(R.id.idBtnFabConsultTasks) FloatingActionButton idBtnFabConsultTasks;
+    protected @BindView(R.id.idRecycleView) RecyclerView idRecycleView;
+    protected @BindView(R.id.idTvwSizeClient) TextView idTvwSizeClient;
+    protected @BindView(R.id.idAdsView) AdView idAdsView;
+    protected @BindView(R.id.idLLMessageEmpty) LinearLayout idLLMessageEmpty;
+    protected @BindView(R.id.idBtnSearch) Button idBtnSearch;
+    protected @BindView(R.id.idAppBarLayoutSearch) AppBarLayout idAppBarLayoutSearch;
+    protected @BindView(R.id.idAppBarLayout) AppBarLayout idAppBarLayout;
+    protected @BindView(R.id.idBtnSearchExit) Button idBtnSearchExit;
+    protected @BindView(R.id.idEdtSearch) EditText idEdtSearch;
+    protected @BindView(R.id.idSwipeContainer) SwipeRefreshLayout idSwipeContainer;
+    protected @BindView(R.id.idLLMessageEmptySearch) LinearLayout idLLMessageEmptySearch;
+
+    public ListClientActivity() {
+        super(R.layout.activity_list_client);
     }
 
     @Override
     public void onClick(View v) {
     }
 
-    private void onInflate(){
-        this.idView = this.findViewById(android.R.id.content);
-        this.idToolbar = this.findViewById(R.id.idToolbar);
-        this.idBtnFam = this.findViewById(R.id.idBtnFam);
-        this.idBtnFabClientLegalPerson = this.findViewById(R.id.idBtnFabClientLegalPerson);
-        this.idBtnFabClientPhysicalPerson = this.findViewById(R.id.idBtnFabClientPhysicalPerson);
-        this.idBtnFabClientExport = this.findViewById(R.id.idBtnFabClientExport);
-        this.idBtnFabContact = this.findViewById(R.id.idBtnFabContact);
-        this.idRecycleView = this.findViewById(R.id.idRecycleView);
-        this.idTvwSizeClient = this.findViewById(R.id.idTvwSizeClient);
-        this.idAdsView = this.findViewById(R.id.idAdsView);
-        this.idLLMessageEmpty = this.findViewById(R.id.idLLMessageEmpty);
-        this.idBtnSearch = this.findViewById(R.id.idBtnSearch);
-        this.idAppBarLayoutSearch = this.findViewById(R.id.idAppBarLayoutSearch);
-        this.idAppBarLayout = this.findViewById(R.id.idAppBarLayout);
-        this.idBtnSearchExit = this.findViewById(R.id.idBtnSearchExit);
-        this.idEdtSearch = this.findViewById(R.id.idEdtSearch);
-        this.idSwipeContainer = this.findViewById(R.id.idSwipeContainer);
-        this.idLLMessageEmptySearch = this.findViewById(R.id.idLLMessageEmptySearch);
-        this.idBtnFabNewTaks = this.findViewById(R.id.idBtnFabNewTaks);
-        this.idBtnFabConsultTasks = this.findViewById(R.id.idBtnFabConsultTasks);
-    }
-
-    private void onConfiguration(){
+    @Override
+    protected void onConfiguration(){
+        this.setSupportActionBar(this.idToolbar);
         MobileAds.initialize(ListClientActivity.this, "@string/str_app_admob_id");
         AdRequest adRequest = new AdRequest.Builder().build();
         this.idAdsView.loadAd(adRequest);
@@ -112,7 +84,7 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
         this.idBtnFabConsultTasks.setOnClickListener(this.onClickBtnFabConsultTasks);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         this.idRecycleView.setLayoutManager(linearLayoutManager);
         this.idRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -302,64 +274,30 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
        }
     }
 
-    View.OnClickListener onClickBtnSearch = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            EntrarEmModoPesquisa();
-        }
+    View.OnClickListener onClickBtnSearch = v -> EntrarEmModoPesquisa();
+
+    View.OnClickListener onClickBtnSearchExit = v -> {
+        SairModoPesquisa();
+        AtualizarLista();
     };
 
-    View.OnClickListener onClickBtnSearchExit = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            SairModoPesquisa();
-            AtualizarLista();
-        }
+    View.OnClickListener onClickBtnFabClientLegalPerson = v -> {
+        Bundle bundle = new Bundle();
+        bundle.putString("TipoCadastro","J");
+        FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
     };
 
-    View.OnClickListener onClickBtnFabClientLegalPerson = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            Bundle bundle = new Bundle();
-            bundle.putString("TipoCadastro","J");
-            FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
-        }
+    View.OnClickListener onClickBtnFabClientPhysicalPerson = v -> {
+        Bundle bundle = new Bundle();
+        bundle.putString("TipoCadastro","F");
+        FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
     };
 
-    View.OnClickListener onClickBtnFabClientPhysicalPerson = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            Bundle bundle = new Bundle();
-            bundle.putString("TipoCadastro","F");
-            FunctionsApp.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
-        }
-    };
+    View.OnClickListener onClickBtnFabNewTaks = v -> FunctionsApp.startActivity(ListClientActivity.this,NewTaskActivity.class,null);
 
-    View.OnClickListener onClickBtnFabNewTaks = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.startActivity(ListClientActivity.this,NewTaskActivity.class,null);
-        }
-    };
+    View.OnClickListener onClickBtnFabConsultTasks = v -> FunctionsApp.startActivity(ListClientActivity.this,SearchTaksActivity.class,null);
 
-    View.OnClickListener onClickBtnFabConsultTasks = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.startActivity(ListClientActivity.this,SearchTaksActivity.class,null);
-        }
-    };
+    View.OnClickListener onClickBtnFabContact = v -> FunctionsApp.startActivity(ListClientActivity.this,ContactActivity.class,null);
 
-    View.OnClickListener onClickBtnFabContact = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.startActivity(ListClientActivity.this,ContactActivity.class,null);
-        }
-    };
-
-    View.OnClickListener onClickExport = new View.OnClickListener(){
-        @Override
-        public void onClick(View v){
-            Exportar();
-        }
-    };
+    View.OnClickListener onClickExport = v -> Exportar();
 }

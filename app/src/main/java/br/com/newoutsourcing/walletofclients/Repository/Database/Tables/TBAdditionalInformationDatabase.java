@@ -7,7 +7,7 @@ import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.AdditionalInformation;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBAdditionalInformationDatabase extends TableConfigurationDatabase {
+public class TBAdditionalInformationDatabase extends TableConfigurationDatabase<AdditionalInformation> {
 
     public enum Fields {
         ID_ADDITIONAL_INFORMATION,
@@ -72,6 +72,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         }
     }
 
+    @Override
     public long Insert(AdditionalInformation additionalInformation){
         super.openDatabaseInstance();
         try{
@@ -93,6 +94,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         }
     }
 
+    @Override
     public Boolean Update(AdditionalInformation additionalInformation){
         super.openDatabaseInstance();
         try {
@@ -117,6 +119,7 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         }
     }
 
+    @Override
     public Boolean Delete(AdditionalInformation additionalInformation){
         super.openDatabaseInstance();
         try {
@@ -133,7 +136,8 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase 
         }
     }
 
-    private String getFields(){
+    @Override
+    protected String getFields(){
         String StringFields = "";
 
         for(Fields Field: Fields.values()){

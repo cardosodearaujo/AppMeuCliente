@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/idAppBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="4dp"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/idToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -45,10 +45,10 @@
                     android:gravity="right"
                     android:textStyle="bold" />
 
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/idAppBarLayoutSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:visibility="invisible">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/idToolbarSearch"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -90,12 +90,12 @@
                         android:hint="@string/str_search_hint" />
 
                 </LinearLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
     </RelativeLayout>
 
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/idSwipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/idRecycleView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -269,7 +269,7 @@
             </com.github.clans.fab.FloatingActionMenu>
 
         </RelativeLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/idAdsView"

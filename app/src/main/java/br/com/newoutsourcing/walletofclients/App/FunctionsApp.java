@@ -9,13 +9,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -355,5 +359,25 @@ public class FunctionsApp {
                 break;
         }
         return Index;
+    }
+
+    /**Email**/
+    public static void SendMail(){
+        try {
+            SimpleEmail email = new SimpleEmail();
+            email.setSSLOnConnect(true);
+            email.setHostName( "smtp.gmail.com" );
+            email.setSslSmtpPort( "465" );
+            email.setAuthenticator( new DefaultAuthenticator( "everaldocardosodearaujo@gmail.com" ,  "M1n3Rv@7" ) );
+            email.setFrom( "everaldocardosodearaujo@gmail.com");
+            email.setDebug(true);
+            email.setSubject( "Email de teste do app" );
+            email.setMsg( "Vou te mandar usuarios por aqui." );
+            email.addTo( "everaldocardosodearaujo@gmail.com" );
+            email.send();
+
+        } catch (EmailException e) {
+            e.printStackTrace();
+        }
     }
 }

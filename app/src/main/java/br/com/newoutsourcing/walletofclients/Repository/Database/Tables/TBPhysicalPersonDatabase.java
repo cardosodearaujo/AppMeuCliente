@@ -7,7 +7,7 @@ import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.PhysicalPerson;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
 
-public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
+public class TBPhysicalPersonDatabase extends TableConfigurationDatabase<PhysicalPerson> {
 
     public enum Fields {
         ID_PHYSICAL_PERSON,
@@ -77,6 +77,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public long Insert(PhysicalPerson physicalPerson){
         super.openDatabaseInstance();
         try{
@@ -99,6 +100,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public Boolean Update(PhysicalPerson physicalPerson){
         super.openDatabaseInstance();
         try {
@@ -124,6 +126,7 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         }
     }
 
+    @Override
     public Boolean Delete(PhysicalPerson physicalPerson){
         super.openDatabaseInstance();
         try {
@@ -171,7 +174,8 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase {
         }
     }
 
-    private String getFields(){
+    @Override
+    protected String getFields(){
         String StringFields = "";
 
         for(Fields Field: Fields.values()){

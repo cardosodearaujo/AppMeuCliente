@@ -17,7 +17,7 @@
             android:layout_marginTop="30dp"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -33,9 +33,9 @@
                     android:hint="@string/str_client_pf_cellphone"
                     android:inputType="phone"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -51,9 +51,9 @@
                     android:hint="@string/str_client_pf_telephone"
                     android:inputType="phone"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -69,9 +69,9 @@
                     android:hint="@string/str_client_pf_email"
                     android:inputType="textEmailAddress"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -86,9 +86,9 @@
                     android:layout_marginBottom="15dp"
                     android:hint="@string/str_client_pf_site"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -107,7 +107,7 @@
                     android:lines="10"
                     android:maxLines="10"
                     android:scrollbars="vertical" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

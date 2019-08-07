@@ -1,76 +1,62 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.support.v4.view.ViewPager;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
+import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalInformationFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
+import butterknife.BindView;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class RegisterClientActivity extends AppCompatActivity {
+public class RegisterClientActivity extends BaseActivity {
 
-    private ViewPager idViewPager;
-    private Button idBtnClose;
-    private Toolbar idToolbar;
+    protected @BindView(R.id.idViewPager) ViewPager idViewPager;
+    protected @BindView(R.id.idBtnClose) Button idBtnClose;
+    protected @BindView(R.id.idToolbar) Toolbar idToolbar;
+    protected @BindView(R.id.idTabLayout) TabLayout idTabLayout;
+    protected @BindView(R.id.idBtnSave) Button idBtnSave;
+    protected @BindView(R.id.idBtnDelete) Button idBtnDelete;
+
     private TabPagerAdapter pagerAdapter;
-    private TabLayout idTabLayout;
-    private Button idBtnSave;
     private FragmentsCallback physicalPersonCallback;
     private FragmentsCallback legalPersonCallback;
     private FragmentsCallback addressCallback;
     private FragmentsCallback additionalInformationCallback;
     private String typePerson;
-    private View idView;
     private Client client;
-    private Button idBtnDelete;
+
+    public RegisterClientActivity() {
+        super(R.layout.activity_register_client);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_register_client);
-        this.onInflate();
-        this.onConfiguration();
-        this.onConfigurationFragments();
-    }
-
-    private void onInflate(){
+    protected void onConfiguration() {
         this.client = new Client();
-        this.idView = this.findViewById(android.R.id.content);
         this.pagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
-        this.idToolbar = this.findViewById(R.id.idToolbar);
-        this.idViewPager = this.findViewById(R.id.idViewPager);
-        this.idBtnClose = this.findViewById(R.id.idBtnClose);
-        this.idTabLayout = this.findViewById(R.id.idTabLayout);
-        this.idBtnSave = this.findViewById(R.id.idBtnSave);
-        this.idBtnDelete = this.findViewById(R.id.idBtnDelete);
-    }
-
-    private void onConfiguration() {
         this.setSupportActionBar(this.idToolbar);
         this.idTabLayout.setupWithViewPager(this.idViewPager);
         this.idBtnClose.setOnClickListener(this.onClickClose);
         this.idBtnSave.setOnClickListener(this.onClickSave);
         this.idBtnDelete.setOnClickListener(this.onClickDelete);
+        this.onConfigurationFragments();
     }
 
     private void onConfigurationFragments() {
@@ -119,19 +105,13 @@ public class RegisterClientActivity extends AppCompatActivity {
         public void onClick(View v){
             if (client.getClientId() > 0){
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
-                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog, final int id) {
-                                TB_CLIENT.Delete(client);
-                                Toast.makeText(RegisterClientActivity.this,"Cliente excluido com sucesso!",Toast.LENGTH_LONG).show();
-                                FunctionsApp.closeActivity(RegisterClientActivity.this);
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog, final int id) {
-                                dialog.cancel();
-                            }
-                        })
+                builder.setPositiveButton("Sim", (dialog, id) -> {
+                    TB_CLIENT.Delete(client);
+                    Toast.makeText(RegisterClientActivity.this,"Cliente excluido com sucesso!",Toast.LENGTH_LONG).show();
+                    FunctionsApp.closeActivity(RegisterClientActivity.this);
+                    dialog.cancel();
+                })
+                        .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
                         .setMessage("Tem ceteza que deseja excluir?");
 
                 final AlertDialog alert = builder.create();
@@ -221,10 +201,5 @@ public class RegisterClientActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener onClickClose = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FunctionsApp.closeActivity(RegisterClientActivity.this);
-        }
-    };
+    View.OnClickListener onClickClose = v -> FunctionsApp.closeActivity(RegisterClientActivity.this);
 }
