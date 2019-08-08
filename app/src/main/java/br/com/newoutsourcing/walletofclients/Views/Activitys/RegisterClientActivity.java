@@ -12,6 +12,7 @@ import android.widget.Toast;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
 import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -100,6 +101,8 @@ public class RegisterClientActivity extends BaseActivity {
         }
     }
 
+
+
     View.OnClickListener onClickDelete = new View.OnClickListener(){
         @Override
         public void onClick(View v){
@@ -107,6 +110,7 @@ public class RegisterClientActivity extends BaseActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
                 builder.setPositiveButton("Sim", (dialog, id) -> {
                     TB_CLIENT.Delete(client);
+                    NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.DELETE);
                     Toast.makeText(RegisterClientActivity.this,"Cliente excluido com sucesso!",Toast.LENGTH_LONG).show();
                     FunctionsTools.closeActivity(RegisterClientActivity.this);
                     dialog.cancel();
@@ -171,10 +175,18 @@ public class RegisterClientActivity extends BaseActivity {
                                         client.getAddress().setClientId(client.getClientId());
                                         TB_ADDRESS.Insert(client.getAddress());
 
+                                        idViewPager.setCurrentItem(0);
                                         if (client.getType() == 1){physicalPersonCallback.onClear();}else{legalPersonCallback.onClear();}
+
+                                        idViewPager.setCurrentItem(1);
                                         additionalInformationCallback.onClear();
+
+                                        idViewPager.setCurrentItem(2);
                                         addressCallback.onClear();
 
+                                        idViewPager.setCurrentItem(0);
+
+                                        NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.INSERT);
                                         FunctionsTools.showSnackBarLong(v,"Cliente salvo!");
                                     }
                                 }else{/**Atualiza cliente**/
@@ -183,14 +195,23 @@ public class RegisterClientActivity extends BaseActivity {
                                     TB_ADDITIONAL_INFORMATION.Update(client.getAdditionalInformation());
                                     TB_ADDRESS.Update(client.getAddress());
 
+                                    idViewPager.setCurrentItem(0);
                                     if (client.getType() == 1){physicalPersonCallback.onClear();}else{legalPersonCallback.onClear();}
+
+                                    idViewPager.setCurrentItem(1);
                                     additionalInformationCallback.onClear();
+
+                                    idViewPager.setCurrentItem(2);
                                     addressCallback.onClear();
+
+                                    idViewPager.setCurrentItem(0);
 
                                     idBtnDelete.setVisibility(View.INVISIBLE);
 
+                                    NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.UPDATE);
                                     FunctionsTools.showSnackBarLong(v,"Cliente atualizado!");
                                 }
+                                client = new Client();
                             }
                         }
                     }

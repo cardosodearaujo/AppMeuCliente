@@ -1,7 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.os.Handler;
-import javax.mail.MessagingException;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase;
@@ -11,6 +10,7 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBClient
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBLegalPersonDatabase;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBPhysicalPersonDatabase;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBTasksDatabase;
+import br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages;
 import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -21,6 +21,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onConfiguration() {
+        NofiticationMessages.onNotificationUse();
         this.onLoadDatabaseSession();
         this.onStartActivity();
     }
@@ -45,4 +46,6 @@ public class SplashActivity extends BaseActivity {
             FunctionsTools.closeActivity(SplashActivity.this);
         },1000);
     }
+
+
 }

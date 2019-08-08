@@ -170,6 +170,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.idEdtClientPJCNPJ.setText("");
         this.idEdtClientPJIE.setText("");
         this.idEdtClientPJIM.setText("");
+        this.setArguments(new Bundle());
         this.onCreateFragment(true);
     }
 }

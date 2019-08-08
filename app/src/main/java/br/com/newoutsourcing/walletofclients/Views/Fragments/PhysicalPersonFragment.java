@@ -196,6 +196,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFRG.setText("");
         this.idSpnClientPFSexo.setSelection(0);
         this.idEdtClientPFDate.setText(FunctionsTools.getCurrentDate());
+        this.setArguments(new Bundle());
         this.onCreateFragment(true);
     }
 

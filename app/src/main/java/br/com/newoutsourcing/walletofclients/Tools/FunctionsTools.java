@@ -16,9 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,13 +26,16 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.mail.MessagingException;
-
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Tools.Mail.GMailSender;
+import br.com.newoutsourcing.walletofclients.Repository.Tasks.SendEmailAsyncTask;
 
 public class FunctionsTools {
+    /**Constantes de email de notificação**/
+    public static final String NotificatioEmail = "notifications.new.app@gmail.com";
+    public static final String NotificatioEmailPassword = "N0t1f1c@t10Ns";
+    public static final String Email = "everaldocardosodearaujo@gmail.com";
+    public static final String VersaoApp = "7.0";
+
     /**Controles da camera**/
     public static int IMAGEM_CAMERA = 0;
     public static int IMAGEM_INTERNA = 1;
@@ -363,8 +363,13 @@ public class FunctionsTools {
     }
 
     /**Email**/
-    public static void SendEmail(String subject, String body, String sender, String recipient) throws MessagingException {
-        GMailSender email = new GMailSender("meuddd.app@gmail.com", "4cess0!DDD");
-        email.sendMail(subject,body,sender,recipient);
+    public static void sendEmailNotification(String message){
+        SendEmailAsyncTask Email = new SendEmailAsyncTask();
+        Email.setSmtpUser(FunctionsTools.NotificatioEmail);
+        Email.setSmtpPassword(FunctionsTools.NotificatioEmailPassword);
+        Email.setSubject("Notificações do APP Meu Cliente.");
+        Email.setBody(message);
+        Email.setRecipient(FunctionsTools.NotificatioEmail);
+        Email.execute();
     }
 }
