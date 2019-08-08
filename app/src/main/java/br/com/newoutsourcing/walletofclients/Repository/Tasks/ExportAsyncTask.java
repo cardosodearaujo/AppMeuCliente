@@ -2,7 +2,7 @@ package br.com.newoutsourcing.walletofclients.Repository.Tasks;
 import android.content.Context;
 import android.os.AsyncTask;
 import java.util.List;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 
@@ -15,7 +15,7 @@ public class ExportAsyncTask extends AsyncTask<Void,String,Boolean> {
     }
     @Override
     protected void onPreExecute(){
-        FunctionsApp.showPgDialog(this.context,"Exportando clientes...");
+        FunctionsTools.showPgDialog(this.context,"Exportando clientes...");
     }
     @Override
     protected Boolean doInBackground(Void... voids) {
@@ -73,7 +73,7 @@ public class ExportAsyncTask extends AsyncTask<Void,String,Boolean> {
                     CSV += "\n";
                 }
 
-                FunctionsApp.saveArchive(CSV,"ListOfClients_" + FunctionsApp.getCurrentDate("dd-MM-yyyy") + ".csv");
+                FunctionsTools.saveArchive(CSV,"ListOfClients_" + FunctionsTools.getCurrentDate("dd-MM-yyyy") + ".csv");
                 return true;
             }else{
                 throw new Exception("Não há dados para exportar!");
@@ -85,6 +85,6 @@ public class ExportAsyncTask extends AsyncTask<Void,String,Boolean> {
     }
     @Override
     protected void onProgressUpdate(String... Status){
-        if (Status.length > 0) FunctionsApp.PG_DIALOG.setMessage(Status[0]);
+        if (Status.length > 0) FunctionsTools.PG_DIALOG.setMessage(Status[0]);
     }
 }

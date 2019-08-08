@@ -11,7 +11,7 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import java.util.Calendar;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
 import butterknife.BindView;
@@ -30,20 +30,20 @@ public class NewTaskActivity extends BaseActivity {
 
     @Override
     protected void onConfiguration(){
-        this.idEdtTaksDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_DATA, this.idEdtTaksDate));
-        this.idEdtTaksDate.setText(FunctionsApp.getCurrentDate());
+        this.idEdtTaksDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_DATA, this.idEdtTaksDate));
+        this.idEdtTaksDate.setText(FunctionsTools.getCurrentDate());
         this.idEdtTaksDate.setOnClickListener(this.onClickDate);
-        this.idEdtTaksHour.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_HORA, this.idEdtTaksHour));
-        this.idEdtTaksHour.setText(FunctionsApp.getCurrentTime());
+        this.idEdtTaksHour.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_HORA, this.idEdtTaksHour));
+        this.idEdtTaksHour.setText(FunctionsTools.getCurrentTime());
         this.idEdtTaksHour.setOnClickListener(this.onClickTime);
         this.idSwtTaskDiaInteiro.setOnClickListener(this.onClickAllDay);
         this.idBtnSave.setOnClickListener(this.onClickSave);
         this.idBtnClose.setOnClickListener(this.onClickClose);
     }
 
-    private View.OnClickListener onClickClose = view -> FunctionsApp.closeActivity(NewTaskActivity.this);
+    private View.OnClickListener onClickClose = view -> FunctionsTools.closeActivity(NewTaskActivity.this);
 
-    private View.OnClickListener onClickSave = view -> FunctionsApp.showSnackBarLong(view,"Em desenvolvimento, aguarde...");
+    private View.OnClickListener onClickSave = view -> FunctionsTools.showSnackBarLong(view,"Em desenvolvimento, aguarde...");
 
     private View.OnClickListener onClickAllDay = new View.OnClickListener() {
         @Override

@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import java.util.Calendar;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -66,9 +66,9 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
 
     private void onConfiguration(){
         this.idToolbar.setSubtitle("Pessoa física");
-        this.idEdtClientPFDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_DATA, this.idEdtClientPFDate));
-        this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CPF, this.idEdtClientPFCPF));
-        this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
+        this.idEdtClientPFDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_DATA, this.idEdtClientPFDate));
+        this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CPF, this.idEdtClientPFCPF));
+        this.idEdtClientPFDate.setText(FunctionsTools.getCurrentDate());
         this.idEdtClientPFDate.setOnClickListener(this.onClickDate);
         this.onCreateFragment(false);
     }
@@ -77,9 +77,9 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.imageFragment = ImageFragment.newInstance();
         this.imageCallback = imageFragment;
         if (createClean){
-            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),null);
+            FunctionsTools.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),null);
         }else{
-            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),this.getArguments());
+            FunctionsTools.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),this.getArguments());
         }
     }
 
@@ -103,7 +103,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         }
 
         if (!this.idEdtClientPFCPF.getText().toString().trim().isEmpty()){
-            if ( FunctionsApp.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() != 11){
+            if ( FunctionsTools.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() != 11){
                 this.idEdtClientPFCPF.setError("O CPF deve conter 11 digitos.");
                 this.idEdtClientPFCPF.requestFocus();
                 save = false;
@@ -113,7 +113,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         }
 
         if (!this.idEdtClientPFCPF.getText().toString().trim().isEmpty()){
-            if (FunctionsApp.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() == 11){
+            if (FunctionsTools.formatCPF(this.idEdtClientPFCPF.getText().toString()).length() == 11){
                 if (TB_PHYSICAL_PERSON.CheckCPF(this.idEdtClientPFCPF.getText().toString(),this.clientId ) > 0) {
                     this.idEdtClientPFCPF.setError("O CPF está em uso em outro cadastro!");
                     this.idEdtClientPFCPF.requestFocus();
@@ -178,7 +178,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
             this.idEdtClientPFCPF.setText(client.getPhysicalPerson().getCPF());
             this.idEdtClientPFRG.setText(client.getPhysicalPerson().getRG());
             this.idEdtClientPFDate.setText(client.getPhysicalPerson().getBirthDate());
-            this.idSpnClientPFSexo.setSelection(FunctionsApp.getSex(client.getPhysicalPerson().getSex()));
+            this.idSpnClientPFSexo.setSelection(FunctionsTools.getSex(client.getPhysicalPerson().getSex()));
         }
     }
 
@@ -195,7 +195,7 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         this.idEdtClientPFCPF.setText("");
         this.idEdtClientPFRG.setText("");
         this.idSpnClientPFSexo.setSelection(0);
-        this.idEdtClientPFDate.setText(FunctionsApp.getCurrentDate());
+        this.idEdtClientPFDate.setText(FunctionsTools.getCurrentDate());
         this.onCreateFragment(true);
     }
 

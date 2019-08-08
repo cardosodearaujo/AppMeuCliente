@@ -3,7 +3,7 @@ package br.com.newoutsourcing.walletofclients.Views.Activitys;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
 import butterknife.BindView;
@@ -23,5 +23,5 @@ public class ContactActivity extends BaseActivity {
         this.idWebView.loadUrl("file:///android_asset/contact.html");
     }
 
-    View.OnClickListener onClickClose = v -> FunctionsApp.closeActivity(ContactActivity.this);
+    View.OnClickListener onClickClose = v -> FunctionsTools.closeActivity(ContactActivity.this);
 }

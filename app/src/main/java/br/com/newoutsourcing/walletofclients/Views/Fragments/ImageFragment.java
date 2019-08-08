@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -93,13 +93,13 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
             switch (idOption) {
                 case 0: //Tirar Foto
                     intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, FunctionsApp.IMAGEM_CAMERA);
+                    startActivityForResult(intent, FunctionsTools.IMAGEM_CAMERA);
                     dialog.cancel();
                     break;
                 case 1: //Pegar da galeria
                     intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                     intent.setType("image/*");
-                    startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"),FunctionsApp.IMAGEM_INTERNA);
+                    startActivityForResult(Intent.createChooser(intent,"Selecione uma imagem"), FunctionsTools.IMAGEM_INTERNA);
                     dialog.cancel();
                     break;
             }
@@ -115,7 +115,7 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 this.getPhoto();
             } else {
-                FunctionsApp.showSnackBarLong(this.getView(),"Permissão negada!");
+                FunctionsTools.showSnackBarLong(this.getView(),"Permissão negada!");
             }
         }
     }
@@ -125,7 +125,7 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
         try{
             if (resultCode == RESULT_OK){
                 Bitmap bitmap;
-                if (requestCode == FunctionsApp.IMAGEM_INTERNA){
+                if (requestCode == FunctionsTools.IMAGEM_INTERNA){
                     Uri imagemSelecionada = data.getData();
                     String[] colunas = {MediaStore.Images.Media.DATA};
                     Cursor cursor = getContext().getContentResolver().query(imagemSelecionada, colunas, null, null, null);
@@ -140,7 +140,7 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
                         this.idImgClient.setImageBitmap(bitmap);
                         this.idImgClient.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     }
-                }else if(requestCode == FunctionsApp.IMAGEM_CAMERA){
+                }else if(requestCode == FunctionsTools.IMAGEM_CAMERA){
                     bitmap = (Bitmap) data.getExtras().get("data");
                     if (bitmap != null){
                         this.idImgClient.setImageBitmap(bitmap);
@@ -149,7 +149,7 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
                 }
             }
         }catch (Exception ex){
-            FunctionsApp.showAlertDialog(this.getContext(),"Erro",ex.getMessage(),"Fechar");
+            FunctionsTools.showAlertDialog(this.getContext(),"Erro",ex.getMessage(),"Fechar");
         }
     }
 
@@ -176,7 +176,7 @@ public class ImageFragment extends Fragment implements FragmentsCallback {
     @Override
     public Client onSave(Client client) {
         if (this.onValidate()){
-            String pathImage = FunctionsApp.saveImage(((BitmapDrawable) this.idImgClient.getDrawable()).getBitmap());
+            String pathImage = FunctionsTools.saveImage(((BitmapDrawable) this.idImgClient.getDrawable()).getBitmap());
             if (!pathImage.isEmpty()){
                 client.setImage(pathImage);
             }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.appcompat.widget.Toolbar;
 import android.widget.EditText;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -59,7 +59,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
 
     private void onConfiguration(){
         this.idToolbar.setSubtitle("Pessoa juridica");
-        this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CNPJ, this.idEdtClientPJCNPJ));
+        this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CNPJ, this.idEdtClientPJCNPJ));
         this.onCreateFragment(false);
     }
 
@@ -67,9 +67,9 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         this.imageFragment = ImageFragment.newInstance();
         this.imageCallback = imageFragment;
         if (createClean){
-            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),null);
+            FunctionsTools.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),null);
         }else{
-            FunctionsApp.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),this.getArguments());
+            FunctionsTools.startFragment(this.imageFragment,R.id.idFrlImg,this.getFragmentManager(),this.getArguments());
         }
     }
 
@@ -98,7 +98,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         }
 
         if (!this.idEdtClientPJCNPJ.getText().toString().trim().isEmpty()){
-            if (FunctionsApp.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() != 14){
+            if (FunctionsTools.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() != 14){
                 this.idEdtClientPJCNPJ.setError("O CNPJ deve conter 14 digitos.");
                 this.idEdtClientPJCNPJ.requestFocus();
                 save = false;
@@ -108,7 +108,7 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
         }
 
         if (!this.idEdtClientPJCNPJ.getText().toString().trim().isEmpty()){
-            if (FunctionsApp.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() == 14){
+            if (FunctionsTools.formatCNPJ(this.idEdtClientPJCNPJ.getText().toString()).length() == 14){
                 if (TB_LEGAL_PERSON.CheckCNPJ(this.idEdtClientPJCNPJ.getText().toString(),this.clientId) > 0) {
                     this.idEdtClientPJCNPJ.setError("O CNPJ está em uso em outro cadastro!");
                     this.idEdtClientPJCNPJ.requestFocus();

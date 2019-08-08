@@ -2,7 +2,7 @@ package br.com.newoutsourcing.walletofclients.Objects;
 
 import java.io.Serializable;
 
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 
 public class PhysicalPerson implements Serializable {
     private long physicalPersonId;
@@ -22,7 +22,7 @@ public class PhysicalPerson implements Serializable {
         this.setNickname("");
         this.setCPF("");
         this.setRG("");
-        this.setBirthDate(FunctionsApp.getCurrentDate());
+        this.setBirthDate(FunctionsTools.getCurrentDate());
         this.setSex("");
         this.setSuccess(true);
     }

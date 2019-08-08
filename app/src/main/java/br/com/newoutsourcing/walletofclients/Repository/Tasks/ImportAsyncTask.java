@@ -1,6 +1,5 @@
 package br.com.newoutsourcing.walletofclients.Repository.Tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
@@ -27,7 +26,7 @@ public class ImportAsyncTask extends AsyncTask<Uri,String,Boolean> {
     }
     @Override
     protected void onPreExecute(){
-        FunctionsApp.showPgDialog(this.context,"Importando clientes...");
+        FunctionsTools.showPgDialog(this.context,"Importando clientes...");
     }
     @Override
     protected Boolean doInBackground(Uri... uri) {
@@ -137,6 +136,6 @@ public class ImportAsyncTask extends AsyncTask<Uri,String,Boolean> {
     }
     @Override
     protected void onProgressUpdate(String... Status){
-        if (Status.length > 0) FunctionsApp.PG_DIALOG.setMessage(Status[0]);
+        if (Status.length > 0) FunctionsTools.PG_DIALOG.setMessage(Status[0]);
      }
 }

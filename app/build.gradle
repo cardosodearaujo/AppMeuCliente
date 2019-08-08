@@ -43,4 +43,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation files('lib\\mail.jar')
     implementation files('lib\\commons-email-1.5.jar')
+    implementation files('lib\\additionnal.jar')
+    implementation files('lib\\activation.jar')
 }

@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Activitys.RegisterClientActivity;
@@ -85,6 +85,6 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
             bundle.putString("TipoCadastro","J");
         }
         bundle.putSerializable("Client", clientList.get(position));
-        FunctionsApp.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
+        FunctionsTools.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
     }
 }

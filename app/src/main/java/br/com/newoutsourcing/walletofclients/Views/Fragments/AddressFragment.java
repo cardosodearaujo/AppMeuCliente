@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -52,7 +52,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
     }
 
     private void onConfiguration(){
-        this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CEP, this.idEdtClientAddressCEP));
+        this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CEP, this.idEdtClientAddressCEP));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
         boolean save = true;
 
         if (!this.idEdtClientAddressCEP.getText().toString().isEmpty()){
-            if (FunctionsApp.formatCEP(this.idEdtClientAddressCEP.getText().toString()).length()!=8){
+            if (FunctionsTools.formatCEP(this.idEdtClientAddressCEP.getText().toString()).length()!=8){
                 this.idEdtClientAddressCEP.setError("O CEP deve conter ");
                 save = false;
             }else{
@@ -100,7 +100,7 @@ public class AddressFragment extends Fragment implements FragmentsCallback {
             this.idEdtClientAddressNumber.setText(String.valueOf(client.getAddress().getNumber()));
             this.idEdtClientAddressNeighborhood.setText(client.getAddress().getNeighborhood());
             this.idEdtClientAddressCity.setText(client.getAddress().getCity());
-            this.idSpnClientAddressState.setSelection(FunctionsApp.getState(client.getAddress().getState()));
+            this.idSpnClientAddressState.setSelection(FunctionsTools.getState(client.getAddress().getState()));
             this.idEdtClientAddressCounty.setText(client.getAddress().getCountry());
         }
     }

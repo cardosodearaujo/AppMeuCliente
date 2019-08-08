@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -47,8 +47,8 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
     }
 
     private void onConfiguration(){
-        this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_CELULAR, this.idEdtClientPFCellphone));
-        this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsApp.MASCARA_TELEFONE, this.idEdtClientPFTelephone));
+        this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CELULAR, this.idEdtClientPFCellphone));
+        this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_TELEFONE, this.idEdtClientPFTelephone));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
         boolean save = true;
 
         if (!this.idEdtClientPFCellphone.getText().toString().isEmpty()){
-            if (FunctionsApp.formatCellphone(this.idEdtClientPFCellphone.getText().toString()).length()!=11){
+            if (FunctionsTools.formatCellphone(this.idEdtClientPFCellphone.getText().toString()).length()!=11){
                 this.idEdtClientPFCellphone.setError("O celular deve conter 2 digitos do DDD e 9 do número.");
                 save = false;
             }else{
@@ -65,7 +65,7 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
         }
 
         if (!this.idEdtClientPFTelephone.getText().toString().isEmpty()){
-            if (FunctionsApp.formatTelephone(this.idEdtClientPFTelephone.getText().toString()).length()!=10){
+            if (FunctionsTools.formatTelephone(this.idEdtClientPFTelephone.getText().toString()).length()!=10){
                 this.idEdtClientPFTelephone.setError("O telephone deve conter 2 digitos do DDD e 8 do número.");
                 save = false;
             }else{

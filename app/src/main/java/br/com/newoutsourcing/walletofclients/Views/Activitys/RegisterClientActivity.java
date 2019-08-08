@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
@@ -80,8 +80,8 @@ public class RegisterClientActivity extends BaseActivity {
                 this.legalPersonCallback = (FragmentsCallback) fragment;
                 this.pagerAdapter.addFragment(fragment, "Informações",bundle);
             }else{
-                FunctionsApp.showAlertDialog(RegisterClientActivity.this,"Erro","Opção não encontrada!","Fechar");
-                FunctionsApp.closeActivity(RegisterClientActivity.this);
+                FunctionsTools.showAlertDialog(RegisterClientActivity.this,"Erro","Opção não encontrada!","Fechar");
+                FunctionsTools.closeActivity(RegisterClientActivity.this);
             }
 
             if (this.pagerAdapter.getCount() > 0) {
@@ -96,7 +96,7 @@ public class RegisterClientActivity extends BaseActivity {
                 this.idViewPager.setAdapter(pagerAdapter);
             }
         }catch (Exception ex){
-            FunctionsApp.showAlertDialog(RegisterClientActivity.this,"Erro",ex.getMessage(),"Fechar");
+            FunctionsTools.showAlertDialog(RegisterClientActivity.this,"Erro",ex.getMessage(),"Fechar");
         }
     }
 
@@ -108,7 +108,7 @@ public class RegisterClientActivity extends BaseActivity {
                 builder.setPositiveButton("Sim", (dialog, id) -> {
                     TB_CLIENT.Delete(client);
                     Toast.makeText(RegisterClientActivity.this,"Cliente excluido com sucesso!",Toast.LENGTH_LONG).show();
-                    FunctionsApp.closeActivity(RegisterClientActivity.this);
+                    FunctionsTools.closeActivity(RegisterClientActivity.this);
                     dialog.cancel();
                 })
                         .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
@@ -175,7 +175,7 @@ public class RegisterClientActivity extends BaseActivity {
                                         additionalInformationCallback.onClear();
                                         addressCallback.onClear();
 
-                                        FunctionsApp.showSnackBarLong(v,"Cliente salvo!");
+                                        FunctionsTools.showSnackBarLong(v,"Cliente salvo!");
                                     }
                                 }else{/**Atualiza cliente**/
                                     TB_CLIENT.Update(client);
@@ -189,17 +189,17 @@ public class RegisterClientActivity extends BaseActivity {
 
                                     idBtnDelete.setVisibility(View.INVISIBLE);
 
-                                    FunctionsApp.showSnackBarLong(v,"Cliente atualizado!");
+                                    FunctionsTools.showSnackBarLong(v,"Cliente atualizado!");
                                 }
                             }
                         }
                     }
                 }
             }catch (Exception ex) {
-                FunctionsApp.showAlertDialog(RegisterClientActivity.this,"Erro",ex.getMessage(),"Fechar");
+                FunctionsTools.showAlertDialog(RegisterClientActivity.this,"Erro",ex.getMessage(),"Fechar");
             }
         }
     };
 
-    View.OnClickListener onClickClose = v -> FunctionsApp.closeActivity(RegisterClientActivity.this);
+    View.OnClickListener onClickClose = v -> FunctionsTools.closeActivity(RegisterClientActivity.this);
 }

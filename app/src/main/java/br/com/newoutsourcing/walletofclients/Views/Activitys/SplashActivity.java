@@ -1,7 +1,8 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.os.Handler;
-import br.com.newoutsourcing.walletofclients.App.FunctionsApp;
+import javax.mail.MessagingException;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAdditionalInformationDatabase;
@@ -33,15 +34,15 @@ public class SplashActivity extends BaseActivity {
             SessionDatabase.TB_ADDRESS = TBAddressDatabase.newInstance(SplashActivity.this);
             SessionDatabase.TB_TASKS = TBTasksDatabase.newInstance(SplashActivity.this);
         }catch (Exception ex){
-            FunctionsApp.showAlertDialog(SplashActivity.this,"Erro","Ocorreu um erro ao inicializar a aplicação. Tente novamente!","Fechar");
-            FunctionsApp.closeActivity(SplashActivity.this);
+            FunctionsTools.showAlertDialog(SplashActivity.this,"Erro","Ocorreu um erro ao inicializar a aplicação. Tente novamente!","Fechar");
+            FunctionsTools.closeActivity(SplashActivity.this);
         }
     }
 
     private void onStartActivity(){
         new Handler().postDelayed(() -> {
-            FunctionsApp.startActivity(SplashActivity.this,ListClientActivity.class,null);
-            FunctionsApp.closeActivity(SplashActivity.this);
+            FunctionsTools.startActivity(SplashActivity.this,ListClientActivity.class,null);
+            FunctionsTools.closeActivity(SplashActivity.this);
         },1000);
     }
 }

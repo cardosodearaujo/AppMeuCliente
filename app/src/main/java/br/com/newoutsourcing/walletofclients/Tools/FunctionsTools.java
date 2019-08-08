@@ -1,4 +1,4 @@
-package br.com.newoutsourcing.walletofclients.App;
+package br.com.newoutsourcing.walletofclients.Tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,11 +16,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,9 +30,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import br.com.newoutsourcing.walletofclients.R;
+import javax.mail.MessagingException;
 
-public class FunctionsApp {
+import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Tools.Mail.GMailSender;
+
+public class FunctionsTools {
     /**Controles da camera**/
     public static int IMAGEM_CAMERA = 0;
     public static int IMAGEM_INTERNA = 1;
@@ -115,8 +116,8 @@ public class FunctionsApp {
 
     public static String saveImage(Bitmap bitmap){
         try{
-            FunctionsApp.createFolder("WalletOfClients");
-            String  path = FunctionsApp.createFolder("WalletOfClients/Images");
+            FunctionsTools.createFolder("WalletOfClients");
+            String  path = FunctionsTools.createFolder("WalletOfClients/Images");
             String name =  "Image_" +  String.valueOf(Math.random()) + ".png";
             File file = new File(path,name);
             if (file.exists())file.delete();
@@ -133,7 +134,7 @@ public class FunctionsApp {
 
     public static String saveArchive(String archive, String name){
         try{
-            String path = FunctionsApp.createFolder("WalletOfClients");
+            String path = FunctionsTools.createFolder("WalletOfClients");
             File file = new File(path,name);
             if (file.exists())file.delete();
 
@@ -362,22 +363,8 @@ public class FunctionsApp {
     }
 
     /**Email**/
-    public static void SendMail(){
-        try {
-            SimpleEmail email = new SimpleEmail();
-            email.setSSLOnConnect(true);
-            email.setHostName( "smtp.gmail.com" );
-            email.setSslSmtpPort( "465" );
-            email.setAuthenticator( new DefaultAuthenticator( "everaldocardosodearaujo@gmail.com" ,  "M1n3Rv@7" ) );
-            email.setFrom( "everaldocardosodearaujo@gmail.com");
-            email.setDebug(true);
-            email.setSubject( "Email de teste do app" );
-            email.setMsg( "Vou te mandar usuarios por aqui." );
-            email.addTo( "everaldocardosodearaujo@gmail.com" );
-            email.send();
-
-        } catch (EmailException e) {
-            e.printStackTrace();
-        }
+    public static void SendEmail(String subject, String body, String sender, String recipient) throws MessagingException {
+        GMailSender email = new GMailSender("meuddd.app@gmail.com", "4cess0!DDD");
+        email.sendMail(subject,body,sender,recipient);
     }
 }
