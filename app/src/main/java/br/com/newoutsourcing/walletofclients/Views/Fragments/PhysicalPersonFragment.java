@@ -52,7 +52,6 @@ public class PhysicalPersonFragment extends Fragment implements FragmentsCallbac
         return view;
     }
 
-
     private void onInflate(View view){
         this.clientId = null;
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);

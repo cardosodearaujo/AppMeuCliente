@@ -103,4 +103,5 @@ public class Client implements Serializable {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
 }

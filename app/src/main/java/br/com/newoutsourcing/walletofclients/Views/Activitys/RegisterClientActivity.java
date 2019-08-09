@@ -101,17 +101,15 @@ public class RegisterClientActivity extends BaseActivity {
         }
     }
 
-
-
     View.OnClickListener onClickDelete = new View.OnClickListener(){
         @Override
         public void onClick(View v){
-            if (client.getClientId() > 0){
+            if (client != null && client.getClientId() > 0){
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
                 builder.setPositiveButton("Sim", (dialog, id) -> {
                     TB_CLIENT.Delete(client);
                     NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.DELETE);
-                    Toast.makeText(RegisterClientActivity.this,"Cliente excluido com sucesso!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterClientActivity.this,"Cliente excluido!",Toast.LENGTH_LONG).show();
                     FunctionsTools.closeActivity(RegisterClientActivity.this);
                     dialog.cancel();
                 })

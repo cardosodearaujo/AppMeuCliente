@@ -9,7 +9,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private int view;
-    protected @BindView(android.R.id.content) View idView;
+    protected @BindView(android.R.id.content) View View;
 
     public BaseActivity(int view){
         this.view = view;

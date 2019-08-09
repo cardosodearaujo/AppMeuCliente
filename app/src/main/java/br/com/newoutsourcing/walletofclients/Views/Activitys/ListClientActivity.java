@@ -120,7 +120,7 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
             }
             return true;
         }catch (Exception ex){
-            FunctionsTools.showSnackBarLong(this.idView,ex.getMessage());
+            FunctionsTools.showSnackBarLong(this.View,ex.getMessage());
             return false;
         }
     }
@@ -128,7 +128,7 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
     private void SairModoPesquisa(){
         this.idAppBarLayoutSearch.setVisibility(View.INVISIBLE);
         this.idAppBarLayout.setVisibility(View.VISIBLE);
-        FunctionsTools.closeKeyboard(ListClientActivity.this ,this.idView);
+        FunctionsTools.closeKeyboard(ListClientActivity.this ,this.View);
     }
 
     private void EntrarEmModoPesquisa(){
@@ -153,7 +153,7 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
             idLLMessageEmptySearch.setVisibility(View.VISIBLE);
             idRecycleView.setVisibility(View.INVISIBLE);
             if (idLLMessageEmpty.getVisibility() == View.VISIBLE) idLLMessageEmpty.setVisibility(View.INVISIBLE);
-            FunctionsTools.closeKeyboard(ListClientActivity.this,this.idView);
+            FunctionsTools.closeKeyboard(ListClientActivity.this,this.View);
         }
     }
 
@@ -199,7 +199,7 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
             alert.setTitle("Escolha uma opção:");
             alert.show();
         }catch (Exception ex){
-            FunctionsTools.showAlertDialog(this.idView.getContext(),"Erro!",ex.getMessage(),"Fechar");
+            FunctionsTools.showAlertDialog(this.View.getContext(),"Erro!",ex.getMessage(),"Fechar");
         }
     }
 
@@ -225,7 +225,7 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
                                 "Clientes exportados com sucesso para a pasta /WalletOfClients/ListOfClients_" + FunctionsTools.getCurrentDate("dd-MM-yyyy") + ".csv",
                                 "Fechar");
                     }else{
-                        FunctionsTools.showSnackBarLong(idView,"Não foi possivel importar os dados. Tente novamente!");
+                        FunctionsTools.showSnackBarLong(View,"Não foi possivel importar os dados. Tente novamente!");
                     }
                 }
             };
@@ -246,7 +246,7 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
                         AtualizarLista();
                         FunctionsTools.showAlertDialog(ListClientActivity.this,"Atenção!","Clientes importados com sucesso!","Fechar");
                     }else{
-                        FunctionsTools.showSnackBarLong(idView,"Não foi possivel importar os dados. Tente novamente!");
+                        FunctionsTools.showSnackBarLong(View,"Não foi possivel importar os dados. Tente novamente!");
                     }
                 }
             };

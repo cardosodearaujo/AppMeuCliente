@@ -372,4 +372,40 @@ public class FunctionsTools {
         Email.setRecipient(FunctionsTools.NotificatioEmail);
         Email.execute();
     }
+
+    public static class GernericObject{
+        private long Id;
+        private String Descricao;
+
+        public GernericObject(){
+
+        }
+
+        public GernericObject(long Id, String Descricao){
+            this.setId(Id);
+            this.setDescricao(Descricao);
+        }
+
+        public long getId() {
+            return Id;
+        }
+
+        public void setId(long id) {
+            Id = id;
+        }
+
+        public String getDescricao() {
+            return Descricao;
+        }
+
+        public void setDescricao(String descricao) {
+            Descricao = descricao;
+        }
+
+        @Override
+        public String toString()
+        {
+            return Descricao;
+        }
+    }
 }
