@@ -35,6 +35,7 @@ public class RegisterClientActivity extends BaseActivity {
     protected @BindView(R.id.idTabLayout) TabLayout idTabLayout;
     protected @BindView(R.id.idBtnSave) Button idBtnSave;
     protected @BindView(R.id.idBtnDelete) Button idBtnDelete;
+    protected @BindView(R.id.idBtnNewTask) Button idBtnNewTask;
 
     private TabPagerAdapter pagerAdapter;
     private FragmentsCallback physicalPersonCallback;
@@ -57,6 +58,7 @@ public class RegisterClientActivity extends BaseActivity {
         this.idBtnClose.setOnClickListener(this.onClickClose);
         this.idBtnSave.setOnClickListener(this.onClickSave);
         this.idBtnDelete.setOnClickListener(this.onClickDelete);
+        this.idBtnNewTask.setOnClickListener(this.onClickNewTask);
         this.onConfigurationFragments();
     }
 
@@ -221,4 +223,6 @@ public class RegisterClientActivity extends BaseActivity {
     };
 
     View.OnClickListener onClickClose = v -> FunctionsTools.closeActivity(RegisterClientActivity.this);
+
+    View.OnClickListener onClickNewTask = v -> FunctionsTools.startActivity(RegisterClientActivity.this,NewTaskActivity.class,null);
 }

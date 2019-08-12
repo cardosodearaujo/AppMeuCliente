@@ -382,7 +382,7 @@ public class FunctionsTools {
         }
 
         public GernericObject(long Id, String Descricao){
-            this.setId(Id);
+            setId(Id);
             this.setDescricao(Descricao);
         }
 

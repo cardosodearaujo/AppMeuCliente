@@ -1,5 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
@@ -30,6 +31,7 @@ public class ListTasksActivity extends BaseActivity implements android.view.View
     protected @BindView(R.id.idAdsView) AdView idAdsView;
     protected @BindView(R.id.idLLMessageEmpty) LinearLayout idLLMessageEmpty;
     protected @BindView(R.id.idSwipeContainer) SwipeRefreshLayout idSwipeContainer;
+    protected @BindView(R.id.idBtnClose) Button idBtnClose;
 
     public ListTasksActivity() {
         super(R.layout.activity_list_tasks);
@@ -43,6 +45,7 @@ public class ListTasksActivity extends BaseActivity implements android.view.View
         this.idAdsView.loadAd(adRequest);
 
         this.idBtnNewTask.setOnClickListener(this.onClickBtnFabNewtasks);
+        this.idBtnClose.setOnClickListener(this.onClickBtnClose);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListTasksActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -93,4 +96,6 @@ public class ListTasksActivity extends BaseActivity implements android.view.View
     }
 
     android.view.View.OnClickListener onClickBtnFabNewtasks = v -> FunctionsTools.startActivity(ListTasksActivity.this,NewTaskActivity.class,null);
+
+    android.view.View.OnClickListener onClickBtnClose = v -> FunctionsTools.closeActivity(ListTasksActivity.this);
 }
