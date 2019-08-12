@@ -1,4 +1,4 @@
-package br.com.newoutsourcing.walletofclients.Views.Adapters;
+package br.com.newoutsourcing.walletofclients.Views.Adapters.Client;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +17,6 @@ import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Views.Activitys.RegisterClientActivity;
-import br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder.ClientViewHolder;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     private List<Client> clientList = new ArrayList<>();

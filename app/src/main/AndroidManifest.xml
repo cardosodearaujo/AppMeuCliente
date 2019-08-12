@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity
-            android:name=".Views.Activitys.SearchTaksActivity"
+            android:name=".Views.Activitys.ListTasksActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

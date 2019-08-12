@@ -10,12 +10,12 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/idPhotoProfile"
+        <ImageView
+            android:id="@+id/idIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="5dp"
-            android:background="@mipmap/ic_client_circle"
+            android:background="@mipmap/ic_check"
             android:backgroundTint="@color/colorAccent"/>
 
         <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/idTxwName"
+                android:id="@+id/idTxwTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
@@ -40,21 +40,18 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/idTxwCPF_CNPJ"
-                    android:layout_width="match_parent"
+                    android:id="@+id/idTxwDate"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
                     android:textSize="11dp" />
 
                 <TextView
-                    android:id="@+id/idTxwTipo"
+                    android:id="@+id/idTxwHour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    android:textSize="10dp"
-                    android:visibility="invisible"/>
+                    android:textSize="11dp" />
             </LinearLayout>
         </LinearLayout>
 

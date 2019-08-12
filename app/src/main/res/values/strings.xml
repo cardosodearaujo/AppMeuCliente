@@ -73,15 +73,16 @@
     <string name="str_client_address_country_fixed">Brasil</string>
 
     <!-- TODO: Nova tarefa -->
-    <string name="str_taks_new_task">Criar tarefa</string>
-    <string name="str_taks_client">Cliente</string>
-    <string name="str_taks_date">Data</string>
-    <string name="str_taks_hour">Horário</string>
-    <string name="str_taks_title">Título</string>
-    <string name="str_taks_title_hint">Insira o título</string>
-    <string name="str_taks_client_select">Selecione um cliente</string>
-    <string name="str_taks_client_all_day">Dia inteiro</string>
+    <string name="str_tasks_new_task">Criar tarefa</string>
+    <string name="str_tasks_client">Cliente</string>
+    <string name="str_tasks_date">Data</string>
+    <string name="str_tasks_hour">Horário</string>
+    <string name="str_tasks_title">Título</string>
+    <string name="str_tasks_title_hint">Insira o título</string>
+    <string name="str_tasks_client_all_day">Dia inteiro</string>
 
     <!-- TODO: Consulta de tarefas -->
-    <string name="str_consult_tasks">Consultar tarefas</string>
+    <string name="str_list_tasks">Tarefas</string>
+    <string name="str_list_tasks_no_clients_message_1">Você ainda não tem tarefas cadastrados.</string>
+    <string name="str_list_tasks_no_clients_message_2">Comece agora clicando no botão + abaixo.</string>
 </resources>

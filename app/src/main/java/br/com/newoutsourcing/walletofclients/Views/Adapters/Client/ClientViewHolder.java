@@ -1,4 +1,4 @@
-package br.com.newoutsourcing.walletofclients.Views.Adapters.ViewHolder;
+package br.com.newoutsourcing.walletofclients.Views.Adapters.Client;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;

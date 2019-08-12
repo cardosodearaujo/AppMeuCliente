@@ -16,11 +16,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.Objects.Tasks;
@@ -34,10 +32,10 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 
 public class NewTaskActivity extends BaseActivity {
 
-    protected @BindView(R.id.idEdtTaksTitle) EditText idEdtTaksTitle;
+    protected @BindView(R.id.idEdttasksTitle) EditText idEdttasksTitle;
     protected @BindView(R.id.idSpnTaskClient) Spinner idSpnTaskClient;
-    protected @BindView(R.id.idEdtTaksDate) EditText idEdtTaksDate;
-    protected @BindView(R.id.idEdtTaksHour) EditText idEdtTaksHour;
+    protected @BindView(R.id.idEdttasksDate) EditText idEdttasksDate;
+    protected @BindView(R.id.idEdttasksHour) EditText idEdttasksHour;
     protected @BindView(R.id.idSwtTaskDiaInteiro) Switch idSwtTaskDiaInteiro;
     protected @BindView(R.id.idEdtClientPFObservation) EditText idEdtClientPFObservation;
     protected @BindView(R.id.idBtnSave) Button idBtnSave;
@@ -52,10 +50,10 @@ public class NewTaskActivity extends BaseActivity {
 
     @Override
     protected void onConfiguration(){
-        idEdtTaksDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_DATA, idEdtTaksDate));
-        idEdtTaksDate.setOnClickListener(onClickDate);
-        idEdtTaksHour.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_HORA, idEdtTaksHour));
-        idEdtTaksHour.setOnClickListener(onClickTime);
+        idEdttasksDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_DATA, idEdttasksDate));
+        idEdttasksDate.setOnClickListener(onClickDate);
+        idEdttasksHour.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_HORA, idEdttasksHour));
+        idEdttasksHour.setOnClickListener(onClickTime);
         idSwtTaskDiaInteiro.setOnClickListener(onClickAllDay);
         idBtnSave.setOnClickListener(onClickSave);
         idBtnClose.setOnClickListener(onClickClose);
@@ -74,7 +72,18 @@ public class NewTaskActivity extends BaseActivity {
         }
 
         if (tasks != null && tasks.getTasksId() > 0){
-            idEdtTaksTitle.setText(tasks.getTitle());
+            idEdttasksTitle.setText(tasks.getTitle());
+            idEdttasksDate.setText(tasks.getDate());
+            idEdtClientPFObservation.setText(tasks.getObservation());
+            if (tasks.getAllDay() == 0){
+                idSwtTaskDiaInteiro.setChecked(false);
+                idEdttasksHour.setEnabled(true);
+                idEdttasksHour.setText(tasks.getHour());
+            }else{
+                idSwtTaskDiaInteiro.setChecked(true);
+                idEdttasksHour.setEnabled(false);
+                idEdttasksHour.setText(null);
+            }
             onLoadClients(tasks.getClienteId());
         }else{
             onLoadClients(0);
@@ -84,12 +93,12 @@ public class NewTaskActivity extends BaseActivity {
     private  boolean onValidate(){
         boolean save = true;
 
-        if (idEdtTaksTitle.getText().toString().isEmpty()){
-            idEdtTaksTitle.setError("Informe o titulo!");
-            idEdtTaksTitle.requestFocus();
+        if (idEdttasksTitle.getText().toString().isEmpty()){
+            idEdttasksTitle.setError("Informe o titulo!");
+            idEdttasksTitle.requestFocus();
             save = false;
         }else{
-            idEdtTaksTitle.setError(null);
+            idEdttasksTitle.setError(null);
         }
 
         if (idSpnTaskClient.getSelectedItem() == null){
@@ -98,34 +107,34 @@ public class NewTaskActivity extends BaseActivity {
             save = false;
         }
 
-        if (idEdtTaksDate.getText().toString().isEmpty()){
-            idEdtTaksDate.setError("Informe o dia!");
-            idEdtTaksDate.requestFocus();
+        if (idEdttasksDate.getText().toString().isEmpty()){
+            idEdttasksDate.setError("Informe o dia!");
+            idEdttasksDate.requestFocus();
             save = false;
         }else{
-            idEdtTaksDate.setError(null);
+            idEdttasksDate.setError(null);
         }
 
         if (!idSwtTaskDiaInteiro.isChecked()){
-            if (idEdtTaksHour.getText().toString().isEmpty()){
-                idEdtTaksHour.setError("Informe o horário!");
-                idEdtTaksHour.requestFocus();
+            if (idEdttasksHour.getText().toString().isEmpty()){
+                idEdttasksHour.setError("Informe o horário!");
+                idEdttasksHour.requestFocus();
                 save = false;
             }else{
-                idEdtTaksHour.setError(null);
+                idEdttasksHour.setError(null);
             }
         }else{
-            idEdtTaksHour.setError(null);
+            idEdttasksHour.setError(null);
         }
 
         return save;
     }
 
     private void onClear(){
-        idEdtTaksTitle.setText(null);
+        idEdttasksTitle.setText(null);
         idSpnTaskClient.setSelection(0);
-        idEdtTaksDate.setText(null);
-        idEdtTaksHour.setText(null);
+        idEdttasksDate.setText(null);
+        idEdttasksHour.setText(null);
         idSwtTaskDiaInteiro.setChecked(false);
         idEdtClientPFObservation.setText(null);
     }
@@ -166,12 +175,12 @@ public class NewTaskActivity extends BaseActivity {
         public void onClick(View view) {
             try{
                 if (onValidate()){
-                    if (tasks == null){ new Tasks(); }
-                    tasks.setTitle(idEdtTaksTitle.getText().toString());
+                    if (tasks == null){ tasks = new Tasks(); }
+                    tasks.setTitle(idEdttasksTitle.getText().toString());
                     tasks.setClienteId(((FunctionsTools.GernericObject)idSpnTaskClient.getSelectedItem()).getId());
                     tasks.setAllDay(idSwtTaskDiaInteiro.isChecked()? 1 : 0);
-                    tasks.setDate(idEdtTaksDate.getText().toString());
-                    tasks.setHour(idEdtTaksHour.getText().toString());
+                    tasks.setDate(idEdttasksDate.getText().toString());
+                    tasks.setHour(idEdttasksHour.getText().toString());
                     tasks.setObservation(idEdtClientPFObservation.getText().toString());
 
                     if (tasks.getTasksId() <= 0){
@@ -218,9 +227,9 @@ public class NewTaskActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             if (idSwtTaskDiaInteiro.isChecked()) {
-                idEdtTaksHour.setEnabled(false);
+                idEdttasksHour.setEnabled(false);
             } else {
-                idEdtTaksHour.setEnabled(true);
+                idEdttasksHour.setEnabled(true);
             }
         }
     };
@@ -230,8 +239,8 @@ public class NewTaskActivity extends BaseActivity {
         public void onClick(View view) {
             int day,month,year;
 
-            if (!idEdtTaksDate.getText().toString().equals("") && idEdtTaksDate.getText().toString().split("/").length > 0 ) {
-                String data[] = idEdtTaksDate.getText().toString().split("/");
+            if (!idEdttasksDate.getText().toString().equals("") && idEdttasksDate.getText().toString().split("/").length > 0 ) {
+                String data[] = idEdttasksDate.getText().toString().split("/");
                 day  = Integer.parseInt(data[0]);
                 month = Integer.parseInt(data[1]) - 1;
                 year = Integer.parseInt(data[2]);
@@ -271,7 +280,7 @@ public class NewTaskActivity extends BaseActivity {
 
             data += "/" + year;
 
-            idEdtTaksDate.setText(data);
+            idEdttasksDate.setText(data);
         }
     };
 
@@ -280,8 +289,8 @@ public class NewTaskActivity extends BaseActivity {
         public void onClick(View view) {
             int hour, minute;
 
-            if (!idEdtTaksHour.getText().toString().equals("") && idEdtTaksHour.getText().toString().split(":").length > 0){
-                String hours[] = idEdtTaksHour.getText().toString().split(":");
+            if (!idEdttasksHour.getText().toString().equals("") && idEdttasksHour.getText().toString().split(":").length > 0){
+                String hours[] = idEdttasksHour.getText().toString().split(":");
                 hour = Integer.parseInt(hours[0]);
                 minute = Integer.parseInt(hours[1]);
             }else{
@@ -315,8 +324,7 @@ public class NewTaskActivity extends BaseActivity {
                 Hour += minute;
             }
 
-            idEdtTaksHour.setText(Hour);
+            idEdttasksHour.setText(Hour);
         }
     };
-
 }

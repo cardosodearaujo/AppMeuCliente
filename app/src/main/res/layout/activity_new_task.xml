@@ -19,7 +19,7 @@
             android:background="?attr/colorPrimary"
             app:logo="@mipmap/ic_list_client"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/str_taks_new_task" >
+            app:title="@string/str_tasks_new_task" >
 
             <Button
                 android:id="@+id/idBtnClose"
@@ -47,7 +47,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/idEdtTaksTitle"
+            android:id="@+id/idEdttasksTitle"
             android:textStyle="bold"
             android:textSize="23dp"
             android:focusedByDefault="true"
@@ -57,7 +57,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="15dp"
-            android:hint="@string/str_taks_title_hint"
+            android:hint="@string/str_tasks_title_hint"
             android:singleLine="true" />
 
         <LinearLayout
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:text="@string/str_taks_client"
+                android:text="@string/str_tasks_client"
                 android:textColor="@color/colorAccent"
                 />
 
@@ -82,7 +82,6 @@
                 android:id="@+id/idSpnTaskClient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:prompt="@string/str_taks_client_select"
                 android:spinnerMode="dialog"
                 android:entries="@array/array_client_test"/>
 
@@ -109,7 +108,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_taks_client_all_day"
+                    android:text="@string/str_tasks_client_all_day"
                     android:layout_gravity="center"
                     android:layout_marginLeft="30dp"
                     android:layout_weight="1"/>
@@ -139,7 +138,7 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/idEdtTaksDate"
+                        android:id="@+id/idEdttasksDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -147,7 +146,7 @@
                         android:layout_marginRight="0dp"
                         android:layout_marginBottom="15dp"
                         android:focusable="false"
-                        android:hint="@string/str_taks_date"
+                        android:hint="@string/str_tasks_date"
                         android:inputType="date"
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -159,7 +158,7 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/idEdtTaksHour"
+                        android:id="@+id/idEdttasksHour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="35dp"
@@ -167,7 +166,7 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="15dp"
                         android:focusable="false"
-                        android:hint="@string/str_taks_hour"
+                        android:hint="@string/str_tasks_hour"
                         android:inputType="datetime"
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
