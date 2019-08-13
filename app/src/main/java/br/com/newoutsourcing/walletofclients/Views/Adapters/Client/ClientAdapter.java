@@ -16,7 +16,7 @@ import java.util.List;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Activitys.RegisterClientActivity;
+import br.com.newoutsourcing.walletofclients.Views.Activitys.NewClientActivity;
 
 public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     private List<Client> clientList = new ArrayList<>();
@@ -52,21 +52,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
         }
 
         viewHolder.idCardView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onClickDetail(v,position);
-                    }
-                }
-        );
-
-        viewHolder.idBtnEdit.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onClickDetail(v,position);
-                    }
-                }
+                v -> onClickDetail(v,position)
         );
     }
 
@@ -74,7 +60,6 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
     public int getItemCount() {
         return this.clientList != null ? this.clientList.size() : 0;
     }
-
 
     private void onClickDetail(View v,int position){
         Bundle bundle = new Bundle();
@@ -84,6 +69,6 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientViewHolder>{
             bundle.putString("TipoCadastro","J");
         }
         bundle.putSerializable("Client", clientList.get(position));
-        FunctionsTools.startActivity(v.getContext(), RegisterClientActivity.class,bundle);
+        FunctionsTools.startActivity(v.getContext(), NewClientActivity.class,bundle);
     }
 }

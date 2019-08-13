@@ -58,11 +58,10 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/idBtnEdit"
+        <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="5dp"
-            android:background="@mipmap/ic_edit"/>
+            android:src="@mipmap/ic_edit"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

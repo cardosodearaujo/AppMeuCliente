@@ -281,13 +281,13 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
     View.OnClickListener onClickBtnFabClientLegalPerson = v -> {
         Bundle bundle = new Bundle();
         bundle.putString("TipoCadastro","J");
-        FunctionsTools.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
+        FunctionsTools.startActivity(ListClientActivity.this, NewClientActivity.class,bundle);
     };
 
     View.OnClickListener onClickBtnFabClientPhysicalPerson = v -> {
         Bundle bundle = new Bundle();
         bundle.putString("TipoCadastro","F");
-        FunctionsTools.startActivity(ListClientActivity.this,RegisterClientActivity.class,bundle);
+        FunctionsTools.startActivity(ListClientActivity.this, NewClientActivity.class,bundle);
     };
 
     View.OnClickListener onClickBtnFabNewtasks = v -> FunctionsTools.startActivity(ListClientActivity.this,NewTaskActivity.class,null);

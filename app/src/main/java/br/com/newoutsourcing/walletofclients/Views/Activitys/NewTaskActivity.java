@@ -86,7 +86,14 @@ public class NewTaskActivity extends BaseActivity {
             }
             onLoadClients(tasks.getClienteId());
         }else{
-            onLoadClients(0);
+            long clientId = 0;
+            if (bundle != null && bundle.containsKey("ClientId")){
+                clientId = bundle.getLong("ClientId");
+                clientId = clientId < 0 ? 0 : clientId;
+                onLoadClients(clientId);
+            }else{
+                onLoadClients(clientId);
+            }
         }
     }
 
