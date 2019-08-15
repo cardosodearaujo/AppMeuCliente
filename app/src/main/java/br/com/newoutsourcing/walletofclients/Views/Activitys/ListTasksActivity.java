@@ -17,12 +17,12 @@ import br.com.newoutsourcing.walletofclients.Objects.Tasks;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.Task.TaskAdapter;
-import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 import butterknife.BindView;
 
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_TASKS;
 
-public class ListTasksActivity extends BaseActivity implements android.view.View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class ListTasksActivity extends ActivityBase implements android.view.View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 
     protected @BindView(R.id.idToolbar) Toolbar idToolbar;
     protected @BindView(R.id.idBtnNewTask) FloatingActionButton idBtnNewTask;

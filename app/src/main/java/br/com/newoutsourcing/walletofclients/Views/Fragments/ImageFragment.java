@@ -9,13 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,45 +21,29 @@ import java.util.ArrayList;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
+import br.com.newoutsourcing.walletofclients.Views.Bases.FragmentBase;
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 
-public class ImageFragment extends Fragment implements FragmentsCallback {
+public class ImageFragment extends FragmentBase {
 
-    private CircleImageView idImgClient;
-    private LinearLayout idLLImgClient;
+    protected @BindView(R.id.idImgClient) CircleImageView idImgClient;
+    protected @BindView(R.id.idLLImgClient) LinearLayout idLLImgClient;
 
     public ImageFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_image, container, false);
-        this.onInflate(view);
-        this.onConfiguration();
-        if (this.getArguments() != null && this.getArguments().containsKey("Client")) this.onLoad((Client)this.getArguments().getSerializable("Client"));
-        return view;
+        super(R.layout.fragment_image);
     }
 
     public static ImageFragment newInstance(){
         return new ImageFragment();
     }
 
-    private void onInflate(View view){
-        this.idImgClient = view.findViewById(R.id.idImgClient);
-        this.idLLImgClient = view.findViewById(R.id.idLLImgClient);
-    }
-
-    private void onConfiguration(){
+    @Override
+    protected void onConfiguration(){
         this.idImgClient.setOnClickListener(this.onClickTakePhoto);
         this.idLLImgClient.setOnClickListener(this.onClickTakePhoto);
+        if (this.getArguments() != null && this.getArguments().containsKey("Client")) this.onLoad((Client)this.getArguments().getSerializable("Client"));
     }
 
     private View.OnClickListener onClickTakePhoto = view -> getPermissions();

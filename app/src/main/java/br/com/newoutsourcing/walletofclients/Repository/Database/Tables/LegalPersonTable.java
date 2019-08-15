@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.LegalPerson;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
-public class TBLegalPersonDatabase extends TableConfigurationDatabase<LegalPerson> {
+public class LegalPersonTable extends TableConfigurationBase<LegalPerson> {
 
     public enum Fields {
         ID_LEGAL_PERSON,
@@ -19,13 +19,13 @@ public class TBLegalPersonDatabase extends TableConfigurationDatabase<LegalPerso
         IM
     }
 
-    public TBLegalPersonDatabase(Context context){
+    public LegalPersonTable(Context context){
         super(context);
         super.Table = "TB_LEGAL_PERSON";
     }
 
-    public static TBLegalPersonDatabase newInstance(Context context){
-        return new TBLegalPersonDatabase(context);
+    public static LegalPersonTable newInstance(Context context){
+        return new LegalPersonTable(context);
     }
 
     @Override

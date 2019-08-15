@@ -24,13 +24,15 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.Objects.Tasks;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 import butterknife.BindView;
 
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_TASKS;
+import static br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages.onNotificationNewTask;
+import static br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages.onNotificationUpdateTask;
 
-public class NewTaskActivity extends BaseActivity {
+public class NewTaskActivity extends ActivityBase {
 
     protected @BindView(R.id.idEdttasksTitle) EditText idEdttasksTitle;
     protected @BindView(R.id.idSpnTaskClient) Spinner idSpnTaskClient;
@@ -138,6 +140,7 @@ public class NewTaskActivity extends BaseActivity {
     }
 
     private void onClear(){
+        tasks = new Tasks();
         idEdttasksTitle.setText(null);
         idSpnTaskClient.setSelection(0);
         idEdttasksDate.setText(null);
@@ -193,9 +196,11 @@ public class NewTaskActivity extends BaseActivity {
                     if (tasks.getTasksId() <= 0){
                         tasks.setTasksId(TB_TASKS.Insert(tasks));
                         FunctionsTools.showSnackBarLong(View, "Tarefa salva!");
+                        onNotificationNewTask();
                     }else{
                         TB_TASKS.Update(tasks);
                         FunctionsTools.showSnackBarLong(View, "Tarefa atualizada!");
+                        onNotificationUpdateTask();
                     }
                     onClear();
                 }
@@ -214,12 +219,12 @@ public class NewTaskActivity extends BaseActivity {
                     builder
                             .setPositiveButton("Sim", (dialog, id) -> {
                                 TB_TASKS.Delete(tasks);
-                                Toast.makeText(NewTaskActivity.this,"Tarefa excluida!",Toast.LENGTH_LONG).show();
+                                Toast.makeText(NewTaskActivity.this,"Tarefa concluida!",Toast.LENGTH_LONG).show();
                                 FunctionsTools.closeActivity(NewTaskActivity.this);
                                 dialog.cancel();
                             })
                             .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
-                            .setMessage("Tem ceteza que deseja excluir?");
+                            .setMessage("Tem ceteza que deseja concluir essa tarefa?");
 
                     final AlertDialog alert = builder.create();
                     alert.show();

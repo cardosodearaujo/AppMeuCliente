@@ -1,13 +1,13 @@
-package br.com.newoutsourcing.walletofclients.Repository.Database.Configurations;
+package br.com.newoutsourcing.walletofclients.Views.Bases;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.List;
 
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAddressDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.ConfigurationDatabase;
 
-public abstract class TableConfigurationDatabase<obj> {
+public abstract class TableConfigurationBase<obj> {
 
     protected SQLiteDatabase database;
     protected Cursor cursor;
@@ -15,7 +15,7 @@ public abstract class TableConfigurationDatabase<obj> {
     public String Table;
     protected Context context;
 
-    public TableConfigurationDatabase(Context context){
+    public TableConfigurationBase(Context context){
         this.context = context;
     }
 

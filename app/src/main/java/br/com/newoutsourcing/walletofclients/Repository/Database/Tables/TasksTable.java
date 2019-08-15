@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Tasks;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
-public class TBTasksDatabase extends TableConfigurationDatabase<Tasks> {
+public class TasksTable extends TableConfigurationBase<Tasks> {
 
     public enum Fields {
         ID_TASK,
@@ -19,13 +19,13 @@ public class TBTasksDatabase extends TableConfigurationDatabase<Tasks> {
         OBSERVATION
     }
 
-    public TBTasksDatabase(Context context) {
+    public TasksTable(Context context) {
         super(context);
         super.Table = "TB_TASKS";
     }
 
-    public static TBTasksDatabase newInstance(Context context){
-        return new TBTasksDatabase(context);
+    public static TasksTable newInstance(Context context){
+        return new TasksTable(context);
     }
 
     @Override
@@ -38,11 +38,13 @@ public class TBTasksDatabase extends TableConfigurationDatabase<Tasks> {
                 this.SQL
                         = " Select " + this.getFields() + " From " + this.Table
                         + " Where " + Fields.ID_TASK + " = " + id
-                        + " Order by " + Fields.ID_TASK.name();
+                        + " Order by  Cast(" + Fields.DATE.name() + " As Date) Asc,"
+                        + " Cast (" + Fields.HOUR + " As Time) Asc";
             }else{
                 this.SQL
                         = " Select " + this.getFields() + " From " + this.Table
-                        + " Order by " + Fields.ID_TASK.name();
+                        + " Order by  Cast(" + Fields.DATE.name() + " As Date) Asc,"
+                        + " Cast (" + Fields.HOUR + " As Time) Asc";
             }
 
             this.cursor = this.database.rawQuery(this.SQL,null);

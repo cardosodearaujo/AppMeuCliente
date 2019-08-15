@@ -1,27 +1,23 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
-import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
+import br.com.newoutsourcing.walletofclients.Views.Bases.FragmentBase;
+import butterknife.BindView;
 
+public class AdditionalInformationFragment extends FragmentBase {
 
-public class AdditionalInformationFragment extends Fragment implements FragmentsCallback {
-
-    private EditText idEdtClientPFCellphone;
-    private EditText idEdtClientPFTelephone;
-    private EditText idEdtClientPFEmail;
-    private EditText idEdtClientPFSite;
-    private EditText idEdtClientPFObservation;
+    protected @BindView(R.id.idEdtClientPFCellphone) EditText idEdtClientPFCellphone;
+    protected @BindView(R.id.idEdtClientPFTelephone) EditText idEdtClientPFTelephone;
+    protected @BindView(R.id.idEdtClientPFEmail) EditText idEdtClientPFEmail;
+    protected @BindView(R.id.idEdtClientPFSite) EditText idEdtClientPFSite;
+    protected @BindView(R.id.idEdtClientPFObservation) EditText idEdtClientPFObservation;
 
     public AdditionalInformationFragment() {
+        super(R.layout.fragment_additional_information);
     }
 
     public static AdditionalInformationFragment newInstance(){
@@ -29,24 +25,8 @@ public class AdditionalInformationFragment extends Fragment implements Fragments
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_additional_information, container, false);
-        this.onInflate(view);
-        this.onConfiguration();
+    protected void onConfiguration(){
         this.onLoad((Client) getArguments().getSerializable("Client"));
-        return view;
-    }
-
-    private void onInflate(View view){
-        this.idEdtClientPFCellphone = view.findViewById(R.id.idEdtClientPFCellphone);
-        this.idEdtClientPFTelephone = view.findViewById(R.id.idEdtClientPFTelephone);
-        this.idEdtClientPFEmail = view.findViewById(R.id.idEdtClientPFEmail);
-        this.idEdtClientPFSite = view.findViewById(R.id.idEdtClientPFSite);
-        this.idEdtClientPFObservation = view.findViewById(R.id.idEdtClientPFObservation);
-    }
-
-    private void onConfiguration(){
         this.idEdtClientPFCellphone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CELULAR, this.idEdtClientPFCellphone));
         this.idEdtClientPFTelephone.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_TELEFONE, this.idEdtClientPFTelephone));
     }

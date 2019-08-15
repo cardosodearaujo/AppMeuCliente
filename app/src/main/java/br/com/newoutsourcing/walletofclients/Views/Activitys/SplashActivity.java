@@ -4,16 +4,16 @@ import android.os.Handler;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAdditionalInformationDatabase;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBAddressDatabase;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBClientDatabase;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBLegalPersonDatabase;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBPhysicalPersonDatabase;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TBTasksDatabase;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.AdditionalInformationTable;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.AddressTable;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.ClientTable;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.LegalPersonTable;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.PhysicalPersonTable;
+import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TasksTable;
 import br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages;
-import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends ActivityBase {
 
     public SplashActivity() {
         super(R.layout.activity_splash);
@@ -28,12 +28,12 @@ public class SplashActivity extends BaseActivity {
 
     private void onLoadDatabaseSession(){
         try{
-            SessionDatabase.TB_CLIENT = TBClientDatabase.newInstance(SplashActivity.this);
-            SessionDatabase.TB_PHYSICAL_PERSON = TBPhysicalPersonDatabase.newInstance(SplashActivity.this);
-            SessionDatabase.TB_LEGAL_PERSON = TBLegalPersonDatabase.newInstance(SplashActivity.this);
-            SessionDatabase.TB_ADDITIONAL_INFORMATION = TBAdditionalInformationDatabase.newInstance(SplashActivity.this);
-            SessionDatabase.TB_ADDRESS = TBAddressDatabase.newInstance(SplashActivity.this);
-            SessionDatabase.TB_TASKS = TBTasksDatabase.newInstance(SplashActivity.this);
+            SessionDatabase.TB_CLIENT = ClientTable.newInstance(SplashActivity.this);
+            SessionDatabase.TB_PHYSICAL_PERSON = PhysicalPersonTable.newInstance(SplashActivity.this);
+            SessionDatabase.TB_LEGAL_PERSON = LegalPersonTable.newInstance(SplashActivity.this);
+            SessionDatabase.TB_ADDITIONAL_INFORMATION = AdditionalInformationTable.newInstance(SplashActivity.this);
+            SessionDatabase.TB_ADDRESS = AddressTable.newInstance(SplashActivity.this);
+            SessionDatabase.TB_TASKS = TasksTable.newInstance(SplashActivity.this);
         }catch (Exception ex){
             FunctionsTools.showAlertDialog(SplashActivity.this,"Erro","Ocorreu um erro ao inicializar a aplicação. Tente novamente!","Fechar");
             FunctionsTools.closeActivity(SplashActivity.this);

@@ -1,32 +1,34 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
 import androidx.appcompat.widget.Toolbar;
 import android.widget.EditText;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Bases.FragmentBase;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
+import butterknife.BindView;
+
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 
-public class LegalPersonFragment extends Fragment implements FragmentsCallback {
+public class LegalPersonFragment extends FragmentBase {
 
+    protected @BindView(R.id.idEdtClientPJSocialName) EditText idEdtClientPJSocialName;
+    protected @BindView(R.id.idEdtClientPJFantasyName) EditText idEdtClientPJFantasyName;
+    protected @BindView(R.id.idEdtClientPJCNPJ) EditText idEdtClientPJCNPJ;
+    protected @BindView(R.id.idEdtClientPJIE) EditText idEdtClientPJIE;
+    protected @BindView(R.id.idEdtClientPJIM) EditText idEdtClientPJIM;
     private Toolbar idToolbar;
-    private EditText idEdtClientPJSocialName;
-    private EditText idEdtClientPJFantasyName;
-    private EditText idEdtClientPJCNPJ;
-    private EditText idEdtClientPJIE;
-    private EditText idEdtClientPJIM;
+
     private FragmentsCallback imageCallback;
     private ImageFragment imageFragment;
     private String clientId;
 
     public LegalPersonFragment() {
+        super(R.layout.fragment_legal_person);
     }
 
     public static LegalPersonFragment newInstance() {
@@ -34,33 +36,13 @@ public class LegalPersonFragment extends Fragment implements FragmentsCallback {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_legal_person, container, false);
-        this.onInflate(view);
-        this.onConfiguration();
-        this.onLoad((Client)getArguments().getSerializable("Client"));
-        return view;
-    }
-
-    private void onInflate(View view){
-        this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
-        this.idEdtClientPJSocialName = view.findViewById(R.id.idEdtClientPJSocialName);
-        this.idEdtClientPJFantasyName = view.findViewById(R.id.idEdtClientPJFantasyName);
-        this.idEdtClientPJCNPJ = view.findViewById(R.id.idEdtClientPJCNPJ);
-        this.idEdtClientPJIE = view.findViewById(R.id.idEdtClientPJIE);
-        this.idEdtClientPJIM = view.findViewById(R.id.idEdtClientPJIM);
+    protected void onConfiguration(){
         this.clientId = null;
-    }
-
-    private void onConfiguration(){
+        this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
         this.idToolbar.setSubtitle("Pessoa juridica");
         this.idEdtClientPJCNPJ.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CNPJ, this.idEdtClientPJCNPJ));
         this.onCreateFragment(false);
+        this.onLoad((Client)getArguments().getSerializable("Client"));
     }
 
     private void onCreateFragment(Boolean createClean){

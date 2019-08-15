@@ -14,7 +14,7 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
-import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AdditionalInformationFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
@@ -27,7 +27,7 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class NewClientActivity extends BaseActivity {
+public class NewClientActivity extends ActivityBase {
 
     protected @BindView(R.id.idViewPager) ViewPager idViewPager;
     protected @BindView(R.id.idBtnClose) Button idBtnClose;
@@ -110,7 +110,7 @@ public class NewClientActivity extends BaseActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
                 builder.setPositiveButton("Sim", (dialog, id) -> {
                     TB_CLIENT.Delete(client);
-                    NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.DELETE);
+                    NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.DELETE);
                     Toast.makeText(NewClientActivity.this,"Cliente excluido!",Toast.LENGTH_LONG).show();
                     FunctionsTools.closeActivity(NewClientActivity.this);
                     dialog.cancel();
@@ -186,7 +186,7 @@ public class NewClientActivity extends BaseActivity {
 
                                         idViewPager.setCurrentItem(0);
 
-                                        NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.INSERT);
+                                        NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.INSERT);
                                         FunctionsTools.showSnackBarLong(v,"Cliente salvo!");
                                     }
                                 }else{/**Atualiza cliente**/
@@ -208,7 +208,7 @@ public class NewClientActivity extends BaseActivity {
 
                                     idBtnDelete.setVisibility(View.INVISIBLE);
 
-                                    NofiticationMessages.onNotificationClient(client,NofiticationMessages.eOperationClient.UPDATE);
+                                    NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.UPDATE);
                                     FunctionsTools.showSnackBarLong(v,"Cliente atualizado!");
                                 }
                                 client = new Client();

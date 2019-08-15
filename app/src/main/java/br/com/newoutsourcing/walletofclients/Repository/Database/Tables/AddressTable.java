@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Address;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
-public class TBAddressDatabase extends TableConfigurationDatabase<Address> {
+public class AddressTable extends TableConfigurationBase<Address> {
 
     public enum Fields {
         ID_ADDRESS,
@@ -21,13 +21,13 @@ public class TBAddressDatabase extends TableConfigurationDatabase<Address> {
         COUNTRY
     }
 
-    public TBAddressDatabase(Context context){
+    public AddressTable(Context context){
         super(context);
         super.Table = "TB_ADDRESS";
     }
 
-    public static TBAddressDatabase newInstance(Context context){
-        return new TBAddressDatabase(context);
+    public static AddressTable newInstance(Context context){
+        return new AddressTable(context);
     }
 
     @Override

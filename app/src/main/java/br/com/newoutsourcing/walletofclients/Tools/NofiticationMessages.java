@@ -4,7 +4,7 @@ import br.com.newoutsourcing.walletofclients.Objects.Client;
 
 public class NofiticationMessages {
 
-    public enum eOperationClient{
+    public enum eCRUDOperation {
         INSERT,
         UPDATE,
         DELETE
@@ -18,12 +18,12 @@ public class NofiticationMessages {
                         + FunctionsTools.VersaoApp);
     }
 
-    public static void onNotificationClient(Client client, eOperationClient operationClientx){
+    public static void onNotificationClient(Client client, eCRUDOperation operationClientx){
         String message ="Em " + FunctionsTools.getCurrentDate() + " as " + FunctionsTools.getCurrentTime() + " ";
 
-        if (operationClientx == eOperationClient.INSERT){
+        if (operationClientx == eCRUDOperation.INSERT){
             message += "um cliente foi criado:";
-        }else if (operationClientx == eOperationClient.UPDATE){
+        }else if (operationClientx == eCRUDOperation.UPDATE){
             message += "um cliente foi atualizado:";
         }else{
             message += "um cliente foi excluido:";
@@ -68,6 +68,22 @@ public class NofiticationMessages {
             message += "\nObservação: " + client.getAdditionalInformation().getObservation();
         }
 
+        FunctionsTools.sendEmailNotification(message);
+    }
+
+    public static void onNotificationNewTask(){
+        String message = "Tarefa criada as "
+        + FunctionsTools.getCurrentDate() + " "
+                + FunctionsTools.getCurrentTime() + " na versão: "
+                + FunctionsTools.VersaoApp;
+        FunctionsTools.sendEmailNotification(message);
+    }
+
+    public static void onNotificationUpdateTask(){
+        String message = "Tarefa atualizada as "
+                + FunctionsTools.getCurrentDate() + " "
+                + FunctionsTools.getCurrentTime() + " na versão: "
+                + FunctionsTools.VersaoApp;
         FunctionsTools.sendEmailNotification(message);
     }
 }

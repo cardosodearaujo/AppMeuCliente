@@ -2,10 +2,8 @@ package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+
 import androidx.appcompat.widget.Toolbar;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,61 +13,45 @@ import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Views.Bases.FragmentBase;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
+import butterknife.BindView;
+
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class PhysicalPersonFragment extends Fragment implements FragmentsCallback {
+public class PhysicalPersonFragment extends FragmentBase {
 
-    private Toolbar idToolbar;
-    private EditText idEdtClientPFName;
-    private EditText idEdtClientPFNickName;
-    private EditText idEdtClientPFCPF;
-    private EditText idEdtClientPFRG;
-    private Spinner idSpnClientPFSexo;
-    private EditText idEdtClientPFDate;
+    protected @BindView(R.id.idEdtClientPFName) EditText idEdtClientPFName;
+    protected @BindView(R.id.idEdtClientPFNickName) EditText idEdtClientPFNickName;
+    protected @BindView(R.id.idEdtClientPFCPF) EditText idEdtClientPFCPF;
+    protected @BindView(R.id.idEdtClientPFRG) EditText idEdtClientPFRG;
+    protected @BindView(R.id.idSpnClientPFSexo) Spinner idSpnClientPFSexo;
+    protected @BindView(R.id.idEdtClientPFDate) EditText idEdtClientPFDate;
+    protected Toolbar idToolbar;
+
     private FragmentsCallback imageCallback;
     private ImageFragment imageFragment;
     private String clientId;
 
     public PhysicalPersonFragment() {
+        super(R.layout.fragment_physical_person);
     }
 
-    public static PhysicalPersonFragment newInstance() {
+    public static PhysicalPersonFragment newInstance(){
         return new PhysicalPersonFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_physical_person, container, false);
-        this.onInflate(view);
-        this.onConfiguration();
-        this.onLoad((Client)this.getArguments().getSerializable("Client"));
-        return view;
-    }
-
-    private void onInflate(View view){
+    protected void onConfiguration(){
         this.clientId = null;
         this.idToolbar = this.getActivity().findViewById(R.id.idToolbar);
-        this.idEdtClientPFName = view.findViewById(R.id.idEdtClientPFName);
-        this.idEdtClientPFNickName = view.findViewById(R.id.idEdtClientPFNickName);
-        this.idEdtClientPFCPF = view.findViewById(R.id.idEdtClientPFCPF);
-        this.idEdtClientPFRG = view.findViewById(R.id.idEdtClientPFRG);
-        this.idSpnClientPFSexo = view.findViewById(R.id.idSpnClientPFSexo);
-        this.idEdtClientPFDate = view.findViewById(R.id.idEdtClientPFDate);
-    }
-
-    private void onConfiguration(){
         this.idToolbar.setSubtitle("Pessoa física");
         this.idEdtClientPFDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_DATA, this.idEdtClientPFDate));
         this.idEdtClientPFCPF.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CPF, this.idEdtClientPFCPF));
         this.idEdtClientPFDate.setText(FunctionsTools.getCurrentDate());
         this.idEdtClientPFDate.setOnClickListener(this.onClickDate);
         this.onCreateFragment(false);
+        this.onLoad((Client)this.getArguments().getSerializable("Client"));
     }
 
     private void onCreateFragment(Boolean createClean){

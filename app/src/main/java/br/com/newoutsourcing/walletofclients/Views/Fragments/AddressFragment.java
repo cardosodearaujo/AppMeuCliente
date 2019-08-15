@@ -1,57 +1,35 @@
 package br.com.newoutsourcing.walletofclients.Views.Fragments;
 
-import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
+import br.com.newoutsourcing.walletofclients.Views.Bases.FragmentBase;
+import butterknife.BindView;
 
-public class AddressFragment extends Fragment implements FragmentsCallback {
+public class AddressFragment extends FragmentBase {
 
-    private EditText idEdtClientAddressCEP;
-    private EditText idEdtClientAddressStreet;
-    private EditText idEdtClientAddressNumber;
-    private EditText idEdtClientAddressNeighborhood;
-    private EditText idEdtClientAddressCity;
-    private Spinner idSpnClientAddressState;
-    private EditText idEdtClientAddressCounty;
+    protected @BindView(R.id.idEdtClientAddressCEP) EditText idEdtClientAddressCEP;
+    protected @BindView(R.id.idEdtClientAddressStreet) EditText idEdtClientAddressStreet;
+    protected @BindView(R.id.idEdtClientAddressNumber) EditText idEdtClientAddressNumber;
+    protected @BindView(R.id.idEdtClientAddressNeighborhood) EditText idEdtClientAddressNeighborhood;
+    protected @BindView(R.id.idEdtClientAddressCity) EditText idEdtClientAddressCity;
+    protected @BindView(R.id.idSpnClientAddressState) Spinner idSpnClientAddressState;
+    protected @BindView(R.id.idEdtClientAddressCounty) EditText idEdtClientAddressCounty;
 
     public AddressFragment() {
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_address, container, false);
-        this.onInflate(view);
-        this.onConfiguration();
-        this.onLoad((Client) getArguments().getSerializable("Client"));
-        return view;
+        super(R.layout.fragment_address);
     }
 
     public static AddressFragment newInstance() {
         return new AddressFragment();
     }
 
-    private void onInflate(View view){
-        this.idEdtClientAddressCEP = view.findViewById(R.id.idEdtClientAddressCEP);
-        this.idEdtClientAddressStreet = view.findViewById(R.id.idEdtClientAddressStreet);
-        this.idEdtClientAddressNumber = view.findViewById(R.id.idEdtClientAddressNumber);
-        this.idEdtClientAddressNeighborhood = view.findViewById(R.id.idEdtClientAddressNeighborhood);
-        this.idEdtClientAddressCity = view.findViewById(R.id.idEdtClientAddressCity);
-        this.idSpnClientAddressState = view.findViewById(R.id.idSpnClientAddressState);
-        this.idEdtClientAddressCounty = view.findViewById(R.id.idEdtClientAddressCounty);
-    }
-
-    private void onConfiguration(){
+    @Override
+    protected void onConfiguration(){
+        this.onLoad((Client) getArguments().getSerializable("Client"));
         this.idEdtClientAddressCEP.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_CEP, this.idEdtClientAddressCEP));
     }
 

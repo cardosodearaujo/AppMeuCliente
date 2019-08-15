@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.PhysicalPerson;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
-public class TBPhysicalPersonDatabase extends TableConfigurationDatabase<PhysicalPerson> {
+public class PhysicalPersonTable extends TableConfigurationBase<PhysicalPerson> {
 
     public enum Fields {
         ID_PHYSICAL_PERSON,
@@ -20,13 +20,13 @@ public class TBPhysicalPersonDatabase extends TableConfigurationDatabase<Physica
         SEX
     }
 
-    public TBPhysicalPersonDatabase(Context context){
+    public PhysicalPersonTable(Context context){
         super(context);
         super.Table = "TB_PHYSICAL_PERSON";
     }
 
-    public static TBPhysicalPersonDatabase newInstance(Context context){
-        return new TBPhysicalPersonDatabase(context);
+    public static PhysicalPersonTable newInstance(Context context){
+        return new PhysicalPersonTable(context);
     }
 
     @Override

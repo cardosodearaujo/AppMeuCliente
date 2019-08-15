@@ -11,6 +11,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder  {
     public TextView idTxwDate;
     public TextView idTxwHour;
     public CardView idCardView;
+    public TextView idTxwClient;
 
     public TaskViewHolder(View view){
         super(view);
@@ -18,5 +19,6 @@ public class TaskViewHolder extends RecyclerView.ViewHolder  {
         this.idTxwDate = view.findViewById(R.id.idTxwDate);
         this.idTxwHour = view.findViewById(R.id.idTxwHour);
         this.idCardView = view.findViewById(R.id.idCardView);
+        this.idTxwClient = view.findViewById(R.id.idTxwClient);
     }
 }

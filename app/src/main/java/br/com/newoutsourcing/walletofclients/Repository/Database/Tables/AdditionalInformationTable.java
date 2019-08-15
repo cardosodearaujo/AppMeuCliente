@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.AdditionalInformation;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
-public class TBAdditionalInformationDatabase extends TableConfigurationDatabase<AdditionalInformation> {
+public class AdditionalInformationTable extends TableConfigurationBase<AdditionalInformation> {
 
     public enum Fields {
         ID_ADDITIONAL_INFORMATION,
@@ -19,13 +19,13 @@ public class TBAdditionalInformationDatabase extends TableConfigurationDatabase<
         OBSERVATION
     }
 
-    public TBAdditionalInformationDatabase(Context context){
+    public AdditionalInformationTable(Context context){
         super(context);
         this.Table = "TB_ADDITIONAL_INFORMATION";
     }
 
-    public static TBAdditionalInformationDatabase newInstance(Context context){
-        return new TBAdditionalInformationDatabase(context);
+    public static AdditionalInformationTable newInstance(Context context){
+        return new AdditionalInformationTable(context);
     }
 
     @Override

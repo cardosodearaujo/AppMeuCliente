@@ -7,7 +7,7 @@
     <string name="str_search_hint">Digite sua pesquisa</string>
     <string name="str_client_selected">Clientes encontrados</string>
     <string name="str_app_name_en">New: Meu cliente</string>
-    <string name="str_client_title">Cadastro de clientes</string>
+    <string name="str_client_title">Cadastro de cliente</string>
     <string name="str_save">Salvar</string>
     <string name="str_back">Anterior</string>
     <string name="str_close">Fechar</string>
@@ -73,7 +73,7 @@
     <string name="str_client_address_country_fixed">Brasil</string>
 
     <!-- TODO: Nova tarefa -->
-    <string name="str_tasks_new_task">Criar tarefa</string>
+    <string name="str_tasks_new_task">Cadastro de tarefa</string>
     <string name="str_tasks_client">Cliente</string>
     <string name="str_tasks_date">Data</string>
     <string name="str_tasks_hour">Horário</string>

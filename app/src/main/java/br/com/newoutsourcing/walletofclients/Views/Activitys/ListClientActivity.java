@@ -30,7 +30,7 @@ import br.com.newoutsourcing.walletofclients.Repository.Tasks.ImportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.Client.ClientAdapter;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 import butterknife.BindView;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
@@ -38,7 +38,7 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class ListClientActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class ListClientActivity extends ActivityBase implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 
     protected @BindView(R.id.idToolbar) Toolbar idToolbar;
     protected @BindView(R.id.idBtnFam) FloatingActionMenu idBtnFam;
@@ -46,7 +46,6 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
     protected @BindView(R.id.idBtnFabClientPhysicalPerson) FloatingActionButton idBtnFabClientPhysicalPerson;
     protected @BindView(R.id.idBtnFabClientExport) FloatingActionButton idBtnFabClientExport;
     protected @BindView(R.id.idBtnFabContact) FloatingActionButton idBtnFabContact;
-    //protected @BindView(R.id.idBtnFabNewtasks) FloatingActionButton idBtnFabNewtasks;
     protected @BindView(R.id.idBtnFabConsultTasks) FloatingActionButton idBtnFabConsultTasks;
     protected @BindView(R.id.idRecycleView) RecyclerView idRecycleView;
     protected @BindView(R.id.idTvwSizeClient) TextView idTvwSizeClient;
@@ -79,7 +78,6 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
         this.idBtnFabClientPhysicalPerson.setOnClickListener(this.onClickBtnFabClientPhysicalPerson);
         this.idBtnFabClientExport.setOnClickListener(this.onClickExport);
         this.idBtnFabContact.setOnClickListener(this.onClickBtnFabContact);
-        //this.idBtnFabNewtasks.setOnClickListener(this.onClickBtnFabNewtasks);
         this.idBtnFabConsultTasks.setOnClickListener(this.onClickBtnFabConsultTasks);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
@@ -289,8 +287,6 @@ public class ListClientActivity extends BaseActivity implements View.OnClickList
         bundle.putString("TipoCadastro","F");
         FunctionsTools.startActivity(ListClientActivity.this, NewClientActivity.class,bundle);
     };
-
-    View.OnClickListener onClickBtnFabNewtasks = v -> FunctionsTools.startActivity(ListClientActivity.this,NewTaskActivity.class,null);
 
     View.OnClickListener onClickBtnFabConsultTasks = v -> FunctionsTools.startActivity(ListClientActivity.this, ListTasksActivity.class,null);
 

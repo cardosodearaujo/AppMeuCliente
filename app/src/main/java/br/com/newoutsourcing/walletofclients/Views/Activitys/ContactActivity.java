@@ -5,10 +5,10 @@ import android.webkit.WebView;
 import android.widget.Button;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Views.Bases.BaseActivity;
+import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 import butterknife.BindView;
 
-public class ContactActivity extends BaseActivity {
+public class ContactActivity extends ActivityBase {
 
     protected @BindView(R.id.idBtnContactClose) Button idBtnContactClose;
     protected @BindView(R.id.idWebView) WebView idWebView;

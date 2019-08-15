@@ -5,13 +5,14 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public abstract class BaseActivity extends AppCompatActivity {
-
+public abstract class ActivityBase extends AppCompatActivity {
+    private Unbinder unbind;
     private int view;
     protected @BindView(android.R.id.content) View View;
 
-    public BaseActivity(int view){
+    public ActivityBase(int view){
         this.view = view;
     }
 
@@ -19,8 +20,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(this.view);
-        ButterKnife.bind(this);
+        this.unbind = ButterKnife.bind(this);
         this.onConfiguration();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.unbind.unbind();
     }
 
     protected abstract void onConfiguration();

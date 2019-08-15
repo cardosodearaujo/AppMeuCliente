@@ -35,7 +35,7 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/colorWhite"
-                android:background="@mipmap/ic_delete" />
+                android:background="@mipmap/ic_check" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

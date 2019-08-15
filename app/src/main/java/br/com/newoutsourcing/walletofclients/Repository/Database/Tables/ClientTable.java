@@ -10,14 +10,14 @@ import br.com.newoutsourcing.walletofclients.Objects.Address;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.Objects.LegalPerson;
 import br.com.newoutsourcing.walletofclients.Objects.PhysicalPerson;
-import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.TableConfigurationDatabase;
+import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 
-public class TBClientDatabase extends TableConfigurationDatabase<Client> {
+public class ClientTable extends TableConfigurationBase<Client> {
 
     public enum Fields {
         ID_CLIENT,
@@ -25,13 +25,13 @@ public class TBClientDatabase extends TableConfigurationDatabase<Client> {
         TYPE
     }
 
-    public TBClientDatabase(Context context){
+    public ClientTable(Context context){
         super(context);
         super.Table = "TB_CLIENT";
     }
 
-    public static TBClientDatabase newInstance(Context context){
-        return new TBClientDatabase(context);
+    public static ClientTable newInstance(Context context){
+        return new ClientTable(context);
     }
 
     @Override
@@ -46,19 +46,19 @@ public class TBClientDatabase extends TableConfigurationDatabase<Client> {
     public List<Client> Select(String search){
         this.SQL
                 = " Select " + this.getFields() + " From " + this.Table
-                + " Left Join " + TB_PHYSICAL_PERSON.Table + " On " + this.Table + "." + Fields.ID_CLIENT.name() + " = " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.ID_CLIENT.name()
-                + " Left Join " + TB_LEGAL_PERSON.Table + " On " + this.Table + "." + Fields.ID_CLIENT.name() + " = " + TB_LEGAL_PERSON.Table + "." + TBLegalPersonDatabase.Fields.ID_CLIENT.name();
+                + " Left Join " + TB_PHYSICAL_PERSON.Table + " On " + this.Table + "." + Fields.ID_CLIENT.name() + " = " + TB_PHYSICAL_PERSON.Table + "." + PhysicalPersonTable.Fields.ID_CLIENT.name()
+                + " Left Join " + TB_LEGAL_PERSON.Table + " On " + this.Table + "." + Fields.ID_CLIENT.name() + " = " + TB_LEGAL_PERSON.Table + "." + LegalPersonTable.Fields.ID_CLIENT.name();
                 if (!search.isEmpty()){
                     this.SQL
                             = this.SQL
-                            + " Where " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.NAME.name() + " Like '%" + QuoteParam(search) + "%'"
-                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.NICKNAME.name() + " Like '%"+ QuoteParam(search) +"%'"
-                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.CPF.name() + " Like '%"+ QuoteParam(search) +"%'"
-                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + TBPhysicalPersonDatabase.Fields.RG.name() + " Like '%"+ QuoteParam(search) +"%'"
-                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.SOCIAL_NAME.name() + " Like '%"+QuoteParam(search)+"%'"
-                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.FANTASY_NAME.name() + " Like '%" + QuoteParam(search) + "%'"
-                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.CNPJ.name()+ " Like '%" + QuoteParam(search) + "%'"
-                            + " Or " + TB_LEGAL_PERSON.Table + "."+ TBLegalPersonDatabase.Fields.IE.name() + " Like '%" + QuoteParam(search) + "%'";
+                            + " Where " + TB_PHYSICAL_PERSON.Table + "." + PhysicalPersonTable.Fields.NAME.name() + " Like '%" + QuoteParam(search) + "%'"
+                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + PhysicalPersonTable.Fields.NICKNAME.name() + " Like '%"+ QuoteParam(search) +"%'"
+                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + PhysicalPersonTable.Fields.CPF.name() + " Like '%"+ QuoteParam(search) +"%'"
+                            + " Or " + TB_PHYSICAL_PERSON.Table + "." + PhysicalPersonTable.Fields.RG.name() + " Like '%"+ QuoteParam(search) +"%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ LegalPersonTable.Fields.SOCIAL_NAME.name() + " Like '%"+QuoteParam(search)+"%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ LegalPersonTable.Fields.FANTASY_NAME.name() + " Like '%" + QuoteParam(search) + "%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ LegalPersonTable.Fields.CNPJ.name()+ " Like '%" + QuoteParam(search) + "%'"
+                            + " Or " + TB_LEGAL_PERSON.Table + "."+ LegalPersonTable.Fields.IE.name() + " Like '%" + QuoteParam(search) + "%'";
                 }
 
         return this.Consulta(SQL);
