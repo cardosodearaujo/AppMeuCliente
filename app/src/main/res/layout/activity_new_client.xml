@@ -33,31 +33,7 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:logo="@mipmap/ic_client_add"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/str_client_title">
-
-                <Button
-                    android:id="@+id/idBtnClose"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@mipmap/ic_close" />
-
-                <Button
-                    android:id="@+id/idBtnNewTask"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@mipmap/ic_calendar" />
-
-                <Button
-                    android:id="@+id/idBtnDelete"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:backgroundTint="@color/colorWhite"
-                    android:background="@mipmap/ic_delete" />
-
-            </androidx.appcompat.widget.Toolbar>
+                app:title="@string/str_client_title"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.tabs.TabLayout

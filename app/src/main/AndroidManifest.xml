@@ -53,7 +53,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Views.Activitys.ListClientActivity"
+            android:name=".Views.Activitys.ListClientsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

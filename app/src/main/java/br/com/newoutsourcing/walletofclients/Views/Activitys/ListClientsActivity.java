@@ -37,8 +37,9 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_TASKS;
 
-public class ListClientActivity extends ActivityBase implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class ListClientsActivity extends ActivityBase implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 
     protected @BindView(R.id.idToolbar) Toolbar idToolbar;
     protected @BindView(R.id.idBtnFam) FloatingActionMenu idBtnFam;
@@ -59,8 +60,8 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
     protected @BindView(R.id.idSwipeContainer) SwipeRefreshLayout idSwipeContainer;
     protected @BindView(R.id.idLLMessageEmptySearch) LinearLayout idLLMessageEmptySearch;
 
-    public ListClientActivity() {
-        super(R.layout.activity_list_client);
+    public ListClientsActivity() {
+        super(R.layout.activity_list_clients);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
     @Override
     protected void onConfiguration(){
         this.setSupportActionBar(this.idToolbar);
-        MobileAds.initialize(ListClientActivity.this, "@string/str_app_admob_id");
+        MobileAds.initialize(ListClientsActivity.this, "@string/str_app_admob_id");
         AdRequest adRequest = new AdRequest.Builder().build();
         this.idAdsView.loadAd(adRequest);
 
@@ -80,7 +81,7 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
         this.idBtnFabContact.setOnClickListener(this.onClickBtnFabContact);
         this.idBtnFabConsultTasks.setOnClickListener(this.onClickBtnFabConsultTasks);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListClientsActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         this.idRecycleView.setLayoutManager(linearLayoutManager);
         this.idRecycleView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -126,14 +127,14 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
     private void SairModoPesquisa(){
         this.idAppBarLayoutSearch.setVisibility(View.INVISIBLE);
         this.idAppBarLayout.setVisibility(View.VISIBLE);
-        FunctionsTools.closeKeyboard(ListClientActivity.this ,this.View);
+        FunctionsTools.closeKeyboard(ListClientsActivity.this ,this.View);
     }
 
     private void EntrarEmModoPesquisa(){
         idAppBarLayout.setVisibility(View.INVISIBLE);
         idAppBarLayoutSearch.setVisibility(View.VISIBLE);
         idEdtSearch.requestFocus();
-        FunctionsTools.showKeybord(ListClientActivity.this);
+        FunctionsTools.showKeybord(ListClientsActivity.this);
     }
 
     private void BuscarClientes(){
@@ -151,7 +152,7 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
             idLLMessageEmptySearch.setVisibility(View.VISIBLE);
             idRecycleView.setVisibility(View.INVISIBLE);
             if (idLLMessageEmpty.getVisibility() == View.VISIBLE) idLLMessageEmpty.setVisibility(View.INVISIBLE);
-            FunctionsTools.closeKeyboard(ListClientActivity.this,this.View);
+            FunctionsTools.closeKeyboard(ListClientsActivity.this,this.View);
         }
     }
 
@@ -164,8 +165,8 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
             itens.add("Exportar");
             itens.add("Apagar todos os clientes");
 
-            ArrayAdapter adapter = new ArrayAdapter(ListClientActivity.this, R.layout.alert_dialog_question, itens);
-            final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ListClientActivity.this,R.style.Theme_MaterialComponents_Light_Dialog);
+            ArrayAdapter adapter = new ArrayAdapter(ListClientsActivity.this, R.layout.alert_dialog_question, itens);
+            final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ListClientsActivity.this,R.style.Theme_MaterialComponents_Light_Dialog);
             builder.setSingleChoiceItems(adapter, 0, (dialog, idOption) -> {
                 Intent intent;
                 switch (idOption) {
@@ -181,8 +182,9 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
                         ExportClients();
                         dialog.cancel();
                         break;
-                    case 2: //Deletar tudo:
-                        FunctionsTools.showPgDialog(ListClientActivity.this,"Apagando os clientes...");
+                    case 2: //Deletar clientes
+                        FunctionsTools.showPgDialog(ListClientsActivity.this,"Apagando os clientes...");
+                        TB_TASKS.DeleteAll();
                         TB_ADDRESS.DeleteAll();
                         TB_ADDITIONAL_INFORMATION.DeleteAll();
                         TB_LEGAL_PERSON.DeleteAll();
@@ -206,19 +208,19 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
         try{
             if (resultCode == RESULT_OK) this.ImportClients(data.getData());
         }catch (Exception ex){
-            FunctionsTools.showAlertDialog(ListClientActivity.this,"Erro",ex.getMessage(),"Fechar");
+            FunctionsTools.showAlertDialog(ListClientsActivity.this,"Erro",ex.getMessage(),"Fechar");
         }
     }
 
     private void ExportClients(){
         try{
-            ExportAsyncTask exportAsyncTask = new ExportAsyncTask(ListClientActivity.this){
+            ExportAsyncTask exportAsyncTask = new ExportAsyncTask(ListClientsActivity.this){
                 @Override
                 protected void onPostExecute(Boolean isSuccess) {
                     FunctionsTools.closePgDialog();
                     if (isSuccess){
                         FunctionsTools.showAlertDialog(
-                                ListClientActivity.this,
+                                ListClientsActivity.this,
                                 "Atenção!",
                                 "Clientes exportados com sucesso para a pasta /WalletOfClients/ListOfClients_" + FunctionsTools.getCurrentDate("dd-MM-yyyy") + ".csv",
                                 "Fechar");
@@ -236,13 +238,13 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
 
     private void ImportClients(Uri uri) {
         try{
-            ImportAsyncTask importAsyncTask = new ImportAsyncTask(ListClientActivity.this){
+            ImportAsyncTask importAsyncTask = new ImportAsyncTask(ListClientsActivity.this){
                 @Override
                 protected void onPostExecute(Boolean isSuccess){
                     FunctionsTools.closePgDialog();
                     if (isSuccess) {
                         AtualizarLista();
-                        FunctionsTools.showAlertDialog(ListClientActivity.this,"Atenção!","Clientes importados com sucesso!","Fechar");
+                        FunctionsTools.showAlertDialog(ListClientsActivity.this,"Atenção!","Clientes importados com sucesso!","Fechar");
                     }else{
                         FunctionsTools.showSnackBarLong(View,"Não foi possivel importar os dados. Tente novamente!");
                     }
@@ -279,18 +281,18 @@ public class ListClientActivity extends ActivityBase implements View.OnClickList
     View.OnClickListener onClickBtnFabClientLegalPerson = v -> {
         Bundle bundle = new Bundle();
         bundle.putString("TipoCadastro","J");
-        FunctionsTools.startActivity(ListClientActivity.this, NewClientActivity.class,bundle);
+        FunctionsTools.startActivity(ListClientsActivity.this, NewClientActivity.class,bundle);
     };
 
     View.OnClickListener onClickBtnFabClientPhysicalPerson = v -> {
         Bundle bundle = new Bundle();
         bundle.putString("TipoCadastro","F");
-        FunctionsTools.startActivity(ListClientActivity.this, NewClientActivity.class,bundle);
+        FunctionsTools.startActivity(ListClientsActivity.this, NewClientActivity.class,bundle);
     };
 
-    View.OnClickListener onClickBtnFabConsultTasks = v -> FunctionsTools.startActivity(ListClientActivity.this, ListTasksActivity.class,null);
+    View.OnClickListener onClickBtnFabConsultTasks = v -> FunctionsTools.startActivity(ListClientsActivity.this, ListTasksActivity.class,null);
 
-    View.OnClickListener onClickBtnFabContact = v -> FunctionsTools.startActivity(ListClientActivity.this,ContactActivity.class,null);
+    View.OnClickListener onClickBtnFabContact = v -> FunctionsTools.startActivity(ListClientsActivity.this,ContactActivity.class,null);
 
     View.OnClickListener onClickExport = v -> Exportar();
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Views.Activitys.ListClientActivity">
+    tools:context=".Views.Activitys.ListClientsActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
                     android:id="@+id/idBtnFabClientExport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_import_export"
+                    android:src="@mipmap/ic_config"
                     fab:fab_label="@string/str_list_client_import_export"
                     fab:fab_size="mini" />
 

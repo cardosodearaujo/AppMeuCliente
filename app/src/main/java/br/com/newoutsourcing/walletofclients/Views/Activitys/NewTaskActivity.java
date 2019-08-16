@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +18,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,14 +40,14 @@ import static br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages.o
 public class NewTaskActivity extends ActivityBase {
 
     protected @BindView(R.id.idEdttasksTitle) EditText idEdttasksTitle;
+    protected @BindView(R.id.idToolbar) Toolbar idToolbar;
     protected @BindView(R.id.idSpnTaskClient) Spinner idSpnTaskClient;
     protected @BindView(R.id.idEdttasksDate) EditText idEdttasksDate;
     protected @BindView(R.id.idEdttasksHour) EditText idEdttasksHour;
     protected @BindView(R.id.idSwtTaskDiaInteiro) Switch idSwtTaskDiaInteiro;
     protected @BindView(R.id.idEdtClientPFObservation) EditText idEdtClientPFObservation;
     protected @BindView(R.id.idBtnSave) Button idBtnSave;
-    protected @BindView(R.id.idBtnClose) Button idBtnClose;
-    protected @BindView(R.id.idBtnDelete) Button idBtnDelete;
+    private MenuItem idItemDelete;
 
     private Tasks tasks;
 
@@ -52,14 +57,13 @@ public class NewTaskActivity extends ActivityBase {
 
     @Override
     protected void onConfiguration(){
+        this.setSupportActionBar(idToolbar);
         idEdttasksDate.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_DATA, idEdttasksDate));
         idEdttasksDate.setOnClickListener(onClickDate);
         idEdttasksHour.addTextChangedListener(new MaskEditTextChangedListener(FunctionsTools.MASCARA_HORA, idEdttasksHour));
         idEdttasksHour.setOnClickListener(onClickTime);
         idSwtTaskDiaInteiro.setOnClickListener(onClickAllDay);
         idBtnSave.setOnClickListener(onClickSave);
-        idBtnClose.setOnClickListener(onClickClose);
-        idBtnDelete.setOnClickListener(onClickDelete);
         onClear();
         onLoadTask();
     }
@@ -69,8 +73,6 @@ public class NewTaskActivity extends ActivityBase {
 
         if (bundle != null && bundle.containsKey("Tasks")){
             tasks = (Tasks) bundle.getSerializable("Tasks");
-        }else{
-            idBtnDelete.setVisibility(View.INVISIBLE);
         }
 
         if (tasks != null && tasks.getTasksId() > 0){
@@ -178,7 +180,56 @@ public class NewTaskActivity extends ActivityBase {
         }
     }
 
-    private View.OnClickListener onClickClose = view -> FunctionsTools.closeActivity(NewTaskActivity.this);
+    private void close(){
+        FunctionsTools.closeActivity(NewTaskActivity.this);
+    }
+
+    private void delete(){
+        try{
+            if (tasks != null && tasks.getTasksId() > 0){
+                AlertDialog.Builder builder = new AlertDialog.Builder(View.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
+                builder
+                        .setPositiveButton("Sim", (dialog, id) -> {
+                            TB_TASKS.Delete(tasks);
+                            Toast.makeText(NewTaskActivity.this,"Tarefa concluida!",Toast.LENGTH_LONG).show();
+                            FunctionsTools.closeActivity(NewTaskActivity.this);
+                            dialog.cancel();
+                        })
+                        .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
+                        .setMessage("Tem ceteza que deseja concluir essa tarefa?");
+
+                final AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }catch (Exception ex){
+            FunctionsTools.showSnackBarLong(View,ex.getMessage());
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_new_task, menu);
+        this.idItemDelete = menu.findItem(R.id.idItemDelete);
+        if (tasks == null || tasks.getTasksId() <= 0 ){
+            this.idItemDelete.setVisible(false);
+        }else{
+            this.idItemDelete.setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.idItemDelete:
+                delete();
+                break;
+            case R.id.idItemClose:
+                close();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private View.OnClickListener onClickSave = new View.OnClickListener(){
         @Override
@@ -203,31 +254,6 @@ public class NewTaskActivity extends ActivityBase {
                         onNotificationUpdateTask();
                     }
                     onClear();
-                }
-            }catch (Exception ex){
-                FunctionsTools.showSnackBarLong(View,ex.getMessage());
-            }
-        }
-    };
-
-    private View.OnClickListener onClickDelete = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            try{
-                if (tasks != null && tasks.getTasksId() > 0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
-                    builder
-                            .setPositiveButton("Sim", (dialog, id) -> {
-                                TB_TASKS.Delete(tasks);
-                                Toast.makeText(NewTaskActivity.this,"Tarefa concluida!",Toast.LENGTH_LONG).show();
-                                FunctionsTools.closeActivity(NewTaskActivity.this);
-                                dialog.cancel();
-                            })
-                            .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
-                            .setMessage("Tem ceteza que deseja concluir essa tarefa?");
-
-                    final AlertDialog alert = builder.create();
-                    alert.show();
                 }
             }catch (Exception ex){
                 FunctionsTools.showSnackBarLong(View,ex.getMessage());

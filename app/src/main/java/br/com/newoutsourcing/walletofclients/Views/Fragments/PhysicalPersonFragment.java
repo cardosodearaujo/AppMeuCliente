@@ -28,7 +28,6 @@ public class PhysicalPersonFragment extends FragmentBase {
     protected @BindView(R.id.idSpnClientPFSexo) Spinner idSpnClientPFSexo;
     protected @BindView(R.id.idEdtClientPFDate) EditText idEdtClientPFDate;
     protected Toolbar idToolbar;
-
     private FragmentsCallback imageCallback;
     private ImageFragment imageFragment;
     private String clientId;

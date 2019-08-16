@@ -31,42 +31,7 @@ public class NofiticationMessages {
 
         message += "\n\n";
 
-        if (client.getClientId() > 0){
-            message += "Codigo: " + client.getClientId();
-        }
-
-        if (client.getType() == 1){
-            message += "\nNome: " + client.getPhysicalPerson().getName();
-            message += "\nApelido: " + client.getPhysicalPerson().getNickname();
-            message += "\nCPF: " + client.getPhysicalPerson().getCPF();
-            message += "\nRG: " + client.getPhysicalPerson().getRG();
-            message += "\nDt. aniversário: " + client.getPhysicalPerson().getBirthDate();
-            message += "\nSexo: " + client.getPhysicalPerson().getSex();
-        }else{
-            message += "\nRazão social: " + client.getLegalPerson().getSocialName();
-            message += "\nNome fantasia: " + client.getLegalPerson().getFantasyName();
-            message += "\nCNPJ: " + client.getLegalPerson().getCNPJ();
-            message += "\nIE " + client.getLegalPerson().getIE();
-            message += "\nIM: " + client.getLegalPerson().getIM();
-        }
-
-        if (client.getAddress() != null && client.getAddress().getAddressId() > 0){
-            message += "\nCEP: " + client.getAddress().getCEP();
-            message += "\nRua: " + client.getAddress().getStreet();
-            message += "\nNumero: " + client.getAddress().getNumber();
-            message += "\nBairro: " + client.getAddress().getNeighborhood();
-            message += "\nCidade: " + client.getAddress().getCity();
-            message += "\nEstado: " + client.getAddress().getState();
-            message += "\nPais: " + client.getAddress().getCountry();
-        }
-
-        if (client.getAdditionalInformation() != null && client.getAdditionalInformation().getAdditionalInformationId() > 0){
-            message += "\nCelular: " + client.getAdditionalInformation().getCellphone();
-            message += "\nTelefone: " + client.getAdditionalInformation().getTelephone();
-            message += "\nEmail: " + client.getAdditionalInformation().getEmail();
-            message += "\nSite: " + client.getAdditionalInformation().getSite();
-            message += "\nObservação: " + client.getAdditionalInformation().getObservation();
-        }
+        message += FunctionsTools.getMessageClient(client);
 
         FunctionsTools.sendEmailNotification(message);
     }

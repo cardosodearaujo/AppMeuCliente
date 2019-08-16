@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Views.Activitys.ListClientActivity">
+    tools:context=".Views.Activitys.ListClientsActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -26,13 +26,6 @@
                 app:logo="@mipmap/ic_consult_taks"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/str_list_tasks">
-
-                <Button
-                    android:id="@+id/idBtnClose"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@mipmap/ic_close" />
 
                 <TextView
                     android:id="@+id/idTvwSizeClient"
@@ -143,6 +136,14 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_calendar"
                     fab:fab_label="@string/str_tasks_new_task"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/idBtnConfig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_config"
+                    fab:fab_label="@string/str_list_client_import_export"
                     fab:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>

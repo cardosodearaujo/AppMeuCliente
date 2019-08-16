@@ -1,6 +1,10 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
-import android.widget.Button;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +16,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Tasks;
 import br.com.newoutsourcing.walletofclients.R;
@@ -26,12 +31,12 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
 
     protected @BindView(R.id.idToolbar) Toolbar idToolbar;
     protected @BindView(R.id.idBtnNewTask) FloatingActionButton idBtnNewTask;
+    protected @BindView(R.id.idBtnConfig) FloatingActionButton idBtnConfig;
     protected @BindView(R.id.idRecycleView) RecyclerView idRecycleView;
     protected @BindView(R.id.idTvwSizeClient) TextView idTvwSizeClient;
     protected @BindView(R.id.idAdsView) AdView idAdsView;
     protected @BindView(R.id.idLLMessageEmpty) LinearLayout idLLMessageEmpty;
     protected @BindView(R.id.idSwipeContainer) SwipeRefreshLayout idSwipeContainer;
-    protected @BindView(R.id.idBtnClose) Button idBtnClose;
 
     public ListTasksActivity() {
         super(R.layout.activity_list_tasks);
@@ -45,7 +50,7 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
         this.idAdsView.loadAd(adRequest);
 
         this.idBtnNewTask.setOnClickListener(this.onClickBtnFabNewtasks);
-        this.idBtnClose.setOnClickListener(this.onClickBtnClose);
+        this.idBtnConfig.setOnClickListener(this.onClickConfig);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListTasksActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -95,7 +100,54 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
         }
     }
 
+    private void onClose(){
+        FunctionsTools.closeActivity(ListTasksActivity.this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_default_close, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.idItemClose:
+                onClose();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void config(){
+        try{
+            AlertDialog alert;
+            ArrayList<String> itens = new ArrayList<String>();
+
+            itens.add("Apagar todos as tarefas");
+
+            ArrayAdapter adapter = new ArrayAdapter(ListTasksActivity.this, R.layout.alert_dialog_question, itens);
+            final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ListTasksActivity.this,R.style.Theme_MaterialComponents_Light_Dialog);
+            builder.setSingleChoiceItems(adapter, 0, (dialog, idOption) -> {
+                switch (idOption) {
+                    case 0: //Deletar agendamentos
+                        FunctionsTools.showPgDialog(ListTasksActivity.this,"Apagando as tarefas...");
+                        TB_TASKS.DeleteAll();
+                        AtualizarLista();
+                        FunctionsTools.closePgDialog();
+                        dialog.cancel();
+                }
+            });
+            alert = builder.create();
+            alert.setTitle("Escolha uma opção:");
+            alert.show();
+        }catch (Exception ex){
+            FunctionsTools.showAlertDialog(this.View.getContext(),"Erro!",ex.getMessage(),"Fechar");
+        }
+    }
+
     android.view.View.OnClickListener onClickBtnFabNewtasks = v -> FunctionsTools.startActivity(ListTasksActivity.this,NewTaskActivity.class,null);
 
-    android.view.View.OnClickListener onClickBtnClose = v -> FunctionsTools.closeActivity(ListTasksActivity.this);
+    android.view.View.OnClickListener onClickConfig = v -> config();
 }

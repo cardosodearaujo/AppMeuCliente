@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Views.Activitys.NewClientActivity"
+    app:showAsAction="always">
+
+    <item
+        android:id="@+id/idItemShare"
+        android:title="@string/str_share"
+        android:icon="@mipmap/ic_share"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/idItemNewTask"
+        android:title="@string/str_share"
+        android:icon="@mipmap/ic_calendar"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/idItemDelete"
+        android:title="@string/str_delete"
+        android:icon="@mipmap/ic_delete"
+        android:orderInCategory="3"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/idItemClose"
+        android:orderInCategory="4"
+        android:icon="@mipmap/ic_close"
+        android:title="@string/str_close"
+        app:showAsAction="ifRoom"/>
+</menu>

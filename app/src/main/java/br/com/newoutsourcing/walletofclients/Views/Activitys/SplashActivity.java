@@ -42,7 +42,7 @@ public class SplashActivity extends ActivityBase {
 
     private void onStartActivity(){
         new Handler().postDelayed(() -> {
-            FunctionsTools.startActivity(SplashActivity.this,ListClientActivity.class,null);
+            FunctionsTools.startActivity(SplashActivity.this, ListClientsActivity.class,null);
             FunctionsTools.closeActivity(SplashActivity.this);
         },1000);
     }

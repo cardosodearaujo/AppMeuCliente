@@ -5,7 +5,11 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -30,13 +34,12 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 public class NewClientActivity extends ActivityBase {
 
     protected @BindView(R.id.idViewPager) ViewPager idViewPager;
-    protected @BindView(R.id.idBtnClose) Button idBtnClose;
     protected @BindView(R.id.idToolbar) Toolbar idToolbar;
     protected @BindView(R.id.idTabLayout) TabLayout idTabLayout;
     protected @BindView(R.id.idBtnSave) Button idBtnSave;
-    protected @BindView(R.id.idBtnDelete) Button idBtnDelete;
-    protected @BindView(R.id.idBtnNewTask) Button idBtnNewTask;
-
+    private MenuItem idItemNewTask;
+    private MenuItem idItemShare;
+    private MenuItem idItemDelete;
     private TabPagerAdapter pagerAdapter;
     private FragmentsCallback physicalPersonCallback;
     private FragmentsCallback legalPersonCallback;
@@ -53,12 +56,9 @@ public class NewClientActivity extends ActivityBase {
     protected void onConfiguration() {
         this.client = new Client();
         this.pagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
-        this.setSupportActionBar(this.idToolbar);
-        this.idTabLayout.setupWithViewPager(this.idViewPager);
-        this.idBtnClose.setOnClickListener(this.onClickClose);
-        this.idBtnSave.setOnClickListener(this.onClickSave);
-        this.idBtnDelete.setOnClickListener(this.onClickDelete);
-        this.idBtnNewTask.setOnClickListener(this.onClickNewTask);
+        this.setSupportActionBar(idToolbar);
+        this.idTabLayout.setupWithViewPager(idViewPager);
+        this.idBtnSave.setOnClickListener(onClickSave);
         this.onConfigurationFragments();
     }
 
@@ -70,8 +70,6 @@ public class NewClientActivity extends ActivityBase {
 
             if (bundle != null && bundle.containsKey("Client")){
                 this.client = (Client)bundle.getSerializable("Client");
-            }else{
-                this.idBtnDelete.setVisibility(View.INVISIBLE);
             }
 
             if (typePerson.equals("F")){
@@ -103,26 +101,85 @@ public class NewClientActivity extends ActivityBase {
         }
     }
 
-    View.OnClickListener onClickDelete = new View.OnClickListener(){
-        @Override
-        public void onClick(View v){
-            if (client != null && client.getClientId() > 0){
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
-                builder.setPositiveButton("Sim", (dialog, id) -> {
-                    TB_CLIENT.Delete(client);
-                    NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.DELETE);
-                    Toast.makeText(NewClientActivity.this,"Cliente excluido!",Toast.LENGTH_LONG).show();
-                    FunctionsTools.closeActivity(NewClientActivity.this);
-                    dialog.cancel();
-                })
-                        .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
-                        .setMessage("Tem ceteza que deseja excluir?");
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_new_client, menu);
 
-                final AlertDialog alert = builder.create();
-                alert.show();
-            }
+        this.idItemNewTask = menu.findItem(R.id.idItemNewTask);
+        this.idItemDelete = menu.findItem(R.id.idItemDelete);
+        this.idItemShare = menu.findItem(R.id.idItemShare);
+
+        if (client == null || client.getClientId() <= 0 ){
+            this.idItemNewTask.setVisible(false);
+            this.idItemShare.setVisible(false);
+            this.idItemDelete.setVisible(false);
+        }else{
+            this.idItemNewTask.setVisible(true);
+            this.idItemShare.setVisible(true);
+            this.idItemDelete.setVisible(true);
         }
-    };
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.idItemShare:
+                share();
+                break;
+            case R.id.idItemNewTask:
+                newTask();
+                break;
+            case R.id.idItemDelete:
+                delete();
+                break;
+            case R.id.idItemClose:
+                close();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void delete(){
+        if (client != null && client.getClientId() > 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(View.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
+            builder.setPositiveButton("Sim", (dialog, id) -> {
+                TB_CLIENT.Delete(client);
+                NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.DELETE);
+                Toast.makeText(NewClientActivity.this,"Cliente excluido!",Toast.LENGTH_LONG).show();
+                FunctionsTools.closeActivity(NewClientActivity.this);
+                dialog.cancel();
+            })
+                    .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
+                    .setMessage("Tem ceteza que deseja excluir?");
+
+            final AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    private void close(){
+        FunctionsTools.closeActivity(NewClientActivity.this);
+    }
+
+    private void newTask(){
+        Bundle bundle = null;
+        if (client != null && client.getClientId() > 0){
+            bundle = new Bundle();
+            bundle.putLong("ClientId",client.getClientId());
+        }
+        FunctionsTools.startActivity(NewClientActivity.this, NewTaskActivity.class, bundle);
+    }
+
+    private void share(){
+        if (client != null && client.getClientId() > 0){
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, FunctionsTools.getMessageClient(client));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        }
+    }
 
     View.OnClickListener onClickSave = new View.OnClickListener() {
         @Override
@@ -206,7 +263,9 @@ public class NewClientActivity extends ActivityBase {
 
                                     idViewPager.setCurrentItem(0);
 
-                                    idBtnDelete.setVisibility(View.INVISIBLE);
+                                    idItemNewTask.setVisible(false);
+                                    idItemShare.setVisible(false);
+                                    idItemDelete.setVisible(false);
 
                                     NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.UPDATE);
                                     FunctionsTools.showSnackBarLong(v,"Cliente atualizado!");
@@ -222,17 +281,4 @@ public class NewClientActivity extends ActivityBase {
         }
     };
 
-    View.OnClickListener onClickClose = v -> FunctionsTools.closeActivity(NewClientActivity.this);
-
-    View.OnClickListener onClickNewTask  = new View.OnClickListener(){
-        @Override
-        public void onClick (android.view.View v){
-            Bundle bundle = null;
-            if (client != null && client.getClientId() > 0){
-                bundle = new Bundle();
-                bundle.putLong("ClientId",client.getClientId());
-            }
-            FunctionsTools.startActivity(NewClientActivity.this, NewTaskActivity.class, bundle);
-        }
-    };
 }
