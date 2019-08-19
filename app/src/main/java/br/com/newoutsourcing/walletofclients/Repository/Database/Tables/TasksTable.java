@@ -140,6 +140,22 @@ public class TasksTable extends TableConfigurationBase<Tasks> {
         }
     }
 
+    public Boolean DeleteByClientId(long clientId){
+        super.openDatabaseInstance();
+        try{
+            if (clientId > 0){
+                this.database.delete(this.Table,
+                        Fields.ID_CLIENT.name() + " = " + clientId,
+                        null);
+            }
+            return true;
+        }catch (Exception ex){
+            throw ex;
+        }finally {
+            super.closeDatabaseInstance();
+        }
+    }
+
     @Override
     protected String getFields() {
         String StringFields = "";

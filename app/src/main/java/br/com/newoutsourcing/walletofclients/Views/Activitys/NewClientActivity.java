@@ -30,6 +30,7 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
+import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_TASKS;
 
 public class NewClientActivity extends ActivityBase {
 
@@ -144,6 +145,7 @@ public class NewClientActivity extends ActivityBase {
         if (client != null && client.getClientId() > 0){
             AlertDialog.Builder builder = new AlertDialog.Builder(View.getContext(),R.style.Theme_MaterialComponents_Light_Dialog);
             builder.setPositiveButton("Sim", (dialog, id) -> {
+                TB_TASKS.DeleteByClientId(client.getClientId());
                 TB_CLIENT.Delete(client);
                 NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.DELETE);
                 Toast.makeText(NewClientActivity.this,"Cliente excluido!",Toast.LENGTH_LONG).show();
@@ -151,7 +153,7 @@ public class NewClientActivity extends ActivityBase {
                 dialog.cancel();
             })
                     .setNegativeButton("Não", (dialog, id) -> dialog.cancel())
-                    .setMessage("Tem ceteza que deseja excluir?");
+                    .setMessage("Tem ceteza que deseja excluir? Essa ação também exclui as tarefas!");
 
             final AlertDialog alert = builder.create();
             alert.show();
