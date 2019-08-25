@@ -20,7 +20,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_wallet_round"
         android:label="@string/str_app_name_en"
-        android:roundIcon="@mipmap/ic_wallet"
+        android:roundIcon="@mipmap/ic_logo_blue_not_name_circle"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">

@@ -18,8 +18,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_wallet_simple"
-            android:tint="@color/colorPrimary"
+            android:src="@mipmap/ic_logo_blue_not_name_circle"
             android:layout_gravity="center"/>
 
         <TextView
