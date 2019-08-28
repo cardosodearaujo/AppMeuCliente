@@ -8,28 +8,28 @@
     <item
         android:id="@+id/idItemShare"
         android:title="@string/str_share"
-        android:icon="@mipmap/ic_share"
+        android:icon="@drawable/ic_share"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/idItemNewTask"
-        android:title="@string/str_share"
-        android:icon="@mipmap/ic_calendar"
+        android:title="@string/str_new_task"
+        android:icon="@drawable/ic_calendar"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/idItemDelete"
         android:title="@string/str_delete"
-        android:icon="@mipmap/ic_delete"
+        android:icon="@drawable/ic_delete"
         android:orderInCategory="3"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/idItemClose"
         android:orderInCategory="4"
-        android:icon="@mipmap/ic_close"
+        android:icon="@drawable/ic_close"
         android:title="@string/str_close"
         app:showAsAction="ifRoom"/>
 </menu>

@@ -1,10 +1,12 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +19,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Tasks;
 import br.com.newoutsourcing.walletofclients.R;
@@ -78,9 +81,18 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
     }
 
     public boolean AtualizarLista(){
+        return AtualizarLista(null);
+    }
+
+    public boolean AtualizarLista(String date){
         try{
             if (this.idRecycleView != null && TB_TASKS != null){
-                List<Tasks> list = TB_TASKS.Select();
+                List<Tasks> list;
+                if (date == null || date.isEmpty()){
+                    list = TB_TASKS.Select();
+                }else{
+                    list = TB_TASKS.Select(date);
+                }
                 if (list != null && list.size() > 0){
                     this.idTvwSizeClient.setText("Total: " + list.size());
                     this.idRecycleView.setAdapter(new TaskAdapter(list));
@@ -106,7 +118,7 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_default_close, menu);
+        getMenuInflater().inflate(R.menu.menu_list_tasks, menu);
         return true;
     }
 
@@ -115,6 +127,9 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
         switch (item.getItemId()){
             case R.id.idItemClose:
                 onClose();
+                break;
+            case R.id.idItemFiltro:
+                onDate();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -146,6 +161,44 @@ public class ListTasksActivity extends ActivityBase implements android.view.View
             FunctionsTools.showAlertDialog(this.View.getContext(),"Erro!",ex.getMessage(),"Fechar");
         }
     }
+
+    private void onDate(){
+        int day,month,year;
+
+        Calendar cal = Calendar.getInstance();
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
+
+
+        DatePickerDialog dialog = new DatePickerDialog(ListTasksActivity.this,
+                onDateSetListener,year,month,day);
+
+        dialog.show();
+    }
+
+    private DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+        String data = "";
+
+        if (dayOfMonth < 10){
+            data += "0" + dayOfMonth;
+        }else{
+            data += dayOfMonth;
+        }
+
+        data += "/";
+
+        monthOfYear = monthOfYear + 1;
+
+        if (monthOfYear < 10){
+            data += "0" + monthOfYear;
+        }else{
+            data += (monthOfYear );
+        }
+
+        data += "/" + year;
+        AtualizarLista(data);
+    };
 
     android.view.View.OnClickListener onClickBtnFabNewtasks = v -> FunctionsTools.startActivity(ListTasksActivity.this,NewTaskActivity.class,null);
 

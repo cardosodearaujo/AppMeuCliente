@@ -36,7 +36,7 @@ public class FunctionsTools {
     public static final String NotificatioEmail = "notifications.new.app@gmail.com";
     public static final String NotificatioEmailPassword = "N0t1f1c@t10Ns";
     public static final String Email = "everaldocardosodearaujo@gmail.com";
-    public static final String VersaoApp = "7.0";
+    public static final String VersaoApp = "9.0";
 
     /**Controles da camera**/
     public static int IMAGEM_CAMERA = 0;

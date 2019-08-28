@@ -29,10 +29,10 @@
 
                 <Button
                     android:id="@+id/idBtnSearch"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="right"
-                    android:background="@mipmap/ic_search"
+                    android:background="@drawable/ic_search"
                     android:backgroundTint="@color/colorWhite"
                     android:gravity="right" />
 
@@ -70,24 +70,24 @@
 
                     <Button
                         android:id="@+id/idBtnSearchExit"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:layout_weight="0"
-                        android:background="@mipmap/ic_arrow_left"
+                        android:background="@drawable/ic_arrow_left"
                         android:backgroundTint="@color/colorWhite"
                         android:gravity="center" />
 
                     <EditText
                         android:id="@+id/idEdtSearch"
                         style="@style/StyledTilEditText"
-                        android:layout_width="match_parent"
+                        android:layout_width="324dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:inputType="textFilter"
                         android:layout_marginRight="15dp"
-                        android:hint="@string/str_search_hint" />
+                        android:layout_weight="1"
+                        android:hint="@string/str_search_hint"
+                        android:inputType="textFilter" />
 
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
