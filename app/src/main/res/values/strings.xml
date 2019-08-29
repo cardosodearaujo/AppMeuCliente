@@ -11,15 +11,18 @@
     <string name="str_save">Salvar</string>
     <string name="str_back">Anterior</string>
     <string name="str_close">Fechar</string>
-    <string name="str_app_version">Versão 9.0</string>
+    <string name="str_app_version">Versão 10.0</string>
     <string name="str_dev_name">New Outsourcing</string>
     <string name="str_copyright">Copyright 2019 ©</string>
     <string name="str_take_photo">Tirar foto</string>
-    <string name="str_contact">Suporte e contato</string>
+    <string name="str_contact">Contato, suporte e informações</string>
     <string name="str_delete">Apagar</string>
     <string name="str_share">Compartilhar</string>
     <string name="str_new_task">Nova tarefa</string>
     <string name="str_new_check">Concluir</string>
+    <string name="str_attetion">Atenção</string>
+    <string name="str_channel_id">new.walletofclients</string>
+    <string name="str_channel_description">walletofclients</string>
 
     <!-- TODO: Erro -->
     <string name="str_error_message_caption">Ocorreu um erro!</string>

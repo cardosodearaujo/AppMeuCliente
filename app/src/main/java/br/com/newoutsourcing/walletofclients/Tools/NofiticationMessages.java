@@ -11,11 +11,11 @@ public class NofiticationMessages {
     }
 
     public static void onNotificationUse(){
-        FunctionsTools
-                .sendEmailNotification("O app foi acessado as "
-                        + FunctionsTools.getCurrentDate() + " "
-                        + FunctionsTools.getCurrentTime() + " na versão: "
-                        + FunctionsTools.VersaoApp);
+        //FunctionsTools
+                //.sendEmailNotification("O app foi acessado as "
+                        //+ FunctionsTools.getCurrentDate() + " "
+                        //+ FunctionsTools.getCurrentTime() + " na versão: "
+                        //+ FunctionsTools.VersaoApp);
     }
 
     public static void onNotificationClient(Client client, eCRUDOperation operationClientx){

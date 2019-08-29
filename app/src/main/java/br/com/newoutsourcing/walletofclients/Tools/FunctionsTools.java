@@ -2,7 +2,10 @@ package br.com.newoutsourcing.walletofclients.Tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,14 +34,18 @@ import java.util.Date;
 
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
+import br.com.newoutsourcing.walletofclients.Repository.Services.BirthdayService;
 import br.com.newoutsourcing.walletofclients.Repository.Tasks.SendEmailAsyncTask;
+import br.com.newoutsourcing.walletofclients.Views.Activitys.SplashActivity;
+
+import static br.com.newoutsourcing.walletofclients.Repository.Services.ApplicationService.CHANNEL_ID;
 
 public class FunctionsTools {
     /**Constantes de email de notificação**/
     public static final String NotificatioEmail = "notifications.new.app@gmail.com";
     public static final String NotificatioEmailPassword = "N0t1f1c@t10Ns";
     public static final String Email = "everaldocardosodearaujo@gmail.com";
-    public static final String VersaoApp = "9.0";
+    public static final String VersaoApp = "10.0";
 
     /**Controles da camera**/
     public static int IMAGEM_CAMERA = 0;
@@ -257,6 +266,24 @@ public class FunctionsTools {
 
     public static Bitmap parseByteToBitmap(byte[] bites){
         return BitmapFactory.decodeByteArray(bites, 0, bites.length);
+    }
+
+    public static void showNotificationPush(Context context, String Title, String Text){
+        Intent intent =  new Intent(context, SplashActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context,CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_notification)
+                        .setContentTitle(Title)
+                        .setContentText(Text)
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, builder.build());
     }
 
     /**Indices de Spinner**/

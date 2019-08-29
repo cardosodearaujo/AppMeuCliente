@@ -17,6 +17,7 @@
         android:required="true" />
 
     <application
+        android:name=".Repository.Services.ApplicationService"
         android:allowBackup="true"
         android:icon="@mipmap/ic_wallet_round"
         android:label="@string/str_app_name_en"
@@ -24,6 +25,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+        <service android:label="BirthDayService" android:name=".Repository.Services.BirthdayService" android:exported="false" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="BIRTHDAY_SERVICE"/>
+            </intent-filter>
+        </service>
+        <service android:label="TasksService" android:name=".Repository.Services.TasksService" android:exported="false" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="TASKS_SERVICE"/>
+            </intent-filter>
+        </service>
         <activity
             android:name=".Views.Activitys.ListTasksActivity"
             android:screenOrientation="portrait"

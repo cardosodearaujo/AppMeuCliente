@@ -73,7 +73,7 @@ public class ClientTable extends TableConfigurationBase<Client> {
     }
 
     private List<Client> Consulta(String SQL){
-        if (SQL.isEmpty()) return new ArrayList<Client>();
+        if (SQL.isEmpty()) return new ArrayList<>();
         super.openDatabaseInstance();
         try{
             List<Client> list = new ArrayList();

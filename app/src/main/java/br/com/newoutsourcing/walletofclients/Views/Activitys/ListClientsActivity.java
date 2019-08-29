@@ -1,10 +1,14 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.appbar.AppBarLayout;
+
+import androidx.core.app.NotificationCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +29,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.newoutsourcing.walletofclients.Objects.Client;
+import br.com.newoutsourcing.walletofclients.Repository.Services.BirthdayService;
 import br.com.newoutsourcing.walletofclients.Repository.Tasks.ExportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Repository.Tasks.ImportAsyncTask;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.Client.ClientAdapter;
@@ -38,6 +43,7 @@ import static br.com.newoutsourcing.walletofclients.Repository.Database.Configur
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_LEGAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_PHYSICAL_PERSON;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_TASKS;
+import static br.com.newoutsourcing.walletofclients.Repository.Services.ApplicationService.CHANNEL_ID;
 
 public class ListClientsActivity extends ActivityBase implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 

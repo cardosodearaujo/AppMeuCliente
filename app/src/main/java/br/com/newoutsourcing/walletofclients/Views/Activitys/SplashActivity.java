@@ -1,6 +1,10 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
+import android.content.Intent;
 import android.os.Handler;
+
+import br.com.newoutsourcing.walletofclients.Repository.Services.BirthdayService;
+import br.com.newoutsourcing.walletofclients.Repository.Services.TasksService;
 import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase;
@@ -22,8 +26,19 @@ public class SplashActivity extends ActivityBase {
     @Override
     protected void onConfiguration() {
         NofiticationMessages.onNotificationUse();
+        this.onLoadServices();
         this.onLoadDatabaseSession();
         this.onStartActivity();
+    }
+
+    private  void onLoadServices(){
+        Intent it;
+
+        it = new Intent(this,BirthdayService.class);
+        startService(it);
+
+        it = new Intent(this, TasksService.class);
+        startService(it);
     }
 
     private void onLoadDatabaseSession(){
@@ -44,7 +59,7 @@ public class SplashActivity extends ActivityBase {
         new Handler().postDelayed(() -> {
             FunctionsTools.startActivity(SplashActivity.this, ListClientsActivity.class,null);
             FunctionsTools.closeActivity(SplashActivity.this);
-        },1000);
+        },500);
     }
 
 
