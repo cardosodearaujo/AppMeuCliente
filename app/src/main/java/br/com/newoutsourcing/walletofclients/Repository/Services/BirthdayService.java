@@ -37,13 +37,13 @@ public class BirthdayService extends Service {
         new Thread(() -> {
             boolean notificou = false;
             while(true){
-                if (FunctionsTools.getCurrentTime().equals("10:00") && !notificou){
+                if (FunctionsTools.getCurrentTime().equals("09:55") && !notificou){
                     List<Client> clients = TB_CLIENT.Select();
                     int cont = 0;
                     for(Client client : clients){
                         if (client.getType() == 1){
                             PhysicalPerson physicalPerson = client.getPhysicalPerson();
-                            if (physicalPerson.getBirthDate().equals(FunctionsTools.getCurrentDate())){
+                            if (physicalPerson.getBirthDate().substring(0,5).equals(FunctionsTools.getCurrentDate().substring(0,5))){
                                 cont ++;
                             }
                         }
