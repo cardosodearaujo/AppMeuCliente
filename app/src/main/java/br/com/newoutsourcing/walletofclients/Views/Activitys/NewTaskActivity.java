@@ -34,8 +34,8 @@ import butterknife.BindView;
 
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_TASKS;
-import static br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages.onNotificationNewTask;
-import static br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages.onNotificationUpdateTask;
+import static br.com.newoutsourcing.walletofclients.Tools.NotificationMessages.onNotificationNewTask;
+import static br.com.newoutsourcing.walletofclients.Tools.NotificationMessages.onNotificationUpdateTask;
 
 public class NewTaskActivity extends ActivityBase {
 
@@ -243,6 +243,8 @@ public class NewTaskActivity extends ActivityBase {
                     tasks.setDate(idEdttasksDate.getText().toString());
                     tasks.setHour(idEdttasksHour.getText().toString());
                     tasks.setObservation(idEdtClientPFObservation.getText().toString());
+                    if (tasks.getIdNuvem() <= 0) tasks.setIdNuvem(0);
+                    if (tasks.getUpdate().isEmpty() || tasks.getUpdate().equals("N")) tasks.setUpdate("S");
 
                     if (tasks.getTasksId() <= 0){
                         tasks.setTasksId(TB_TASKS.Insert(tasks));

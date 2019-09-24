@@ -22,7 +22,9 @@ public class ClientTable extends TableConfigurationBase<Client> {
     public enum Fields {
         ID_CLIENT,
         IMAGE,
-        TYPE
+        TYPE,
+        ID_NUVEM,
+        UP
     }
 
     public ClientTable(Context context){
@@ -32,6 +34,25 @@ public class ClientTable extends TableConfigurationBase<Client> {
 
     public static ClientTable newInstance(Context context){
         return new ClientTable(context);
+    }
+
+    public List<Client> SelectForInsert(){
+        this.SQL
+                = " Select " + this.getFields()
+                + " From " + this.Table
+                + " Where " + Fields.ID_NUVEM.name() + " Is Null "
+                + " Order by " + Fields.ID_CLIENT.name();
+        return this.Consulta(SQL);
+    }
+
+    public List<Client> SelectForUpdate(){
+        this.SQL
+                = " Select " + this.getFields()
+                + " From " + this.Table
+                + " Where " + Fields.ID_NUVEM.name() + " Is Not Null "
+                + " And (" + Fields.UP.name() + " = 'S' Or " + Fields.UP.name() + " Is Null)"
+                + " Order by " + Fields.ID_CLIENT.name();
+        return this.Consulta(SQL);
     }
 
     @Override
@@ -89,6 +110,8 @@ public class ClientTable extends TableConfigurationBase<Client> {
                     client.setClientId(this.cursor.getInt(0));
                     client.setImage(this.cursor.getString(1));
                     client.setType(this.cursor.getInt(2));
+                    client.setUpdate(this.cursor.getString(3));
+                    client.setIdNuvem(this.cursor.getLong(4));
 
                     List<PhysicalPerson> physicalPersonList = TB_PHYSICAL_PERSON.Select(client.getClientId());
                     if (physicalPersonList != null && physicalPersonList.size() > 0 && physicalPersonList.get(0).getPhysicalPersonId() >= 0){
@@ -150,6 +173,8 @@ public class ClientTable extends TableConfigurationBase<Client> {
 
             values.put(Fields.IMAGE.name(), client.getImage());
             values.put(Fields.TYPE.name(), client.getType());
+            values.put(Fields.ID_NUVEM.name(),client.getIdNuvem());
+            values.put(Fields.UP.name(),client.getUpdate());
 
             this.database.update(this.Table, values,
                     Fields.ID_CLIENT.name() + " = " + client.getClientId(),

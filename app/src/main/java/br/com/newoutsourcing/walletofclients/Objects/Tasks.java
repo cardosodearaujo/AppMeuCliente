@@ -10,6 +10,8 @@ public class Tasks implements Serializable {
     private String date;
     private String hour;
     private String observation;
+    private long idNuvem;
+    private String update;
 
     public Tasks(){
         this.tasksId = 0;
@@ -19,9 +21,11 @@ public class Tasks implements Serializable {
         this.date = "";
         this.hour = "";
         this.observation = "";
+        this.idNuvem = 0;
+        this.update = "";
     }
 
-    public Tasks(long tasksId, long clienteId, String title, int allDay, String date, String hour, String observation){
+    public Tasks(long tasksId, long clienteId, String title, int allDay, String date, String hour, String observation, long idNuvem, String update){
         this.tasksId = tasksId;
         this.clienteId = clienteId;
         this.title = title;
@@ -29,6 +33,8 @@ public class Tasks implements Serializable {
         this.date = date;
         this.hour = hour;
         this.observation = observation;
+        this.idNuvem = idNuvem;
+        this.update = update;
     }
 
     public long getTasksId() {
@@ -85,5 +91,21 @@ public class Tasks implements Serializable {
 
     public void setObservation(String observation) {
         this.observation = observation;
+    }
+
+    public long getIdNuvem() {
+        return idNuvem;
+    }
+
+    public void setIdNuvem(long idNuvem) {
+        this.idNuvem = idNuvem;
+    }
+
+    public String getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
     }
 }

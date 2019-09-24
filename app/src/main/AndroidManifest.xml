@@ -37,6 +37,12 @@
                 <action android:name="TASKS_SERVICE"/>
             </intent-filter>
         </service>
+        <service android:label="SynchronizeService" android:name=".Repository.Services.SynchronizeService" android:exported="false" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="SYNCHRONIZE_SERVICE"/>
+            </intent-filter>
+        </service>
         <activity
             android:name=".Views.Activitys.ListTasksActivity"
             android:screenOrientation="portrait"

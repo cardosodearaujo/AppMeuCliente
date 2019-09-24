@@ -1,11 +1,6 @@
 package br.com.newoutsourcing.walletofclients.Views.Activitys;
 
 import android.app.AlertDialog;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,10 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
 import br.com.newoutsourcing.walletofclients.Objects.Client;
 import br.com.newoutsourcing.walletofclients.R;
-import br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
+import br.com.newoutsourcing.walletofclients.Tools.NotificationMessages;
 import br.com.newoutsourcing.walletofclients.Views.Adapters.TabPagerAdapter;
 import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 import br.com.newoutsourcing.walletofclients.Views.Callbacks.FragmentsCallback;
@@ -25,6 +27,7 @@ import br.com.newoutsourcing.walletofclients.Views.Fragments.AddressFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.LegalPersonFragment;
 import br.com.newoutsourcing.walletofclients.Views.Fragments.PhysicalPersonFragment;
 import butterknife.BindView;
+
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDITIONAL_INFORMATION;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_ADDRESS;
 import static br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase.TB_CLIENT;
@@ -147,7 +150,7 @@ public class NewClientActivity extends ActivityBase {
             builder.setPositiveButton("Sim", (dialog, id) -> {
                 TB_TASKS.DeleteByClientId(client.getClientId());
                 TB_CLIENT.Delete(client);
-                NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.DELETE);
+                NotificationMessages.onNotificationClient(client, NotificationMessages.eCRUDOperation.DELETE);
                 Toast.makeText(NewClientActivity.this,"Cliente excluido!",Toast.LENGTH_LONG).show();
                 FunctionsTools.closeActivity(NewClientActivity.this);
                 dialog.cancel();
@@ -190,6 +193,8 @@ public class NewClientActivity extends ActivityBase {
                 if (client == null || client.getClientId() <= 0){ client = new Client();}
 
                 if (typePerson.equals("F")){client.setType(1);}else{client.setType(2);}
+                if (client.getIdNuvem() <= 0) client.setIdNuvem(0);
+                if (client.getUpdate().isEmpty() || client.getUpdate().equals("N")) client.setUpdate("S");
                 client.setSuccess(true);
 
                 if (client.isSuccess()){
@@ -245,7 +250,7 @@ public class NewClientActivity extends ActivityBase {
 
                                         idViewPager.setCurrentItem(0);
 
-                                        NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.INSERT);
+                                        NotificationMessages.onNotificationClient(client, NotificationMessages.eCRUDOperation.INSERT);
                                         FunctionsTools.showSnackBarLong(v,"Cliente salvo!");
                                     }
                                 }else{/**Atualiza cliente**/
@@ -269,7 +274,7 @@ public class NewClientActivity extends ActivityBase {
                                     idItemShare.setVisible(false);
                                     idItemDelete.setVisible(false);
 
-                                    NofiticationMessages.onNotificationClient(client, NofiticationMessages.eCRUDOperation.UPDATE);
+                                    NotificationMessages.onNotificationClient(client, NotificationMessages.eCRUDOperation.UPDATE);
                                     FunctionsTools.showSnackBarLong(v,"Cliente atualizado!");
                                 }
                                 client = new Client();

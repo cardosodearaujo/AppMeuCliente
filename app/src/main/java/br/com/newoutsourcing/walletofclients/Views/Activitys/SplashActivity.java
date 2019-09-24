@@ -3,9 +3,6 @@ package br.com.newoutsourcing.walletofclients.Views.Activitys;
 import android.content.Intent;
 import android.os.Handler;
 
-import br.com.newoutsourcing.walletofclients.Repository.Services.BirthdayService;
-import br.com.newoutsourcing.walletofclients.Repository.Services.TasksService;
-import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
 import br.com.newoutsourcing.walletofclients.R;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Configurations.SessionDatabase;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.AdditionalInformationTable;
@@ -14,7 +11,11 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.ClientTa
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.LegalPersonTable;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.PhysicalPersonTable;
 import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TasksTable;
-import br.com.newoutsourcing.walletofclients.Tools.NofiticationMessages;
+import br.com.newoutsourcing.walletofclients.Repository.Services.BirthdayService;
+import br.com.newoutsourcing.walletofclients.Repository.Services.SynchronizeService;
+import br.com.newoutsourcing.walletofclients.Repository.Services.TasksService;
+import br.com.newoutsourcing.walletofclients.Tools.FunctionsTools;
+import br.com.newoutsourcing.walletofclients.Tools.NotificationMessages;
 import br.com.newoutsourcing.walletofclients.Views.Bases.ActivityBase;
 
 public class SplashActivity extends ActivityBase {
@@ -25,7 +26,7 @@ public class SplashActivity extends ActivityBase {
 
     @Override
     protected void onConfiguration() {
-        NofiticationMessages.onNotificationUse();
+        NotificationMessages.onNotificationUse();
         this.onLoadServices();
         this.onLoadDatabaseSession();
         this.onStartActivity();
@@ -33,6 +34,9 @@ public class SplashActivity extends ActivityBase {
 
     private  void onLoadServices(){
         Intent it;
+
+        it = new Intent(this, SynchronizeService.class);
+        startService(it);
 
         it = new Intent(this,BirthdayService.class);
         startService(it);

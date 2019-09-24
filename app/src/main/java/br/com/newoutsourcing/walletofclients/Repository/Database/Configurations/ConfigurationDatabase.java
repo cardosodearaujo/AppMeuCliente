@@ -18,7 +18,9 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
         SQL =  " CREATE TABLE IF NOT EXISTS TB_CLIENT( ";
         SQL += "    ID_CLIENT INTEGER PRIMARY KEY AUTOINCREMENT , ";
         SQL += "    IMAGE TEXT NULL, ";
-        SQL += "    TYPE INTEGER NOT NULL ";
+        SQL += "    TYPE INTEGER NOT NULL, ";
+        SQL += "    ID_NUVEM INTEGER NULL, ";
+        SQL += "    UP TEXT NULL ";
         SQL += " ); ";
 
         return SQL;
@@ -91,9 +93,31 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
         SQL += "    ALL_DAY INTEGER NOT NULL, ";
         SQL += "    DATE TEXT NOT NULL, ";
         SQL += "    HOUR TEXT NULL, ";
-        SQL += "    OBSERVATION TEXT NULL ";
+        SQL += "    OBSERVATION TEXT NULL, ";
+        SQL += "    ID_NUVEM INTEGER NULL, ";
+        SQL += "    UP TEXT NULL ";
         SQL += " ); ";
 
+        return SQL;
+    }
+
+    private String getScript_TB_CLIENT_AddColumnID_NUVEM(){
+        SQL =  " ALTER TABLE TB_CLIENT ADD ID_NUVEM INTEGER NULL; ";
+        return SQL;
+    }
+
+    private String getScript_TB_CLIENT_AddColumnUPDATE(){
+        SQL = " ALTER TABLE TB_CLIENT ADD UP TEXT NULL; ";
+        return SQL;
+    }
+
+    private String getScript_TB_TASKS_AddColumnID_NUVEM(){
+        SQL =  " ALTER TABLE TB_TASKS ADD ID_NUVEM INTEGER NULL; ";
+        return SQL;
+    }
+
+    private String getScript_TB_TASKS_AddColumnUPDATE(){
+        SQL = " ALTER TABLE TB_TASKS ADD UP TEXT NULL; ";
         return SQL;
     }
 
@@ -119,6 +143,12 @@ public class ConfigurationDatabase extends SQLiteOpenHelper {
                     break;
                 case 2:
                     DB.execSQL(getScript_TB_TASKS());
+                    break;
+                case 3:
+                    DB.execSQL(getScript_TB_CLIENT_AddColumnID_NUVEM());
+                    DB.execSQL(getScript_TB_CLIENT_AddColumnUPDATE());
+                    DB.execSQL(getScript_TB_TASKS_AddColumnID_NUVEM());
+                    DB.execSQL(getScript_TB_TASKS_AddColumnUPDATE());
                     break;
             }
         } catch (Exception ex) {

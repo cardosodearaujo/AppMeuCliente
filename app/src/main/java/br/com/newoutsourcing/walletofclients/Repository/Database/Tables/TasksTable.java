@@ -3,9 +3,9 @@ package br.com.newoutsourcing.walletofclients.Repository.Database.Tables;
 import android.content.ContentValues;
 import android.content.Context;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
 import br.com.newoutsourcing.walletofclients.Objects.Tasks;
 import br.com.newoutsourcing.walletofclients.Views.Bases.TableConfigurationBase;
 
@@ -18,7 +18,9 @@ public class TasksTable extends TableConfigurationBase<Tasks> {
         ALL_DAY,
         DATE,
         HOUR,
-        OBSERVATION
+        OBSERVATION,
+        ID_NUVEM,
+        UP
     }
 
     public TasksTable(Context context) {
@@ -30,12 +32,29 @@ public class TasksTable extends TableConfigurationBase<Tasks> {
         return new TasksTable(context);
     }
 
+    public List<Tasks> SelectForInsert(){
+        this.SQL
+                = " Select " + this.getFields()
+                + " From " + this.Table
+                + " Where " + Fields.ID_NUVEM.name() + " Is Null "
+                + " Order by " + Fields.ID_TASK.name();
+        return this.Consulta(SQL);
+    }
+
+    public List<Tasks> SelectForUpdate(){
+        this.SQL
+                = " Select " + this.getFields()
+                + " From " + this.Table
+                + " Where " + Fields.ID_NUVEM.name() + " Is Not Null "
+                + " And (" + Fields.UP.name() + " = 'S' Or " + Fields.UP.name() + " Is Null)"
+                + " Order by " + Fields.ID_TASK.name();
+        return this.Consulta(SQL);
+    }
+
     @Override
     public List<Tasks> Select(long id) {
         super.openDatabaseInstance();
         try{
-            List<Tasks> list = new ArrayList<Tasks>();
-
             if (id > 0){
                 this.SQL
                         = " Select " + this.getFields() + " From " + this.Table
@@ -48,6 +67,39 @@ public class TasksTable extends TableConfigurationBase<Tasks> {
                         + " Order by  Cast(" + Fields.DATE.name() + " As Date) Asc,"
                         + " Cast (" + Fields.HOUR + " As Time) Asc";
             }
+
+            return this.Consulta(this.SQL);
+        }catch (Exception ex){
+            throw ex;
+        }finally {
+            super.closeDatabaseInstance();
+        }
+    }
+
+    public List<Tasks> Select(String date){
+        super.openDatabaseInstance();
+        try{
+            if (!date.isEmpty()) {
+                this.SQL
+                        = " Select " + this.getFields() + " From " + this.Table
+                        + " Where " + Fields.DATE + " = '" + date + "'"
+                        + " Order by  Cast(" + Fields.DATE.name() + " As Date) Asc,"
+                        + " Cast (" + Fields.HOUR + " As Time) Asc";
+                return this.Consulta(this.SQL);
+            }
+            return new ArrayList<>();
+        }catch (Exception ex){
+            throw ex;
+        }finally {
+            super.closeDatabaseInstance();
+        }
+    }
+
+    private List<Tasks> Consulta(String SQL){
+        if (SQL.isEmpty()) return new ArrayList<>();
+        super.openDatabaseInstance();
+        try{
+            List<Tasks> list = new ArrayList<Tasks>();
 
             this.cursor = this.database.rawQuery(this.SQL,null);
 
@@ -64,54 +116,13 @@ public class TasksTable extends TableConfigurationBase<Tasks> {
                     obj.setDate(this.cursor.getString(4));
                     obj.setHour(this.cursor.getString(   5));
                     obj.setObservation(this.cursor.getString(6));
+                    obj.setIdNuvem(this.cursor.getLong(7));
+                    obj.setUpdate(this.cursor.getString(8));
 
                     list.add(obj);
                 }while (this.cursor.moveToNext());
             }
-
             this.cursor.close();
-
-            return list;
-        }catch (Exception ex){
-            throw ex;
-        }finally {
-            super.closeDatabaseInstance();
-        }
-    }
-
-    public List<Tasks> Select(String date){
-        super.openDatabaseInstance();
-        try{
-            List<Tasks> list = new ArrayList<Tasks>();
-
-            if (!date.isEmpty()){
-                this.SQL
-                        = " Select " + this.getFields() + " From " + this.Table
-                        + " Where " + Fields.DATE + " = '" + date + "'"
-                        + " Order by  Cast(" + Fields.DATE.name() + " As Date) Asc,"
-                        + " Cast (" + Fields.HOUR + " As Time) Asc";
-
-                this.cursor = this.database.rawQuery(this.SQL,null);
-
-                if (this.cursor.getCount()>0){
-                    this.cursor.moveToFirst();
-                    Tasks obj;
-                    do{
-                        obj = new Tasks();
-
-                        obj.setTasksId(this.cursor.getInt(0));
-                        obj.setTitle(this.cursor.getString(1));
-                        obj.setClienteId(this.cursor.getInt(2));
-                        obj.setAllDay(this.cursor.getInt(3));
-                        obj.setDate(this.cursor.getString(4));
-                        obj.setHour(this.cursor.getString(   5));
-                        obj.setObservation(this.cursor.getString(6));
-
-                        list.add(obj);
-                    }while (this.cursor.moveToNext());
-                }
-                this.cursor.close();
-            }
 
             return list;
         }catch (Exception ex){
@@ -154,6 +165,8 @@ public class TasksTable extends TableConfigurationBase<Tasks> {
             values.put(Fields.DATE.name(), tasks.getDate());
             values.put(Fields.HOUR.name(), tasks.getHour());
             values.put(Fields.OBSERVATION.name(), tasks.getObservation());
+            values.put(Fields.ID_NUVEM.name(), tasks.getIdNuvem());
+            values.put(Fields.UP.name(), tasks.getUpdate());
 
             this.database.update(this.Table, values,
                     Fields.ID_TASK.name() + " = " + tasks.getTasksId(),

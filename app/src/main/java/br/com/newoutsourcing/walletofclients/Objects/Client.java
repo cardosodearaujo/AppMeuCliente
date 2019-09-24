@@ -12,6 +12,8 @@ public class Client implements Serializable {
     private AdditionalInformation additionalInformation;
     private Address address;
     private boolean success;
+    private long idNuvem;
+    private String update;
 
     public Client(){
         this.setClientId(0);
@@ -22,10 +24,12 @@ public class Client implements Serializable {
         this.setAdditionalInformation(AdditionalInformation.newInstance());
         this.setAddress(Address.newInstance());
         this.setSuccess(true);
+        this.setIdNuvem(0);
+        this.setUpdate("N");
     }
 
     public Client(long clientId, String image, int type, PhysicalPerson physicalPerson, LegalPerson legalPerson,
-                  AdditionalInformation additionalInformation, Address addressEntity, boolean success){
+                  AdditionalInformation additionalInformation, Address addressEntity, boolean success, long idNuvem, String update){
         this.setClientId(clientId);
         this.setImage(image);
         this.setType(type);
@@ -34,6 +38,8 @@ public class Client implements Serializable {
         this.setAdditionalInformation(additionalInformation);
         this.setAddress(addressEntity);
         this.setSuccess(success);
+        this.setIdNuvem(idNuvem);
+        this.setUpdate(update);
     }
 
     public static Client newInstance(){
@@ -104,4 +110,19 @@ public class Client implements Serializable {
         this.success = success;
     }
 
+    public long getIdNuvem() {
+        return idNuvem;
+    }
+
+    public void setIdNuvem(long idNuvem) {
+        this.idNuvem = idNuvem;
+    }
+
+    public String getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
+    }
 }

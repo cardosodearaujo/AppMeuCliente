@@ -9,7 +9,7 @@ import br.com.newoutsourcing.walletofclients.Repository.Database.Tables.TasksTab
 
 public class SessionDatabase {
     public static final String DB_NAME = "DB_WalletOfClients1";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public static ClientTable TB_CLIENT;
     public static LegalPersonTable TB_LEGAL_PERSON;
